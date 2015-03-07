@@ -1,0 +1,9 @@
+{
+  "name": "contesttracker",
+  "title": "Programming Contest Tracker",
+  "id": "jid1-ThQRNy5J1zU6Bg",
+  "description": "Shows a list of upcoming Programming Contests happeing on a variety of popular platforms.",
+  "author": "Nishanth Vijayan",
+  "license": "MPL 2.0",
+  "version": "0.1"
+}

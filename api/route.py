@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
+
 import os
 from flask import Flask, jsonify
 from bs4 import BeautifulSoup
 from operator import itemgetter
-from time import strptime,strftime,mktime
+from time import strptime,strftime,mktime,gmtime
 import json
 from urllib2 import urlopen
 
@@ -48,6 +50,22 @@ def getDataFromHackerearth():
             posts["ongoing"].append({  "Name" :  item["title"].strip()  , "url" : item["url"].strip() , "EndTime"   : strftime("%a, %d %b %Y %H:%M", end_time)  ,"Platform":"HACKEREARTH"  })
 
 
+def getDataFromCodeforces():
+    page = urlopen("http://codeforces.com/api/contest.list")
+    data = json.load(page)["result"]
+    for item in data:
+        
+        if item["phase"]=="FINISHED": break
+        
+        start_time = strftime("%a, %d %b %Y %H:%M",gmtime(item["startTimeSeconds"]+19800))
+        end_time   = strftime("%a, %d %b %Y %H:%M",gmtime(item["durationSeconds"]+item["startTimeSeconds"]+19800))
+        
+        if item["phase"].strip()=="BEFORE":  
+            posts["upcoming"].append({ "Name" :  item["name"] , "url" : "http://codeforces.com/contest/"+str(item["id"]) , "StartTime" :  start_time,"Platform":"CODEFORCES"  })
+        else:
+            posts["ongoing"].append({  "Name" :  item["name"] , "url" : "http://codeforces.com/contest/"+str(item["id"])  , "EndTime"   : end_time  ,"Platform":"CODEFORCES"  })
+
+
 
 @app.route('/')
 @app.route('/data.json')
@@ -57,6 +75,7 @@ def index():
     posts["ongoing"]=[]
     getDataFromCodechef()
     getDataFromHackerearth()
+    getDataFromCodeforces()
     posts["upcoming"] = sorted(posts["upcoming"], key=lambda k: strptime(k['StartTime'], "%a, %d %b %Y %H:%M"))
     posts["ongoing"] = sorted(posts["ongoing"], key=lambda k: strptime(k['EndTime'], "%a, %d %b %Y %H:%M"))
     

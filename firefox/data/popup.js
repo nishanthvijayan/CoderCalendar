@@ -8,6 +8,8 @@ function icon(platform){
       return "cc32.jpg";
   }else if (platform=="HACKEREARTH") {
       return "he32.png";
+  }else if (platform=="CODEFORCES") {
+      return "cf32.png";
   }
 }
 

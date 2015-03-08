@@ -1,38 +1,51 @@
 import os
 from flask import Flask, jsonify
-import mechanize
 from bs4 import BeautifulSoup
+from operator import itemgetter
+from time import strptime,strftime,mktime
+import json
+from urllib2 import urlopen
 
 app = Flask(__name__)
 
 
-def getData():
-    
-    posts= []
-    
-    browser = mechanize.Browser()
-    browser.set_handle_robots(False)
-    cookies = mechanize.CookieJar()
-    browser.addheaders = [('User-agent', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:25.0) Gecko/20100101 Firefox/25.0')]
+#add duration ?
 
-    page = browser.open("http://www.codechef.com/contests")
+posts= {"ongoing":[] , "upcoming":[]}
+
+def getDataFromCodechef():
+    
+    page = urlopen("http://www.codechef.com/contests")
     soup = BeautifulSoup(page,"html.parser")
 
     statusdiv = soup.findAll("div",attrs = {"id":"statusdiv"})
     ongoing_contests = statusdiv[0].findAll("tr")
     for ongoing_contest in ongoing_contests[1:]:
         details = ongoing_contest.findAll("td")
-        posts.append({ "Code" : details[0].string    ,"Name" :  details[1].string  , "url" : "www.codechef.com"+details[1].a["href"] , "StartTime" : details[2].string ,"Endtime" : details[3].string })
-        
-
+        end_time = strptime(details[3].string, "%Y-%m-%d %H:%M:%S")
+        posts["ongoing"].append({ "Name" :  details[1].string  , "url" : "http://www.codechef.com"+details[1].a["href"] , "EndTime" : strftime("%a, %d %b %Y %H:%M", end_time) ,"Platform":"CODECHEF"})
+    
     upcoming_contests = statusdiv[1].findAll("tr")
     for upcoming_contest in upcoming_contests[1:]:
         details = upcoming_contest.findAll("td")
-        posts.append({ "Code" : details[0].string    ,"Name" :  details[1].string  , "url" : "www.codechef.com"+details[1].a["href"] , "StartTime" : details[2].string ,"Endtime" : details[3].string })
-        
+        start_time = strptime(details[2].string, "%Y-%m-%d %H:%M:%S")
+        end_time = strptime(details[3].string, "%Y-%m-%d %H:%M:%S")
+        duration = str(abs(mktime(start_time)-mktime(end_time))/(60.0*60.0))
+        posts["upcoming"].append({"Name" :  details[1].string  , "url" : "http://www.codechef.com"+details[1].a["href"] , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time) ,"Platform":"CODECHEF" })
     
-    return posts
 
+
+def getDataFromHackerearth():
+    page = urlopen("https://www.hackerearth.com/chrome-extension/events/")
+    data = json.load(page)
+    for item in data:
+        start_time = strptime(item["start_tz"].strip()[:19], "%Y-%m-%d %H:%M:%S")
+        end_time = strptime(item["end_tz"].strip()[:19], "%Y-%m-%d %H:%M:%S")
+        duration = str(abs(mktime(start_time)-mktime(end_time))/(60.0*60.0))
+        if item["status"].strip()=="UPCOMING":  
+            posts["upcoming"].append({ "Name" :  item["title"].strip()  , "url" : item["url"].strip() , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time),"Platform":"HACKEREARTH"  })
+        else:
+            posts["ongoing"].append({  "Name" :  item["title"].strip()  , "url" : item["url"].strip() , "EndTime"   : strftime("%a, %d %b %Y %H:%M", end_time)  ,"Platform":"HACKEREARTH"  })
 
 
 
@@ -40,9 +53,14 @@ def getData():
 @app.route('/data.json')
 def index():
     
-    results = getData()
-    list = [ {'Posts':  results   } ]
-    resp = jsonify(result=results)
+    posts["upcoming"]=[]
+    posts["ongoing"]=[]
+    getDataFromCodechef()
+    getDataFromHackerearth()
+    posts["upcoming"] = sorted(posts["upcoming"], key=lambda k: strptime(k['StartTime'], "%a, %d %b %Y %H:%M"))
+    posts["ongoing"] = sorted(posts["ongoing"], key=lambda k: strptime(k['EndTime'], "%a, %d %b %Y %H:%M"))
+    
+    resp = jsonify(result=posts)
     resp.status_code = 200
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp

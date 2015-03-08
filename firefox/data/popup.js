@@ -2,22 +2,38 @@
 var res;
 var req;
 
+function icon(platform){
 
+  if(platform=="CODECHEF"){
+      return "cc32.jpg";
+  }else if (platform=="HACKEREARTH") {
+      return "he32.png";
+  }
+}
 
 function putdata(json)
 { 
-  $.each(res.result , function(i,post){ 
-     $("body").append('<a data='+'"'+post.url+'"'+'><li>'+post.Name+'</li></a>');
+  
+  $.each(res.result.ongoing , function(i,post){ 
+     
+     $("#ongoing").append('<a  data='+'"'+post.url+'"'+'><li><h4>'+post.Name+'</h4><img src="'+icon(post.Platform)+'"></img><br><h5>End: '+post.EndTime+'</h5></li><hr></a>');
     });
+  
+  $.each(res.result.upcoming , function(i,post){ 
+
+     $("#upcoming").append('<a  data='+'"'+post.url+'"'+'><li><h4>'+post.Name+'</h4><img src="'+icon(post.Platform)+'"></img><br><h5>Start: '+post.StartTime+'</h5></li><hr></a>');
+    });
+
 }
 
 
 function fetchdata(){
-  
+
     req =  new XMLHttpRequest();
     req.open("GET",'https://contesttrackerapi.herokuapp.com/',true);
     req.send();
     req.onload = function(){
+        $("a").remove();
         res = JSON.parse(req.responseText);
         putdata(res);
     };
@@ -26,10 +42,7 @@ function fetchdata(){
 
 $(document).ready(function(){
   fetchdata();
-  // update feeds every 5 minutes
-  setInterval(function(){
-    $("a").remove();
-    fetchdata() }, 100000)
+  setInterval(function(){ fetchdata() }, 120000)
 
 
 //sends "link to be opened" to main.js

@@ -6,10 +6,10 @@ var tabs = require("sdk/tabs");
 
 
 var newsfeed = panels.Panel({
-  width: 500,
+  width: 350,
   height: 500,
   contentURL: self.data.url("popup.html"),
-  contentScriptFile: [self.data.url("jquery.js"),self.data.url("popup.js"),self.data.url("pace.js")]
+  contentScriptFile: [self.data.url("jquery.js"),self.data.url("popup.js")]
 });
 
 
@@ -31,6 +31,5 @@ function popup(){
 
 newsfeed.port.on("postClicked", function (text) {
   //open new tab with link
-  console.log(text);
-  tabs.open("http://"+text);
+  tabs.open(text);
 });

@@ -11,6 +11,9 @@ function icon(platform){
   }else if (platform=="CODEFORCES") {
       return "cf32.png";
   }
+  else if(platform=="TOPCODER"){
+      return "tc32.gif"
+  }
 }
 
 function putdata(json)
@@ -44,7 +47,7 @@ function fetchdata(){
 
 $(document).ready(function(){
   fetchdata();
-  setInterval(function(){ fetchdata() }, 120000)
+  setInterval(function(){ fetchdata() }, 300000)
 
 
 //sends "link to be opened" to main.js

@@ -12,9 +12,22 @@ import threading
 app = Flask(__name__)
 
 
-#add duration ?
 
 posts= {"ongoing":[] , "upcoming":[]}
+
+
+def getDuration(duration):
+    days = duration/(60*24)
+    duration = duration - days*60*24
+    hours = duration/60
+    duration = duration - hours*60
+    minutes = duration
+    ans=""
+    if days==1: ans+=str(days)+" day "
+    elif days!=0: ans+=str(days)+" days "
+    if hours!=0:ans+=str(hours)+"h "
+    if minutes!=0:ans+=str(minutes)+"m"
+    return ans.strip()
 
 def getDataFromCodechef():
     page = urlopen("http://www.codechef.com/contests")
@@ -32,8 +45,8 @@ def getDataFromCodechef():
         details = upcoming_contest.findAll("td")
         start_time = strptime(details[2].string, "%Y-%m-%d %H:%M:%S")
         end_time = strptime(details[3].string, "%Y-%m-%d %H:%M:%S")
-        duration = str(abs(mktime(start_time)-mktime(end_time))/(60.0*60.0))
-        posts["upcoming"].append({"Name" :  details[1].string  , "url" : "http://www.codechef.com"+details[1].a["href"] , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time) ,"Platform":"CODECHEF" })
+        duration = getDuration(int(( mktime(end_time)-mktime(start_time) )/60 ))
+        posts["upcoming"].append({"Name" :  details[1].string  , "url" : "http://www.codechef.com"+details[1].a["href"] , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time),"Duration":duration ,"Platform":"CODECHEF" })
 
 
 def getDataFromHackerearth():
@@ -42,9 +55,9 @@ def getDataFromHackerearth():
     for item in data:
         start_time = strptime(item["start_tz"].strip()[:19], "%Y-%m-%d %H:%M:%S")
         end_time = strptime(item["end_tz"].strip()[:19], "%Y-%m-%d %H:%M:%S")
-        duration = str(abs(mktime(start_time)-mktime(end_time))/(60.0*60.0))
+        duration = getDuration(int(( mktime(end_time)-mktime(start_time) )/60 ))
         if item["status"].strip()=="UPCOMING":  
-            posts["upcoming"].append({ "Name" :  item["title"].strip()  , "url" : item["url"].strip() , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time),"Platform":"HACKEREARTH"  })
+            posts["upcoming"].append({ "Name" :  item["title"].strip()  , "url" : item["url"].strip() , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time),"Duration":duration,"Platform":"HACKEREARTH"  })
         else:
             posts["ongoing"].append({  "Name" :  item["title"].strip()  , "url" : item["url"].strip() , "EndTime"   : strftime("%a, %d %b %Y %H:%M", end_time)  ,"Platform":"HACKEREARTH"  })
 
@@ -57,9 +70,10 @@ def getDataFromCodeforces():
         
         start_time = strftime("%a, %d %b %Y %H:%M",gmtime(item["startTimeSeconds"]+19800))
         end_time   = strftime("%a, %d %b %Y %H:%M",gmtime(item["durationSeconds"]+item["startTimeSeconds"]+19800))
+        duration = getDuration( item["durationSeconds"]/60 )
         
         if item["phase"].strip()=="BEFORE":  
-            posts["upcoming"].append({ "Name" :  item["name"] , "url" : "http://codeforces.com/contest/"+str(item["id"]) , "StartTime" :  start_time,"Platform":"CODEFORCES"  })
+            posts["upcoming"].append({ "Name" :  item["name"] , "url" : "http://codeforces.com/contest/"+str(item["id"]) , "StartTime" :  start_time,"Duration":duration,"Platform":"CODEFORCES"  })
         else:
             posts["ongoing"].append({  "Name" :  item["name"] , "url" : "http://codeforces.com/contest/"+str(item["id"])  , "EndTime"   : end_time  ,"Platform":"CODEFORCES"  })
 
@@ -76,12 +90,13 @@ def getDataFromTopcoder():
             
             end_time = strptime(item["challengeEndTime"][:19], "%Y-%m-%dT%H:%M:%S")
             end_time_indian = strftime("%a, %d %b %Y %H:%M",gmtime(mktime(end_time)+54000))
+            duration = getDuration(int(( mktime(end_time)-mktime(start_time) )/60 ))
             
             cur_time = localtime()
             if cur_time>start_time_indian and cur_time<end_time_indian:
                 posts["upcoming"].append({ "Name" :  item["contestName"] , "url" : "http://community.topcoder.com/tc?module=MatchDetails&rd="+str(item["roundId"]) , "EndTime" :  end_time_indian,"Platform":"TOPCODER"  })
             elif cur_time>start_time_indian:
-                posts["upcoming"].append({ "Name" :  item["contestName"] , "url" : "http://community.topcoder.com/tc?module=MatchDetails&rd="+str(item["roundId"]) , "StartTime" :  start_time_indian,"Platform":"TOPCODER"  })
+                posts["upcoming"].append({ "Name" :  item["contestName"] , "url" : "http://community.topcoder.com/tc?module=MatchDetails&rd="+str(item["roundId"]) ,"Duration":duration, "StartTime" :  start_time_indian,"Platform":"TOPCODER"  })
 
 def fetch():
 

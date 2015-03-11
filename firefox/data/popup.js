@@ -26,7 +26,7 @@ function putdata(json)
   
   $.each(res.result.upcoming , function(i,post){ 
 
-     $("#upcoming").append('<a  data='+'"'+post.url+'"'+'><li><h4>'+post.Name+'</h4><img src="'+icon(post.Platform)+'"></img><br><h5>Start: '+post.StartTime+'</h5></li><hr></a>');
+     $("#upcoming").append('<a  data='+'"'+post.url+'"'+'><li><h4>'+post.Name+'</h4><img src="'+icon(post.Platform)+'"></img><br><h5>Start: '+post.StartTime+'</h5><br><h5>Duration: '+post.Duration+'</h5></li><hr></a>');
     });
 
 }

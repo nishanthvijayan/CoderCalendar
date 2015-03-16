@@ -94,9 +94,26 @@ def getDataFromTopcoder():
             
             cur_time = localtime()
             if cur_time>start_time_indian and cur_time<end_time_indian:
-                posts["upcoming"].append({ "Name" :  item["contestName"] , "url" : "http://community.topcoder.com/tc?module=MatchDetails&rd="+str(item["roundId"]) , "EndTime" :  end_time_indian,"Platform":"TOPCODER"  })
+                posts["ongoing"].append({ "Name" :  item["contestName"] , "url" : "http://community.topcoder.com/tc?module=MatchDetails&rd="+str(item["roundId"]) , "EndTime" :  end_time_indian,"Platform":"TOPCODER"  })
             elif cur_time>start_time_indian:
                 posts["upcoming"].append({ "Name" :  item["contestName"] , "url" : "http://community.topcoder.com/tc?module=MatchDetails&rd="+str(item["roundId"]) ,"EndTime" : end_time_indian,"Duration":duration, "StartTime" :  start_time_indian,"Platform":"TOPCODER"  })
+
+
+def getDataFromHackerrank():
+    page = urlopen("https://www.hackerrank.com/rest/contests/upcoming?offset=0&limit=10&contest_slug=active&_=1426414378923")
+    data = json.load(page)["models"]
+    page = urlopen("https://www.hackerrank.com/rest/contests/college?offset=0&limit=50&_=1426414659769")
+    for item in json.load(page)["models"]:data.append(item)
+    for item in data:
+        if not item["ended"]:
+            start_time = strptime(item["get_starttimeiso"], "%Y-%m-%dT%H:%M:%SZ")
+            end_time = strptime(item["get_endtimeiso"], "%Y-%m-%dT%H:%M:%SZ")
+            duration = getDuration(int(( mktime(end_time)-mktime(start_time) )/60 ))
+            if not item["started"]:
+                posts["upcoming"].append({ "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"] , "StartTime" :  strftime("%a, %d %b %Y %H:%M", start_time),"EndTime" : strftime("%a, %d %b %Y %H:%M", end_time),"Duration":duration,"Platform":"HACKERRANK"  })
+            elif   item["started"]:
+                posts["ongoing"].append({  "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"]  , "EndTime"   : strftime("%a, %d %b %Y %H:%M", end_time)  ,"Platform":"HACKERRANK"  })
+
 
 def fetch():
 
@@ -106,6 +123,7 @@ def fetch():
     thread_list.append( threading.Thread(target=getDataFromTopcoder) )
     thread_list.append( threading.Thread(target=getDataFromHackerearth) )
     thread_list.append( threading.Thread(target=getDataFromCodechef) )
+    thread_list.append( threading.Thread(target=getDataFromHackerrank) )
 
     for thread in thread_list:
         thread.start()

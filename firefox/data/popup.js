@@ -12,7 +12,10 @@ function icon(platform){
       return "cf32.png";
   }
   else if(platform=="TOPCODER"){
-      return "tc32.gif"
+      return "tc32.gif";
+  }
+  else if(platform=="HACKERRANK"){
+      return "hr36.png";
   }
 }
 

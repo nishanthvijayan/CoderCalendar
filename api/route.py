@@ -34,20 +34,29 @@ def getDataFromCodechef():
     soup = BeautifulSoup(page,"html.parser")
 
     statusdiv = soup.findAll("div",attrs = {"id":"statusdiv"})
-    ongoing_contests = statusdiv[0].findAll("tr")
-    for ongoing_contest in ongoing_contests[1:]:
-        details = ongoing_contest.findAll("td")
-        end_time = strptime(details[3].string, "%Y-%m-%d %H:%M:%S")
-        posts["ongoing"].append({ "Name" :  details[1].string  , "url" : "http://www.codechef.com"+details[1].a["href"] , "EndTime" : strftime("%a, %d %b %Y %H:%M", end_time) ,"Platform":"CODECHEF"})
-    
     upcoming_contests = statusdiv[1].findAll("tr")
-    for upcoming_contest in upcoming_contests[1:]:
-        details = upcoming_contest.findAll("td")
-        start_time = strptime(details[2].string, "%Y-%m-%d %H:%M:%S")
-        end_time = strptime(details[3].string, "%Y-%m-%d %H:%M:%S")
-        duration = getDuration(int(( mktime(end_time)-mktime(start_time) )/60 ))
-        posts["upcoming"].append({"Name" :  details[1].string  , "url" : "http://www.codechef.com"+details[1].a["href"] , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time),"EndTime" : strftime("%a, %d %b %Y %H:%M", end_time),"Duration":duration ,"Platform":"CODECHEF" })
+    if(len(upcoming_contests) <100):
+        for upcoming_contest in upcoming_contests[1:]:
+            details = upcoming_contest.findAll("td")
+            start_time = strptime(details[2].string, "%Y-%m-%d %H:%M:%S")
+            end_time = strptime(details[3].string, "%Y-%m-%d %H:%M:%S")
+            duration = getDuration(int(( mktime(end_time)-mktime(start_time) )/60 ))
+            posts["upcoming"].append({"Name" :  details[1].string  , "url" : "http://www.codechef.com"+details[1].a["href"] , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time),"EndTime" : strftime("%a, %d %b %Y %H:%M", end_time),"Duration":duration ,"Platform":"CODECHEF" })
 
+        ongoing_contests = statusdiv[0].findAll("tr")
+        for ongoing_contest in ongoing_contests[1:]:
+            details = ongoing_contest.findAll("td")
+            end_time = strptime(details[3].string, "%Y-%m-%d %H:%M:%S")
+            posts["ongoing"].append({ "Name" :  details[1].string  , "url" : "http://www.codechef.com"+details[1].a["href"] , "EndTime" : strftime("%a, %d %b %Y %H:%M", end_time) ,"Platform":"CODECHEF"})
+    else:
+        upcoming_contests = statusdiv[0].findAll("tr")
+        for upcoming_contest in upcoming_contests[1:]:
+            details = upcoming_contest.findAll("td")
+            start_time = strptime(details[2].string, "%Y-%m-%d %H:%M:%S")
+            end_time = strptime(details[3].string, "%Y-%m-%d %H:%M:%S")
+            duration = getDuration(int(( mktime(end_time)-mktime(start_time) )/60 ))
+            posts["upcoming"].append({"Name" :  details[1].string  , "url" : "http://www.codechef.com"+details[1].a["href"] , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time),"EndTime" : strftime("%a, %d %b %Y %H:%M", end_time),"Duration":duration ,"Platform":"CODECHEF" })
+    
 
 def getDataFromHackerearth():
     page = urlopen("https://www.hackerearth.com/chrome-extension/events/")

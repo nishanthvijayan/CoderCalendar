@@ -26,7 +26,13 @@ function putdata(json)
   
   $.each(res.result.upcoming , function(i,post){ 
 
-     $("#upcoming").append('<a  data='+'"'+post.url+'"'+'><li><h4>'+post.Name+'</h4><img src="'+icon(post.Platform)+'"></img><br><h5>Start: '+post.StartTime+'</h5><br><h5>Duration: '+post.Duration+'</h5></li><hr></a>');
+      startTime = Date.parse(post.StartTime)
+      endTime   = Date.parse(post.EndTime)
+      s = new Date(startTime+19800000).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"")
+      e = new Date(endTime+19800000).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"")
+      calenderTime = s+'/'+e
+      calenderLink = "https://www.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(post.Name)+"&dates="+calenderTime+"&location="+post.url+"&pli=1&uid=&sf=true&output=xml#eventpage_6"
+     $("#upcoming").append('<a  data='+'"'+post.url+'"'+'><li><h4>'+post.Name+'</h4><img src="'+icon(post.Platform)+'"></img><br><h5>Start: '+post.StartTime+'</h5><br><h5>Duration: '+post.Duration+'</h5><br><h5 data='+calenderLink+' class="calender">Add to Calendar</h5></li><hr></a>');
     });
 
 }
@@ -55,6 +61,10 @@ $(document).ready(function(){
        self.port.emit("postClicked",$(this).attr('data'));
        return false;
      });
-
+  //sends "link to be opened" to main.js
+  $("body").on('click',".calender", function(){
+       self.port.emit("postClicked",$(this).attr('data'));
+       return false;
+     });
 });
 

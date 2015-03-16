@@ -32,8 +32,12 @@ a{
   
   text-decoration: none;
   color: black;
-  cursor: pointer;
+  
 
+}
+.calender{
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 a li:hover{

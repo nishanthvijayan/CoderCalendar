@@ -59,16 +59,33 @@ def getDataFromCodechef():
     
 
 def getDataFromHackerearth():
+    #fix this shit
+    cur_time = localtime()
+    ref_date =  strftime("%Y-%m-%d",  localtime(mktime(localtime())   - 432000))
+    duplicate_check=[]
+
     page = urlopen("https://www.hackerearth.com/chrome-extension/events/")
     data = json.load(page)
     for item in data:
         start_time = strptime(item["start_tz"].strip()[:19], "%Y-%m-%d %H:%M:%S")
         end_time = strptime(item["end_tz"].strip()[:19], "%Y-%m-%d %H:%M:%S")
         duration = getDuration(int(( mktime(end_time)-mktime(start_time) )/60 ))
-        if item["status"].strip()=="UPCOMING":  
+        duplicate_check.append(item["title"].strip())
+        if item["status"].strip()=="UPCOMING":
             posts["upcoming"].append({ "Name" :  item["title"].strip()  , "url" : item["url"].strip() , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time),"EndTime" : strftime("%a, %d %b %Y %H:%M", end_time),"Duration":duration,"Platform":"HACKEREARTH"  })
-        else:
-            posts["ongoing"].append({  "Name" :  item["title"].strip()  , "url" : item["url"].strip() , "EndTime"   : strftime("%a, %d %b %Y %H:%M", end_time)  ,"Platform":"HACKEREARTH"  })
+
+    page = urlopen("https://clients6.google.com/calendar/v3/calendars/hackerearth.com_73f0o8kl62rb5v1htv19p607e4@group.calendar.google.com/events?calendarId=hackerearth.com_73f0o8kl62rb5v1htv19p607e4%40group.calendar.google.com&singleEvents=true&timeZone=Asia%2FCalcutta&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin="+ref_date+"T00%3A00%3A00%2B05%3A30&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs")
+    data = json.load(page)["items"]
+    for item in data:
+        start_time = strptime(item["start"]["dateTime"][:19], "%Y-%m-%dT%H:%M:%S")
+        end_time = strptime(item["end"]["dateTime"][:19], "%Y-%m-%dT%H:%M:%S")
+        duration = getDuration(int(( mktime(end_time)-mktime(start_time) )/60 ))
+        if cur_time>start_time and cur_time<end_time and item["summary"].strip() not in duplicate_check:
+            posts["ongoing"].append({  "Name" :  item["summary"].strip()  , "url" : item["location"].strip() , "EndTime"   : strftime("%a, %d %b %Y %H:%M", end_time)  ,"Platform":"HACKEREARTH"  })
+        elif cur_time<start_time and item["summary"].strip() not in duplicate_check:
+            posts["upcoming"].append({ "Name" :  item["summary"].strip()  , "url" : item["location"].strip() , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time),"EndTime" : strftime("%a, %d %b %Y %H:%M", end_time),"Duration":duration,"Platform":"HACKEREARTH"  })
+
+    
 
 def getDataFromCodeforces():
     page = urlopen("http://codeforces.com/api/contest.list")
@@ -87,31 +104,34 @@ def getDataFromCodeforces():
             posts["ongoing"].append({  "Name" :  item["name"] , "url" : "http://codeforces.com/contest/"+str(item["id"])  , "EndTime"   : end_time  ,"Platform":"CODEFORCES"  })
 
 def getDataFromTopcoder():
-    page = urlopen("http://api.topcoder.com/v2/data/srm/schedule?pageSize=5")
-    data = json.load(page)["data"]
+    try:
+        page = urlopen("http://api.topcoder.com/v2/data/srm/schedule?pageSize=5")
+        data = json.load(page)["data"]
 
-    for item in data:
-        if item["name"]=="Round 1":
-                        
-            start_time = strptime(item["codingStartTime"][:19], "%Y-%m-%dT%H:%M:%S")
-            start_time_indian = strftime("%a, %d %b %Y %H:%M",gmtime(mktime(start_time)+54000))
-            
-            
-            end_time = strptime(item["challengeEndTime"][:19], "%Y-%m-%dT%H:%M:%S")
-            end_time_indian = strftime("%a, %d %b %Y %H:%M",gmtime(mktime(end_time)+54000))
-            duration = getDuration(int(( mktime(end_time)-mktime(start_time) )/60 ))
-            
-            cur_time = localtime()
-            if cur_time>start_time_indian and cur_time<end_time_indian:
-                posts["ongoing"].append({ "Name" :  item["contestName"] , "url" : "http://community.topcoder.com/tc?module=MatchDetails&rd="+str(item["roundId"]) , "EndTime" :  end_time_indian,"Platform":"TOPCODER"  })
-            elif cur_time>start_time_indian:
-                posts["upcoming"].append({ "Name" :  item["contestName"] , "url" : "http://community.topcoder.com/tc?module=MatchDetails&rd="+str(item["roundId"]) ,"EndTime" : end_time_indian,"Duration":duration, "StartTime" :  start_time_indian,"Platform":"TOPCODER"  })
-
-
+        for item in data:
+            if item["name"]=="Round 1":
+                            
+                start_time = strptime(item["codingStartTime"][:19], "%Y-%m-%dT%H:%M:%S")
+                start_time_indian = strftime("%a, %d %b %Y %H:%M",gmtime(mktime(start_time)+54000))
+                
+                
+                end_time = strptime(item["challengeEndTime"][:19], "%Y-%m-%dT%H:%M:%S")
+                end_time_indian = strftime("%a, %d %b %Y %H:%M",gmtime(mktime(end_time)+54000))
+                duration = getDuration(int(( mktime(end_time)-mktime(start_time) )/60 ))
+                
+                cur_time = localtime()
+                if cur_time>start_time_indian and cur_time<end_time_indian:
+                    posts["ongoing"].append({ "Name" :  item["contestName"] , "url" : "http://community.topcoder.com/tc?module=MatchDetails&rd="+str(item["roundId"]) , "EndTime" :  end_time_indian,"Platform":"TOPCODER"  })
+                elif cur_time>start_time_indian:
+                    posts["upcoming"].append({ "Name" :  item["contestName"] , "url" : "http://community.topcoder.com/tc?module=MatchDetails&rd="+str(item["roundId"]) ,"EndTime" : end_time_indian,"Duration":duration, "StartTime" :  start_time_indian,"Platform":"TOPCODER"  })
+    except Exception, e:
+        pass
+    
 def getDataFromHackerrank():
-    page = urlopen("https://www.hackerrank.com/rest/contests/upcoming?offset=0&limit=10&contest_slug=active&_=1426414378923")
+    cur_time = str(int(mktime(localtime())*1000))
+    page = urlopen("https://www.hackerrank.com/rest/contests/upcoming?offset=0&limit=10&contest_slug=active&_="+cur_time)
     data = json.load(page)["models"]
-    page = urlopen("https://www.hackerrank.com/rest/contests/college?offset=0&limit=50&_=1426414659769")
+    page = urlopen("https://www.hackerrank.com/rest/contests/college?offset=0&limit=50&_="+cur_time)
     for item in json.load(page)["models"]:data.append(item)
     for item in data:
         if not item["ended"]:
@@ -119,12 +139,16 @@ def getDataFromHackerrank():
             end_time = strptime(item["get_endtimeiso"], "%Y-%m-%dT%H:%M:%SZ")
             duration = getDuration(int(( mktime(end_time)-mktime(start_time) )/60 ))
             if not item["started"]:
-                posts["upcoming"].append({ "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"] , "StartTime" :  strftime("%a, %d %b %Y %H:%M", start_time),"EndTime" : strftime("%a, %d %b %Y %H:%M", end_time),"Duration":duration,"Platform":"HACKERRANK"  })
+                posts["upcoming"].append({ "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"] , "StartTime" :  strftime("%a, %d %b %Y %H:%M", localtime(mktime(start_time)+19800)),"EndTime" : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)+19800)),"Duration":duration,"Platform":"HACKERRANK"  })
             elif   item["started"]:
-                posts["ongoing"].append({  "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"]  , "EndTime"   : strftime("%a, %d %b %Y %H:%M", end_time)  ,"Platform":"HACKERRANK"  })
+                posts["ongoing"].append({  "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"]  , "EndTime"   : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)+19800))  ,"Platform":"HACKERRANK"  })
 
 
 def fetch():
+
+
+    posts["upcoming"]=[]
+    posts["ongoing"]=[]
 
     thread_list = []
     
@@ -140,18 +164,15 @@ def fetch():
     for thread in thread_list:
         thread.join()
 
+    posts["upcoming"] = sorted(posts["upcoming"], key=lambda k: strptime(k['StartTime'], "%a, %d %b %Y %H:%M"))
+    posts["ongoing"] = sorted(posts["ongoing"], key=lambda k: strptime(k['EndTime'], "%a, %d %b %Y %H:%M"))
+
 
 @app.route('/')
 @app.route('/data.json')
 def index():
     
-    posts["upcoming"]=[]
-    posts["ongoing"]=[]
-
     fetch()
-    
-    posts["upcoming"] = sorted(posts["upcoming"], key=lambda k: strptime(k['StartTime'], "%a, %d %b %Y %H:%M"))
-    posts["ongoing"] = sorted(posts["ongoing"], key=lambda k: strptime(k['EndTime'], "%a, %d %b %Y %H:%M"))
     
     resp = jsonify(result=posts)
     resp.status_code = 200

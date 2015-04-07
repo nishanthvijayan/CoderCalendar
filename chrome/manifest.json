@@ -1,0 +1,20 @@
+{
+"manifest_version": 2,
+
+  "name": "ContestTracker",
+  "description": "Shows a list of upcoming Programming Contests happeing on a variety of popular platforms.",
+  "version": "0.1",
+
+  "permissions": [
+    "http://contesttrackerapi.herokuapp.com/",
+    "tabs"
+  ],
+   "icons": { "16": "icon32.png",
+              "32": "icon32.png",
+           "48": "icon32.png",
+          "128": "icon32.png" },
+  "browser_action": {
+    "default_icon": "icon32.png",
+    "default_popup": "popup.html"
+  }
+}

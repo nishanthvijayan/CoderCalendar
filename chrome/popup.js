@@ -1,6 +1,9 @@
 
 var res;
 var req;
+var ongoingHtmlString = "";
+var upcomingHtmlString = "";
+var now;
 
 function icon(platform){
 
@@ -21,22 +24,42 @@ function icon(platform){
 
 function putdata(json)
 { 
-  
+  ongoingHtmlString= "";
+  upcomingHtmlString = "";
+
   $.each(res.result.ongoing , function(i,post){ 
-     console.log(post.Name);
-     $("#ongoing").append('<a  data='+'"'+post.url+'"'+'><li><h4>'+post.Name+'</h4><img src="'+icon(post.Platform)+'"></img><br><h5>End: '+post.EndTime+'</h5><br></li><hr></a>');
-    });
+     
+   ongoingHtmlString +='<a  data='+'"'+post.url+'"'+'>\
+    <li><h4>'+post.Name+'</h4>\
+    <img src="'+icon(post.Platform)+'"></img><br>\
+    <h5>End: '+post.EndTime+'</h5><br>\
+    </li><hr></a>';
+  });
   
+  $("#ongoing").append(ongoingHtmlString);
+
   $.each(res.result.upcoming , function(i,post){ 
-      console.log(post.Name);
-      startTime = Date.parse(post.StartTime)
-      endTime   = Date.parse(post.EndTime)
-      s = new Date(startTime+19800000).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"")
-      e = new Date(endTime+19800000).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"")
-      calenderTime = s+'/'+e
-      calenderLink = "https://www.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(post.Name)+"&dates="+calenderTime+"&location="+post.url+"&pli=1&uid=&sf=true&output=xml#eventpage_6"
-     $("#upcoming").append('<a  data='+'"'+post.url+'"'+'><li><h4>'+post.Name+'</h4><img src="'+icon(post.Platform)+'"></img><br><h5>Start: '+post.StartTime+'</h5><br><h5>Duration: '+post.Duration+'</h5><br><h5 data='+calenderLink+' class="calender">Add to Calendar</h5></li><hr></a>');
-    });
+
+    startTime = Date.parse(post.StartTime)
+    endTime   = Date.parse(post.EndTime)
+    s = new Date(startTime+19800000).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"")
+    e = new Date(endTime+19800000).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"")
+    
+    calenderTime = s+'/'+e
+    calenderLink = "https://www.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(post.Name)+"&dates="+calenderTime+"&location="+post.url+"&pli=1&uid=&sf=true&output=xml#eventpage_6"
+    
+    upcomingHtmlString+= '<a  data='+'"'+post.url+'"'+'>\
+      <li><h4>'+post.Name+'</h4>\
+      <img src="'+icon(post.Platform)+'"></img><br>\
+      <h5>Start: '+post.StartTime+'</h5><br>\
+      <h5>Duration: '+post.Duration+'</h5><br>\
+      <h5 data='+calenderLink+' class="calender">Add to Calendar</h5>\
+      </li><hr></a>';
+  });
+
+  $("#upcoming").append(upcomingHtmlString);
+
+
 
 }
 
@@ -47,10 +70,14 @@ function fetchdata(){
     req.open("GET",'https://contesttrackerapi.herokuapp.com/',true);
     req.send();
     req.onload = function(){
-        console.log("Hail Hydra");
-        $("a").remove();
         res = JSON.parse(req.responseText);
         putdata(res);
+
+        // cache creation
+        localStorage.cacheUpcoming  = upcomingHtmlString;
+        localStorage.cacheOngoing  = ongoingHtmlString;
+        localStorage.time = now;
+        
     };
 }
 
@@ -58,7 +85,18 @@ function fetchdata(){
 
 $(document).ready(function(){
 
-  fetchdata();
+  now = (new Date()).getTime()/1000;
+  if(!localStorage.cacheUpcoming || now - parseInt(localStorage.time) > 60){
+    // cache is old or not set
+    fetchdata();
+  
+  }
+  else{
+    // cache is fresh
+    $("#upcoming").append(localStorage.cacheUpcoming);
+    $("#ongoing").append(localStorage.cacheOngoing);
+
+  }
 
   $("body").on('click',"a", function(){
        chrome.tabs.create({url: $(this).attr('data')});

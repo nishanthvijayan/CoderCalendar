@@ -86,7 +86,7 @@ function fetchdata(){
 $(document).ready(function(){
 
   now = (new Date()).getTime()/1000;
-  if(!localStorage.cacheUpcoming || now - parseInt(localStorage.time) > 60){
+  if(!localStorage.cacheUpcoming || now - parseInt(localStorage.time) > 5*60){
     // cache is old or not set
     fetchdata();
   
@@ -95,8 +95,15 @@ $(document).ready(function(){
     // cache is fresh
     $("#upcoming").append(localStorage.cacheUpcoming);
     $("#ongoing").append(localStorage.cacheOngoing);
+    if(localStorage.scrollTop){
+        document.body.scrollTop = localStorage.scrollTop;
+    }
 
   }
+
+  addEventListener('scroll', function(){
+    localStorage.scrollTop = document.body.scrollTop;
+  });
 
   $("body").on('click',"a", function(){
        chrome.tabs.create({url: $(this).attr('data')});

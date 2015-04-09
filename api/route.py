@@ -8,8 +8,17 @@ from time import strptime,strftime,mktime,gmtime,localtime
 import json
 from urllib2 import urlopen
 import threading
+# import the flask extension
+from flask.ext.cache import Cache   
 
 app = Flask(__name__)
+
+# define the cache config keys, remember that it can be done in a settings file
+app.config['CACHE_TYPE'] = 'simple'
+
+# register the cache instance and binds it on to your app 
+app.cache = Cache(app)   
+
 
 
 
@@ -166,10 +175,10 @@ def fetch():
 
     posts["upcoming"] = sorted(posts["upcoming"], key=lambda k: strptime(k['StartTime'], "%a, %d %b %Y %H:%M"))
     posts["ongoing"] = sorted(posts["ongoing"], key=lambda k: strptime(k['EndTime'], "%a, %d %b %Y %H:%M"))
-
+    posts["timestamp"] = strftime("%a, %d %b %Y %H:%M:%S", localtime())
 
 @app.route('/')
-@app.route('/data.json')
+@app.cache.cached(timeout=300) # cache for 5 minutes
 def index():
     
     fetch()

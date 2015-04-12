@@ -45,10 +45,6 @@ app.initialize();
 
 
 
-
-var res;
-var req;
-
 function icon(platform){
 
   if(platform=="CODECHEF"){
@@ -69,7 +65,7 @@ function icon(platform){
 function putdata(json)
 { 
   
-  $.each(res.result.ongoing , function(i,post){ 
+  $.each(json.result.ongoing , function(i,post){ 
      
      $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
         <li><h4>'+post.Name+'</h4>\
@@ -78,7 +74,7 @@ function putdata(json)
         </li><hr></a>');
     });
   
-  $.each(res.result.upcoming , function(i,post){ 
+  $.each(json.result.upcoming , function(i,post){ 
 
       startTime = Date.parse(post.StartTime)
       endTime   = Date.parse(post.EndTime)
@@ -109,25 +105,25 @@ function fetchdata(){
         $("#ongoing > a").remove();
         $("#upcoming > a").remove();
         res = JSON.parse(req.responseText);
+
+        data = JSON.stringify(res);
+        window.localStorage.setItem('last_collected_data', data);
+        
         putdata(res);
     };
 }
 
 
 $(document).ready(function(){
-  fetchdata();
-  setInterval(function(){ fetchdata() }, 60000)
+  
+  if(window.localStorage.getItem('last_collected_data')){
+      var localData = JSON.parse(window.localStorage.getItem('last_collected_data'));
+      putdata(localData);
+  }
 
-/*
-//sends "link to be opened" to main.js
-  $("body").on('click',"a", function(){
-       self.port.emit("postClicked",$(this).attr('data'));
-       return false;
-     });
-  //sends "link to be opened" to main.js
-  $("body").on('click',".calender", function(){
-       self.port.emit("postClicked",$(this).attr('data'));
-       return false;
-     });
- */
+  setInterval(function(){
+    fetchdata();
+  }, 60000)
+
+
 });

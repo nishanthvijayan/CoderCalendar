@@ -67,30 +67,20 @@ function putdata(json)
   
   $.each(json.result.ongoing , function(i,post){ 
      
-     $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
-        <li><h4>'+post.Name+'</h4>\
+     $("#ongoing").append('<li><br><h3>'+post.Name+'</h3>\
         <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br>\
         <h5>End: '+post.EndTime+'</h5><br>\
-        </li><hr></a>');
+        </li>');
     });
   
   $.each(json.result.upcoming , function(i,post){ 
 
-      startTime = Date.parse(post.StartTime)
-      endTime   = Date.parse(post.EndTime)
-      s = new Date(startTime+19800000).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"")
-      e = new Date(endTime+19800000).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"")
-      
-      calenderTime = s+'/'+e
-      calenderLink = "https://www.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(post.Name)+"&dates="+calenderTime+"&location="+post.url+"&pli=1&uid=&sf=true&output=xml#eventpage_6"
-      
-      $("#upcoming").append('<a  data='+'"'+post.url+'"'+'>\
-        <li><h4>'+post.Name+'</h4>\
+      $("#upcoming").append('<li><br><h3>'+post.Name+'</h3>\
         <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br>\
         <h5>Start: '+post.StartTime+'</h5><br>\
         <h5>Duration: '+post.Duration+'</h5><br>\
-        <h5 data='+calenderLink+' class="calender">Add to Calendar</h5>\
-        </li><hr></a>');
+        <h5  class="calender">Add to Calendar</h5>\
+        </li>');
     });
 
 }
@@ -123,7 +113,7 @@ $(document).ready(function(){
 
   setInterval(function(){
     fetchdata();
-  }, 60000)
+  }, 300000)
 
 
 });

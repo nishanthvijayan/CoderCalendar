@@ -103,11 +103,6 @@ h1 {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
 }
-nav{
-    background-color: #ffffff;
-    padding: 0;
-    margin: 0;
-}  
 
 /**********************************************************************************************************************************/
 
@@ -117,41 +112,31 @@ nav{
   margin: 0;
 }
 
-
-
-.title{
+header{
+  background-color: #4285f4;
+  height: 70px;
+  color : #ffffff;
+}
+header > h2{
   text-align: center;
-  padding: 7px;
+  padding-top: 7%;
 }
 
-a >li{
+li{
   
   list-style-type:none;
   padding: 15px;
-  display: block;
- 
-}
-
-a{
-  
+  display: block;  
   text-decoration: none;
   color: black;
 }
-a li:hover{
-
-  background-color: #d9d9d9;
-}
 
 hr{
-  color: #f2f2f2;
+  border-width: 0.5px;
 }
 
-h3{
-  padding-top: 15px;
-  text-align: center;
-}
-h4,h5{
-  font-weight: normal;
+h3,h4,h5{
+  font-weight: inherit;
 }
 .calender{
   cursor: pointer;
@@ -164,3 +149,21 @@ h4,h5{
   float: right;
   margin: 5px;
 }
+.title{
+  text-align: center;
+  padding: 10px;
+  background-color: #5491f5;
+  color: #ffffff;
+}
+li:hover{
+  background-color: #b3cefa;/*#f4f4f4;*/
+  font-weight: bold; 
+}
+
+/*
+li{
+margin: 7px;
+-webkit-box-shadow: 0px 2px 11px -3px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 2px 11px -3px rgba(0,0,0,0.75);
+box-shadow: 0px 2px 11px -3px rgba(0,0,0,0.75);
+} 

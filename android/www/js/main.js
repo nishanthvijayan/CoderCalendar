@@ -110,7 +110,7 @@ $(document).ready(function(){
       var localData = JSON.parse(window.localStorage.getItem('last_collected_data'));
       putdata(localData);
   }
-
+  fetchdata();
   setInterval(function(){
     fetchdata();
   }, 300000)

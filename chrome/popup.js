@@ -99,6 +99,8 @@ $(document).ready(function(){
 
   }
 
+  setInterval(function(){  fetchdata(); }, 300000)
+
   addEventListener('scroll', function(){
     localStorage.scrollTop = document.body.scrollTop;
   });

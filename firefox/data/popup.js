@@ -1,7 +1,4 @@
 
-var res;
-var req;
-
 function icon(platform){
 
   if(platform=="CODECHEF"){
@@ -22,7 +19,7 @@ function icon(platform){
 function putdata(json)
 { 
   
-  $.each(res.result.ongoing , function(i,post){ 
+  $.each(json.result.ongoing , function(i,post){ 
      
      $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
      	<li><h4>'+post.Name+'</h4>\
@@ -31,7 +28,7 @@ function putdata(json)
      	</li><hr></a>');
     });
   
-  $.each(res.result.upcoming , function(i,post){ 
+  $.each(json.result.upcoming , function(i,post){ 
 
       startTime = Date.parse(post.StartTime)
       endTime   = Date.parse(post.EndTime)

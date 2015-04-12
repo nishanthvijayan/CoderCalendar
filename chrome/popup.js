@@ -1,6 +1,4 @@
 
-var res;
-var req;
 var ongoingHtmlString = "";
 var upcomingHtmlString = "";
 var now;
@@ -27,7 +25,7 @@ function putdata(json)
   ongoingHtmlString= "";
   upcomingHtmlString = "";
 
-  $.each(res.result.ongoing , function(i,post){ 
+  $.each(json.result.ongoing , function(i,post){ 
      
    ongoingHtmlString +='<a  data='+'"'+post.url+'"'+'>\
     <li><h4>'+post.Name+'</h4>\
@@ -38,7 +36,7 @@ function putdata(json)
   
   $("#ongoing").append(ongoingHtmlString);
 
-  $.each(res.result.upcoming , function(i,post){ 
+  $.each(json.result.upcoming , function(i,post){ 
 
     startTime = Date.parse(post.StartTime)
     endTime   = Date.parse(post.EndTime)

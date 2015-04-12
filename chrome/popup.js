@@ -8,17 +8,17 @@ var now;
 function icon(platform){
 
   if(platform=="CODECHEF"){
-      return "cc32.jpg";
+      return "img/cc32.jpg";
   }else if (platform=="HACKEREARTH") {
-      return "he32.png";
+      return "img/he32.png";
   }else if (platform=="CODEFORCES") {
-      return "cf32.png";
+      return "img/cf32.png";
   }
   else if(platform=="TOPCODER"){
-      return "tc32.gif";
+      return "img/tc32.gif";
   }
   else if(platform=="HACKERRANK"){
-      return "hr36.png";
+      return "img/hr36.png";
   }
 }
 

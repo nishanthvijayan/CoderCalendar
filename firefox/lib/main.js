@@ -17,8 +17,8 @@ var button = buttons.ActionButton({
   id: "ContestTracker",
   label: "Displays upcoming coding contests from various platforms",
   icon: {
-    "16": "./icon16.gif",
-    "32": "./icon16.gif"
+    "16": "./img/icon16.gif",
+    "32": "./img/icon16.gif"
   },
   onClick: popup 
 })

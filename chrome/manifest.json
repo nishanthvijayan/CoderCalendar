@@ -9,12 +9,12 @@
     "http://contesttrackerapi.herokuapp.com/",
     "tabs"
   ],
-   "icons": { "16": "icon32.png",
-              "32": "icon32.png",
-           "48": "icon32.png",
-          "128": "icon32.png" },
+   "icons": { "16": "img/icon32.png",
+              "32": "img/icon32.png",
+           "48": "img/icon32.png",
+          "128": "img/icon32.png" },
   "browser_action": {
-    "default_icon": "icon32.png",
+    "default_icon": "img/icon32.png",
     "default_popup": "popup.html"
   }
 }

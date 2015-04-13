@@ -137,6 +137,7 @@ footer{
 footer > a{
   color: white;
   font-weight: bold;
+  text-decoration: underline;
 }
 
 li{
@@ -153,9 +154,13 @@ h3,h4,h5{
 }
 h3{display: inline-block;}
 
-.calender{
+li > h3{
+  text-decoration: underline;
+}
+.calendar{
   cursor: pointer;
   text-decoration: underline;
+  display: inline-block;
 }
 
 .contest_image{
@@ -189,10 +194,3 @@ hr {
   left: 90%;
   display: none;
 }
-/*
-li{
-margin: 7px;
--webkit-box-shadow: 0px 2px 11px -3px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 2px 11px -3px rgba(0,0,0,0.75);
-box-shadow: 0px 2px 11px -3px rgba(0,0,0,0.75);
-} 

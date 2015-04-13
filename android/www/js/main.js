@@ -65,6 +65,10 @@ function icon(platform){
 function putdata(json)
 { 
   
+  $("#ongoing > li").remove();
+  $("#upcoming > li").remove();
+  $("hr").remove();
+
   $.each(json.result.ongoing , function(i,post){ 
      
      $("#ongoing").append('<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
@@ -74,14 +78,32 @@ function putdata(json)
     });
   
   $.each(json.result.upcoming , function(i,post){ 
-
+    
+    startTime = Date.parse(post.StartTime)
+    endTime   = Date.parse(post.EndTime)
+    s = new Date(startTime)
+    e = new Date(endTime)
+    var title = post.Name;
+    var eventLocation = post.url;
+    var notes = " ";
+    var x;
+    var success = function(message) {
+      if(Object.keys(message).length>0){
+        calender_string = "";
+      }else{
+        calender_string = '<h4 onclick="addcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;,&quot;'+post.EndTime+'&quot;);" class="calendar">Add to Calendar</h4>';
+      }
       $("#upcoming").append('<li><br><h3 onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
-        <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
-        <h4>Start: '+post.StartTime+'</h4><br>\
-        <h4>Duration: '+post.Duration+'</h4><br>\
-        <h4  class="calender">Add to Calendar</h4>\
-        </li><hr>');
-    });
+      <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
+      <h4>Start: '+post.StartTime+'</h4><br>\
+      <h4>Duration: '+post.Duration+'</h4><br>'+calender_string+'</li><hr>');
+    };
+
+    var error   = function(message) {};
+
+    // seaarch for calender event
+    window.plugins.calendar.findEvent(title,eventLocation,notes,s,e,success,error);
+  });
 
 }
 
@@ -93,22 +115,46 @@ function fetchdata(){
     req.open("GET",'https://contesttrackerapi.herokuapp.com/',true);
     req.send();
     req.onload = function(){
-        $("#ongoing > li").remove();
-        $("#upcoming > li").remove();
-        $("hr").remove();
 
-        res = JSON.parse(req.responseText);
+      res = JSON.parse(req.responseText);
 
-        data = JSON.stringify(res);
-        window.localStorage.setItem('last_collected_data', data);
-        $("#imgAjaxLoader").hide();
-        putdata(res);
+      data = JSON.stringify(res);
+      window.localStorage.setItem('last_collected_data', data);
+      $("#imgAjaxLoader").hide();
+      putdata(res);
+    };
+    req.onerror = function(){
+      $("#imgAjaxLoader").hide();
+      // display some msg showing no connection.
     };
 }
 
 function load(url){
   window.open(url, "_system");
 }
+
+function addcalendarEvent(name,url,StartTime,EndTime){
+
+  startTime = Date.parse(StartTime)
+  endTime   = Date.parse(EndTime)
+  s = new Date(startTime)
+  e = new Date(endTime)
+  var title = name;
+  var eventLocation = url;
+  var notes = " ";
+  var success = function(message) { 
+    var localData = JSON.parse(window.localStorage.getItem('last_collected_data'));
+    putdata(localData);
+  };
+  var error = function(message) { };
+
+  // create an event Interactively
+  // window.plugins.calendar.createEventInteractively(title,eventLocation,notes,s,e,success,error);
+  // create an event silently
+  window.plugins.calendar.createEvent(title,eventLocation,notes,s,e,success,error);
+  
+}
+
 
 document.addEventListener("deviceready", function(){
   if(window.localStorage.getItem('last_collected_data')){

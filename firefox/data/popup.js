@@ -22,7 +22,7 @@ function putdata(json)
   $.each(json.result.ongoing , function(i,post){ 
      
      $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
-     	<li><h4>'+post.Name+'</h4>\
+     	<li><br><h4>'+post.Name+'</h4>\
      	<img src="'+icon(post.Platform)+'"></img><br>\
      	<h5>End: '+post.EndTime+'</h5><br>\
      	</li><hr></a>');
@@ -39,7 +39,7 @@ function putdata(json)
       calenderLink = "https://www.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(post.Name)+"&dates="+calenderTime+"&location="+post.url+"&pli=1&uid=&sf=true&output=xml#eventpage_6"
       
       $("#upcoming").append('<a  data='+'"'+post.url+'"'+'>\
-      	<li><h4>'+post.Name+'</h4>\
+      	<li><br><h4>'+post.Name+'</h4>\
       	<img src="'+icon(post.Platform)+'"></img><br>\
       	<h5>Start: '+post.StartTime+'</h5><br>\
       	<h5>Duration: '+post.Duration+'</h5><br>\

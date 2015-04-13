@@ -10,15 +10,20 @@ body {
 
 }
 header{
-  /*background-color: #f2f2f2;*/
-  color: white;
-  background-color: black;
+  background-color: #4285f4;
+  height: 50px;
+  color : #ffffff;
+  position: fixed;
+  width: 100%;
+  top:0%;
 }
 
 
 .title{
   text-align: center;
-  padding: 7px;
+  padding: 10px;
+  background-color: #5491f5;
+  color: #ffffff;
 }
 
 li{
@@ -30,26 +35,30 @@ li{
 }
 
 a{
-  
   text-decoration: none;
-  color: black;
 }
 a li:hover{
-
-  background-color: #d9d9d9;
+  background-color: #e0ebfd;/*#f4f4f4;*/
+  font-weight: bold; 
 }
 
-hr{
-  color: #f2f2f2;
+hr {
+    border: none;
+    height: 1px;
+    color: #e0ebfd;
+    background-color: #e0ebfd;
 }
 
-h3{
-  padding-top: 15px;
-  text-align: center;
-}
-h4,h5{
+h3,h4,h5{
   font-weight: normal;
 }
+
+header > h3{
+  padding-top: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
 .calender{
   cursor: pointer;
   text-decoration: underline;
@@ -60,4 +69,7 @@ img{
   display: inline-block;
   float: right;
   margin: 5px;
+}
+#ongoing{
+  margin-top: 50px;
 }

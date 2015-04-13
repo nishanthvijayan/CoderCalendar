@@ -67,20 +67,20 @@ function putdata(json)
   
   $.each(json.result.ongoing , function(i,post){ 
      
-     $("#ongoing").append('<li><br><h3>'+post.Name+'</h3>\
-        <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br>\
-        <h5>End: '+post.EndTime+'</h5><br>\
-        </li>');
+     $("#ongoing").append('<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
+        <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
+        <h4>End: '+post.EndTime+'</h4><br><br>\
+        </li><hr>');
     });
   
   $.each(json.result.upcoming , function(i,post){ 
 
-      $("#upcoming").append('<li><br><h3>'+post.Name+'</h3>\
-        <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br>\
-        <h5>Start: '+post.StartTime+'</h5><br>\
-        <h5>Duration: '+post.Duration+'</h5><br>\
-        <h5  class="calender">Add to Calendar</h5>\
-        </li>');
+      $("#upcoming").append('<li><br><h3 onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
+        <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
+        <h4>Start: '+post.StartTime+'</h4><br>\
+        <h4>Duration: '+post.Duration+'</h4><br>\
+        <h4  class="calender">Add to Calendar</h4>\
+        </li><hr>');
     });
 
 }
@@ -88,24 +88,29 @@ function putdata(json)
 
 function fetchdata(){
 
+    $("#imgAjaxLoader").show();
     req =  new XMLHttpRequest();
     req.open("GET",'https://contesttrackerapi.herokuapp.com/',true);
     req.send();
     req.onload = function(){
-        $("#ongoing > a").remove();
-        $("#upcoming > a").remove();
+        $("#ongoing > li").remove();
+        $("#upcoming > li").remove();
+        $("hr").remove();
+
         res = JSON.parse(req.responseText);
 
         data = JSON.stringify(res);
         window.localStorage.setItem('last_collected_data', data);
-        
+        $("#imgAjaxLoader").hide();
         putdata(res);
     };
 }
 
+function load(url){
+  window.open(url, "_system");
+}
 
-$(document).ready(function(){
-  
+document.addEventListener("deviceready", function(){
   if(window.localStorage.getItem('last_collected_data')){
       var localData = JSON.parse(window.localStorage.getItem('last_collected_data'));
       putdata(localData);
@@ -113,7 +118,6 @@ $(document).ready(function(){
   fetchdata();
   setInterval(function(){
     fetchdata();
-  }, 300000)
-
+  }, 300000);
 
 });

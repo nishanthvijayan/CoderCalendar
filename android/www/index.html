@@ -23,7 +23,7 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-tap-highlight" content="no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
 
         <!--<link rel="stylesheet" href="js/jquery/jquery.mobile-1.4.5.css" /> -->
         <script src="js/jquery/jquery-1.11.2.js" type="text/javascript"></script>
@@ -39,7 +39,7 @@
     <!-- This is the first page -->
     <section id="firstpage" data-role="page">
         <header data-role="header">
-          <h2>Coder Calender</h2>
+          <h2>Coder Calender</h2><img id="imgAjaxLoader" class="ajaxLoader" src="img/ajax-loader.gif" />
         </header>
         <div class="ui-content">
             <div id="ongoing">
@@ -49,6 +49,11 @@
                 <div class='title'><h3>Upcoming Contests<h3></div>
             </div>
         </div>
+        <footer>
+            <a onclick="window.open('https://www.linkedin.com/in/nishanthvijayan', '_system');">Contact Us</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a onclick="window.open('https://github.com/nishanthvijayan/CoderCalender', '_system');">Source Code</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a onclick="window.open('https://gratipay.com/nishanthvijayan', '_system');">Contribute</a>
+        </footer>
     </section>                                
 
 </body>

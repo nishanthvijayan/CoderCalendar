@@ -109,17 +109,34 @@ h1 {
 
 * {
   margin:0;
-  margin: 0;
+  padding: 0;
+  text-transform: none;
 }
 
 header{
   background-color: #4285f4;
   height: 70px;
   color : #ffffff;
+  position: fixed;
+  width: 100%;
+  top:0%;
+  text-align: center;
 }
 header > h2{
   text-align: center;
-  padding-top: 7%;
+  margin-top: 25px;
+  display: inline-block;
+}
+
+footer{
+  padding: 15px;
+  color: white;
+  background-color: #5491f5;
+  text-align: center;
+}
+footer > a{
+  color: white;
+  font-weight: bold;
 }
 
 li{
@@ -131,17 +148,14 @@ li{
   color: black;
 }
 
-hr{
-  border-width: 0.5px;
-}
-
 h3,h4,h5{
   font-weight: inherit;
 }
+h3{display: inline-block;}
+
 .calender{
   cursor: pointer;
   text-decoration: underline;
-  display: inline;
 }
 
 .contest_image{
@@ -151,15 +165,30 @@ h3,h4,h5{
 }
 .title{
   text-align: center;
-  padding: 10px;
+  padding: 15px;
   background-color: #5491f5;
   color: #ffffff;
 }
 li:hover{
-  background-color: #b3cefa;/*#f4f4f4;*/
-  font-weight: bold; 
+  background-color: #e0ebfd;
+  font-weight: bold;
+}
+hr {
+  border: none;
+  height: 1px;
+  color: #e0ebfd;
+  background-color: #e0ebfd;
+}
+#ongoing{
+  margin-top: 70px;
 }
 
+.ajaxLoader {
+  position: fixed;
+  margin-top: 15px;
+  left: 90%;
+  display: none;
+}
 /*
 li{
 margin: 7px;

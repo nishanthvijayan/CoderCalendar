@@ -16,50 +16,15 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var app = {
-    // Application Constructor
-    initialize: function() {
-        this.bindEvents();
-    },
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-    },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
-        app.receivedEvent('deviceready');
-    },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        
-    }
-};
-
-app.initialize();
-
 
 
 function icon(platform){
 
-  if(platform=="CODECHEF"){
-      return "cc32.jpg";
-  }else if (platform=="HACKEREARTH") {
-      return "he32.png";
-  }else if (platform=="CODEFORCES") {
-      return "cf32.png";
-  }
-  else if(platform=="TOPCODER"){
-      return "tc32.gif";
-  }
-  else if(platform=="HACKERRANK"){
-      return "hr36.png";
-  }
+  if(platform=="CODECHEF")          return "cc32.jpg";
+  else if (platform=="HACKEREARTH") return "he32.png";
+  else if (platform=="CODEFORCES")  return "cf32.png"; 
+  else if(platform=="TOPCODER")     return "tc32.gif";
+  else if(platform=="HACKERRANK")   return "hr36.png";
 }
 
 function putdata(json)
@@ -89,7 +54,7 @@ function putdata(json)
     var x;
     var success = function(message) {
       if(Object.keys(message).length>0){
-        calender_string = "";
+        calender_string = '<h4 onclick="delcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;,&quot;'+post.EndTime+'&quot;);" class="calendar">Delete from Calendar</h4>';
       }else{
         calender_string = '<h4 onclick="addcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;,&quot;'+post.EndTime+'&quot;);" class="calendar">Add to Calendar</h4>';
       }
@@ -125,12 +90,23 @@ function fetchdata(){
     };
     req.onerror = function(){
       $("#imgAjaxLoader").hide();
-      // display some msg showing no connection.
+      navigator.notification.alert("Connection Failed",function() {},"Error","OK");
     };
 }
 
 function load(url){
-  window.open(url, "_system");
+  navigator.notification.confirm(
+    "Would you like to open the contest page?",
+    function( index ) {
+        switch ( index ) {
+            case 2:
+                window.open(url, "_system");
+                break;
+        }
+    },
+    "Confirm", // a title
+    [ "No","Yes" ]    // text of the buttons
+  );
 }
 
 function addcalendarEvent(name,url,StartTime,EndTime){
@@ -143,6 +119,7 @@ function addcalendarEvent(name,url,StartTime,EndTime){
   var eventLocation = url;
   var notes = " ";
   var success = function(message) { 
+    navigator.notification.alert("'"+name+"'  added to Calender",function() {},"Notification","OK");
     var localData = JSON.parse(window.localStorage.getItem('last_collected_data'));
     putdata(localData);
   };
@@ -154,7 +131,25 @@ function addcalendarEvent(name,url,StartTime,EndTime){
   window.plugins.calendar.createEvent(title,eventLocation,notes,s,e,success,error);
   
 }
+function delcalendarEvent(name,url,StartTime,EndTime){
 
+  startTime = Date.parse(StartTime)
+  endTime   = Date.parse(EndTime)
+  s = new Date(startTime)
+  e = new Date(endTime)
+  var title = name;
+  var eventLocation = url;
+  var notes = " ";
+  var success = function(message) { 
+    navigator.notification.alert("'"+name+"'  deleted from Calender",function() {},"Notification","OK");
+    var localData = JSON.parse(window.localStorage.getItem('last_collected_data'));
+    putdata(localData);
+  };
+  var error = function(message) { };
+
+  window.plugins.calendar.deleteEvent(title,eventLocation,notes,s,e,success,error)
+  
+}
 
 document.addEventListener("deviceready", function(){
   if(window.localStorage.getItem('last_collected_data')){

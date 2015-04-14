@@ -15,7 +15,7 @@ var newsfeed = panels.Panel({
 
 var button = buttons.ActionButton({
   id: "CoderCalendar",
-  label: "Displays upcoming coding contests from various platforms",
+  label: "Displays upcoming and ongoing coding contests from various platforms",
   icon: {
     "16": "./img/icon16.gif",
     "32": "./img/icon16.gif"
@@ -29,7 +29,7 @@ function popup(){
  };
 
 
-newsfeed.port.on("postClicked", function (text) {
+newsfeed.port.on("linkClicked", function (text) {
   //open new tab with link
   tabs.open(text);
 });

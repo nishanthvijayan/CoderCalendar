@@ -5,19 +5,11 @@ var now;
 
 function icon(platform){
 
-  if(platform=="CODECHEF"){
-      return "img/cc32.jpg";
-  }else if (platform=="HACKEREARTH") {
-      return "img/he32.png";
-  }else if (platform=="CODEFORCES") {
-      return "img/cf32.png";
-  }
-  else if(platform=="TOPCODER"){
-      return "img/tc32.gif";
-  }
-  else if(platform=="HACKERRANK"){
-      return "img/hr36.png";
-  }
+  if(platform=="CODECHEF")          return "cc32.jpg";
+  else if (platform=="HACKEREARTH") return "he32.png";
+  else if (platform=="CODEFORCES")  return "cf32.png"; 
+  else if(platform=="TOPCODER")     return "tc32.gif";
+  else if(platform=="HACKERRANK")   return "hr36.png";
 }
 
 function putdata(json)
@@ -43,15 +35,15 @@ function putdata(json)
     s = new Date(startTime+19800000).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"")
     e = new Date(endTime+19800000).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"")
     
-    calenderTime = s+'/'+e
-    calenderLink = "https://www.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(post.Name)+"&dates="+calenderTime+"&location="+post.url+"&pli=1&uid=&sf=true&output=xml#eventpage_6"
+    calendarTime = s+'/'+e
+    calendarLink = "https://www.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(post.Name)+"&dates="+calendarTime+"&location="+post.url+"&pli=1&uid=&sf=true&output=xml#eventpage_6"
     
     upcomingHtmlString+= '<a  data='+'"'+post.url+'"'+'>\
       <li><br><h3>'+post.Name+'</h3>\
       <img src="'+icon(post.Platform)+'"></img><br>\
       <h4>Start: '+post.StartTime+'</h4><br>\
       <h4>Duration: '+post.Duration+'</h4><br>\
-      <h4 data='+calenderLink+' class="calender">Add to Calendar</h4>\
+      <h4 data='+calendarLink+' class="calendar">Add to Calendar</h4>\
       </li><hr></a>';
   });
 
@@ -111,7 +103,7 @@ $(document).ready(function(){
        chrome.tabs.create({url: $(this).attr('data')});
        return false;
      });
-  $("body").on('click',".calender", function(){
+  $("body").on('click',".calendar", function(){
        chrome.tabs.create({url: $(this).attr('data')});
        return false;
      });

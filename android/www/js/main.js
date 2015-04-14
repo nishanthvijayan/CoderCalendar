@@ -55,20 +55,20 @@ function putdata(json)
     var x;
     var success = function(message) {
       if(Object.keys(message).length>0){
-        calender_string = '<h4 onclick="delcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;,&quot;'+post.EndTime+'&quot;);" class="calendar">Delete from Calendar</h4>';
+        calendar_string = '<h4 onclick="delcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;,&quot;'+post.EndTime+'&quot;);" class="calendar">Delete from Calendar</h4>';
       }else{
-        calender_string = '<h4 onclick="addcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;,&quot;'+post.EndTime+'&quot;);" class="calendar">Add to Calendar</h4>';
+        calendar_string = '<h4 onclick="addcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;,&quot;'+post.EndTime+'&quot;);" class="calendar">Add to Calendar</h4>';
       }
       $("#upcoming").append('<li><br><h3 onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
       <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
       <h4>Start: '+post.StartTime+'</h4><br>\
-      <h4>Duration: '+post.Duration+'</h4><br>'+calender_string+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
+      <h4>Duration: '+post.Duration+'</h4><br>'+calendar_string+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
       <h4 class="share" onclick="socialShare(1,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;);" >Tell your Friends</h4></li><hr>');
     };
 
     var error   = function(message) {};
 
-    // seaarch for calender event
+    // seaarch for calendar event
     window.plugins.calendar.findEvent(title,eventLocation,notes,s,e,success,error);
   });
 
@@ -121,7 +121,7 @@ function addcalendarEvent(name,url,StartTime,EndTime){
   var eventLocation = url;
   var notes = " ";
   var success = function(message) { 
-    navigator.notification.alert("'"+name+"'  added to Calender",function() {},"Notification","OK");
+    navigator.notification.alert("'"+name+"'  added to Calendar",function() {},"Notification","OK");
     var localData = JSON.parse(window.localStorage.getItem('last_collected_data'));
     putdata(localData);
   };
@@ -143,7 +143,7 @@ function delcalendarEvent(name,url,StartTime,EndTime){
   var eventLocation = url;
   var notes = " ";
   var success = function(message) { 
-    navigator.notification.alert("'"+name+"'  deleted from Calender",function() {},"Notification","OK");
+    navigator.notification.alert("'"+name+"'  deleted from Calendar",function() {},"Notification","OK");
     var localData = JSON.parse(window.localStorage.getItem('last_collected_data'));
     putdata(localData);
   };
@@ -194,7 +194,7 @@ document.addEventListener("deviceready", function(){
   });
 
   $(".info").click(function(){
-    navigator.notification.alert("Tap on the contest to visit the contest page.\n\nTap on Add to Calendar/Delete from Calendar to add/delete the contest to your calender.\n\nTap on 'Tell your Friends' to let others know about the contest.\n\nHappy Coding!",function() {},"Instructions","OK");
+    navigator.notification.alert("Tap on the contest to visit the contest page.\n\nTap on Add to Calendar/Delete from Calendar to add/delete the contest to your calendar.\n\nTap on 'Tell your Friends' to let others know about the contest.\n\nHappy Coding!",function() {},"Instructions","OK");
   });
 
 });

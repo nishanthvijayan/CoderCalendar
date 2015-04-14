@@ -14,7 +14,7 @@ var newsfeed = panels.Panel({
 
 
 var button = buttons.ActionButton({
-  id: "ContestTracker",
+  id: "CoderCalendar",
   label: "Displays upcoming coding contests from various platforms",
   icon: {
     "16": "./img/icon16.gif",

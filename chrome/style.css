@@ -71,7 +71,7 @@ header > h3{
   font-weight: bold;
   display: inline-block;
 }
-.calender{
+.calendar{
   cursor: pointer;
   text-decoration: underline;
   display: inline;

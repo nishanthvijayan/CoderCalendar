@@ -1,7 +1,7 @@
 {
 "manifest_version": 2,
 
-  "name": "ContestTracker",
+  "name": "Coder Calendar",
   "description": "Shows a list of upcoming Programming Contests happeing on a variety of popular platforms.",
   "version": "0.1",
 

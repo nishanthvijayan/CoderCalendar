@@ -64,11 +64,13 @@ function putdata(json)
 
 function fetchdata(){
 
+    $("#imgAjaxLoader").show();
     req =  new XMLHttpRequest();
     req.open("GET",'https://contesttrackerapi.herokuapp.com/',true);
     req.send();
     req.onload = function(){
         res = JSON.parse(req.responseText);
+        $("#imgAjaxLoader").hide();
         putdata(res);
 
         // cache creation

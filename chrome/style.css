@@ -16,8 +16,21 @@ header{
   position: fixed;
   width: 100%;
   top:0%;
+  text-align: center;
 }
 
+footer{
+  padding: 15px;
+  color: white;
+  background-color: #5491f5;
+  text-align: center;
+}
+footer > a{
+  color: white;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
 
 .title{
   text-align: center;
@@ -38,7 +51,7 @@ a{
   text-decoration: none;
 }
 a li:hover{
-  background-color: #e0ebfd;/*#f4f4f4;*/
+  background-color: #e0ebfd;
   font-weight: bold; 
 }
 
@@ -52,24 +65,31 @@ hr {
 h3,h4,h5{
   font-weight: normal;
 }
-
 header > h3{
   padding-top: 15px;
   text-align: center;
   font-weight: bold;
+  display: inline-block;
 }
-
 .calender{
   cursor: pointer;
   text-decoration: underline;
   display: inline;
 }
 
-img{
+li > img{
   display: inline-block;
   float: right;
   margin: 5px;
 }
 #ongoing{
   margin-top: 50px;
+}
+
+
+.ajaxLoader {
+  position: fixed;
+  top: 3%;
+  left: 90%;
+  display: none;
 }

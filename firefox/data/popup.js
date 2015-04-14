@@ -52,11 +52,14 @@ function putdata(json)
 
 function fetchdata(){
 
+	$("#imgAjaxLoader").show();
     req =  new XMLHttpRequest();
     req.open("GET",'https://contesttrackerapi.herokuapp.com/',true);
     req.send();
     req.onload = function(){
-        $("a").remove();
+        $("#upcoming > a").remove();
+        $("#ongoing > a").remove();
+        $("#imgAjaxLoader").hide();
         res = JSON.parse(req.responseText);
         putdata(res);
     };

@@ -77,7 +77,7 @@ function putdata(json)
 
 function fetchdata(){
 
-    $("#imgAjaxLoader").show();
+    imgToggle();
     req =  new XMLHttpRequest();
     req.open("GET",'https://contesttrackerapi.herokuapp.com/',true);
     req.send();
@@ -87,11 +87,11 @@ function fetchdata(){
 
       data = JSON.stringify(res);
       window.localStorage.setItem('last_collected_data', data);
-      $("#imgAjaxLoader").hide();
+      imgToggle();
       putdata(res);
     };
     req.onerror = function(){
-      $("#imgAjaxLoader").hide();
+      imgToggle();
       navigator.notification.alert("Connection Failed",function() {},"Error","OK");
     };
 }
@@ -159,9 +159,9 @@ function socialShare(status,name,url,Time){
         switch ( index ) {
             case 2:
                 if(status==1){
-                  window.plugins.socialsharing.share( 'Hey, Check out this coding contest: '+name+' . Link: '+ url + " . Starts at: "+Time );
+                  window.plugins.socialsharing.share( 'Hey, Check out this coding contest: \n'+name+' \nLink: '+ url + " \nStarts at: "+Time );
                 }else{
-                  window.plugins.socialsharing.share( 'Hey, Check out this coding contest: '+name+' , taking place now at '+ url + " . Ends at: "+Time );
+                  window.plugins.socialsharing.share( 'Hey, Check out this coding contest: \n'+name+' , taking place now at '+ url + " \nEnds at: "+Time );
                 }
                 break;
         }
@@ -170,6 +170,12 @@ function socialShare(status,name,url,Time){
     [ "No","Yes" ]    // text of the buttons
   );
 }
+function imgToggle(){
+  src = $('.loading').attr('src');
+  if(src=="img/refresh-white.png") $(".loading").attr("src","img/ajax-loader.gif");
+  else $(".loading").attr("src","img/refresh-white.png");
+}
+
 document.addEventListener("deviceready", function(){
   if(window.localStorage.getItem('last_collected_data')){
       var localData = JSON.parse(window.localStorage.getItem('last_collected_data'));
@@ -179,5 +185,16 @@ document.addEventListener("deviceready", function(){
   setInterval(function(){
     fetchdata();
   }, 300000);
+
+  // refresh only if icon is refresh icon.
+  // Makes sure that clicking a loading icon does not trigger fetchdata()
+  $(".loading").click(function(){
+    src = $('.loading').attr('src');
+    if(src=="img/refresh-white.png") fetchdata();
+  });
+
+  $(".info").click(function(){
+    navigator.notification.alert("Tap on the contest to visit the contest page.\n\nTap on Add to Calendar/Delete from Calendar to add/delete the contest to your calender.\n\nTap on 'Tell your Friends' to let others know about the contest.\n\nHappy Coding!",function() {},"Instructions","OK");
+  });
 
 });

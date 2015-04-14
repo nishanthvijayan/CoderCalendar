@@ -191,9 +191,17 @@ hr {
   margin-top: 70px;
 }
 
-.ajaxLoader {
+.loading{
   position: fixed;
-  margin-top: 15px;
+  margin-top: 25px;
   left: 90%;
-  display: none;
+  height: 20px;
+  width: 20px;
+}
+.info{
+  position: fixed;
+  margin-top: 25px;
+  left: 80%;
+  height: 20px;
+  width: 20px; 
 }

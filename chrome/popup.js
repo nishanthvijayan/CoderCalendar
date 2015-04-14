@@ -5,15 +5,20 @@ var now;
 
 function icon(platform){
 
-  if(platform=="CODECHEF")          return "cc32.jpg";
-  else if (platform=="HACKEREARTH") return "he32.png";
-  else if (platform=="CODEFORCES")  return "cf32.png"; 
-  else if(platform=="TOPCODER")     return "tc32.gif";
-  else if(platform=="HACKERRANK")   return "hr36.png";
+  if(platform=="CODECHEF")          return "img/cc32.jpg";
+  else if (platform=="HACKEREARTH") return "img/he32.png";
+  else if (platform=="CODEFORCES")  return "img/cf32.png"; 
+  else if(platform=="TOPCODER")     return "img/tc32.gif";
+  else if(platform=="HACKERRANK")   return "img/hr36.png";
 }
 
 function putdata(json)
 { 
+  
+  $("#upcoming > a").remove();
+  $("#ongoing > a").remove();
+  $("hr").remove();
+
   ongoingHtmlString= "";
   upcomingHtmlString = "";
 
@@ -56,13 +61,13 @@ function putdata(json)
 
 function fetchdata(){
 
-    $("#imgAjaxLoader").show();
+    imgToggle();
     req =  new XMLHttpRequest();
     req.open("GET",'https://contesttrackerapi.herokuapp.com/',true);
     req.send();
     req.onload = function(){
         res = JSON.parse(req.responseText);
-        $("#imgAjaxLoader").hide();
+        imgToggle();
         putdata(res);
 
         // cache creation
@@ -73,10 +78,14 @@ function fetchdata(){
     };
 }
 
-
+function imgToggle(){
+  src = $('.loading').attr('src');
+  if(src=="img/refresh-white.png") $(".loading").attr("src","img/ajax-loader.gif");
+  else $(".loading").attr("src","img/refresh-white.png");
+}
 
 $(document).ready(function(){
-
+  
   now = (new Date()).getTime()/1000;
   if(!localStorage.cacheUpcoming || now - parseInt(localStorage.time) > 5*60){
     // cache is old or not set
@@ -107,6 +116,13 @@ $(document).ready(function(){
        chrome.tabs.create({url: $(this).attr('data')});
        return false;
      });
+
+  // refresh only if icon is refresh icon.
+  // Makes sure that clicking a loading icon does not trigger fetchdata()
+  $("body").on('click',".loading", function(){
+    src = $('.loading').attr('src');
+    if(src=="img/refresh-white.png") fetchdata();
+  });
 
 });
 

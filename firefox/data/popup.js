@@ -1,17 +1,21 @@
 
 function icon(platform){
 
-  if(platform=="CODECHEF")          return "cc32.jpg";
-  else if (platform=="HACKEREARTH") return "he32.png";
-  else if (platform=="CODEFORCES")  return "cf32.png"; 
-  else if(platform=="TOPCODER")     return "tc32.gif";
-  else if(platform=="HACKERRANK")   return "hr36.png";
+  if(platform=="CODECHEF")          return "img/cc32.jpg";
+  else if (platform=="HACKEREARTH") return "img/he32.png";
+  else if (platform=="CODEFORCES")  return "img/cf32.png"; 
+  else if(platform=="TOPCODER")     return "img/tc32.gif";
+  else if(platform=="HACKERRANK")   return "img/hr36.png";
 }
 
 function putdata(json)
 { 
   
   $.each(json.result.ongoing , function(i,post){ 
+     
+     $("#upcoming > a").remove();
+     $("#ongoing > a").remove();
+     $("hr").remove();
      
      $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
      	<li><br><h4>'+post.Name+'</h4>\
@@ -44,19 +48,23 @@ function putdata(json)
 
 function fetchdata(){
 
-	$("#imgAjaxLoader").show();
+	imgToggle();
     req =  new XMLHttpRequest();
     req.open("GET",'https://contesttrackerapi.herokuapp.com/',true);
     req.send();
     req.onload = function(){
-        $("#upcoming > a").remove();
-        $("#ongoing > a").remove();
-        $("#imgAjaxLoader").hide();
+        
+        imgToggle();
         res = JSON.parse(req.responseText);
         putdata(res);
     };
 }
 
+function imgToggle(){
+  src = $('.loading').attr('src');
+  if(src=="img/refresh-white.png") $(".loading").attr("src","img/ajax-loader.gif");
+  else $(".loading").attr("src","img/refresh-white.png");
+}
 
 $(document).ready(function(){
   fetchdata();
@@ -73,5 +81,10 @@ $(document).ready(function(){
        self.port.emit("postClicked",$(this).attr('data'));
        return false;
      });
+
+  $("body").on('click',".loading", function(){
+    src = $('.loading').attr('src');
+    if(src=="img/refresh-white.png") fetchdata();
+  });
 });
 

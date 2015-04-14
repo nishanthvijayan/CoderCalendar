@@ -66,7 +66,7 @@ h3,h4,h5{
   font-weight: normal;
 }
 header > h3{
-  padding-top: 15px;
+  margin-top: 15px;
   text-align: center;
   font-weight: bold;
   display: inline-block;
@@ -87,9 +87,10 @@ li > img{
 }
 
 
-.ajaxLoader {
+.loading{
   position: fixed;
-  top: 3%;
+  margin-top: 15px;
   left: 90%;
-  display: none;
+  height: 20px;
+  width: 20px;
 }

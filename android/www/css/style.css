@@ -162,7 +162,10 @@ li > h3{
   text-decoration: underline;
   display: inline-block;
 }
-
+.share{
+  text-decoration: underline;
+  display: inline-block;
+}
 .contest_image{
   display: inline-block;
   float: right;

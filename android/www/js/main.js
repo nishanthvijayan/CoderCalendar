@@ -39,6 +39,7 @@ function putdata(json)
      $("#ongoing").append('<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
         <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
         <h4>End: '+post.EndTime+'</h4><br><br>\
+        <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.EndTime+'&quot;);" >Tell your Friends</h4>\
         </li><hr>');
     });
   
@@ -61,7 +62,8 @@ function putdata(json)
       $("#upcoming").append('<li><br><h3 onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
       <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
       <h4>Start: '+post.StartTime+'</h4><br>\
-      <h4>Duration: '+post.Duration+'</h4><br>'+calender_string+'</li><hr>');
+      <h4>Duration: '+post.Duration+'</h4><br>'+calender_string+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
+      <h4 class="share" onclick="socialShare(1,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;);" >Tell your Friends</h4></li><hr>');
     };
 
     var error   = function(message) {};
@@ -150,7 +152,24 @@ function delcalendarEvent(name,url,StartTime,EndTime){
   window.plugins.calendar.deleteEvent(title,eventLocation,notes,s,e,success,error)
   
 }
-
+function socialShare(status,name,url,Time){
+  navigator.notification.confirm(
+    "Are you sure you want to tell others about this contest? ",
+    function( index ) {
+        switch ( index ) {
+            case 2:
+                if(status==1){
+                  window.plugins.socialsharing.share( 'Hey, Check out this coding contest: '+name+' . Link: '+ url + " . Starts at: "+Time );
+                }else{
+                  window.plugins.socialsharing.share( 'Hey, Check out this coding contest: '+name+' , taking place now at '+ url + " . Ends at: "+Time );
+                }
+                break;
+        }
+    },
+    "Confirm", // a title
+    [ "No","Yes" ]    // text of the buttons
+  );
+}
 document.addEventListener("deviceready", function(){
   if(window.localStorage.getItem('last_collected_data')){
       var localData = JSON.parse(window.localStorage.getItem('last_collected_data'));

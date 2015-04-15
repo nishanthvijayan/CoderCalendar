@@ -65,6 +65,7 @@ function fetchdata(){
     putdata(res);
 
     // cache creation
+    now = (new Date()).getTime()/1000;
     localStorage.cache  = JSON.stringify(res);
     localStorage.time = now;
         

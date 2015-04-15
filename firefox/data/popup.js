@@ -81,13 +81,13 @@ $(document).ready(function(){
 
   //sends "link to be opened" to main.js
   $("body").on('click',"a", function(){
-    self.port.emit("postClicked",$(this).attr('data'));
+    self.port.emit("linkClicked",$(this).attr('data'));
     return false;
   });
   
   //sends "link to be opened" to main.js
   $("body").on('click',".calendar", function(){
-    self.port.emit("postClicked",$(this).attr('data'));
+    self.port.emit("linkClicked",$(this).attr('data'));
     return false;
   });
 

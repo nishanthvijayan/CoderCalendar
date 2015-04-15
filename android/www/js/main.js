@@ -29,18 +29,31 @@ function icon(platform){
 
 function putdata(json)
 { 
-  
+  scrollPos = document.body.scrollTop;
+
+  // the conditional statements that compare the start and end time with curTime
+  // verifies makes sure that each contest gets added to right section regardless of the 
+  // section it was present in the "json" variable.
   $("#ongoing > li").remove();
   $("#upcoming > li").remove();
   $("hr").remove();
 
-  $.each(json.result.ongoing , function(i,post){ 
-     
-    $("#ongoing").append('<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
-      <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
-      <h4>End: '+post.EndTime+'</h4><br><br>\
-      <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.EndTime+'&quot;);" >Tell your Friends</h4>\
-      </li><hr>');
+  curTime  = new Date();
+  
+  $.each(json.result.ongoing , function(i,post){
+
+    endTime   = Date.parse(post.EndTime)
+    e = new Date(endTime)
+    
+    if(e>curTime){
+
+      $("#ongoing").append('<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
+        <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
+        <h4>End: '+post.EndTime+'</h4><br><br>\
+        <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.EndTime+'&quot;);" >Tell your Friends</h4>\
+        </li><hr>');
+    }
+
   });
   
   $.each(json.result.upcoming , function(i,post){ 
@@ -52,26 +65,40 @@ function putdata(json)
     var title = post.Name;
     var eventLocation = post.url;
     var notes = " ";
-    var x;
     var success = function(message) {
       if(Object.keys(message).length>0){
         calendar_string = '<h4 onclick="delcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;,&quot;'+post.EndTime+'&quot;);" class="calendar">Delete from Calendar</h4>';
       }else{
         calendar_string = '<h4 onclick="addcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;,&quot;'+post.EndTime+'&quot;);" class="calendar">Add to Calendar</h4>';
       }
-      $("#upcoming").append('<li><br><h3 onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
+      // if contest has already started add it to ongoing 
+      if(s<curTime){
+        
+        $("#ongoing").append('<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
+        <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
+        <h4>End: '+post.EndTime+'</h4><br><br>\
+        <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.EndTime+'&quot;);" >Tell your Friends</h4>\
+        </li><hr>');
+      }else{
+
+        $("#upcoming").append('<li><br><h3 onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
         <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
         <h4>Start: '+post.StartTime+'</h4><br>\
         <h4>Duration: '+post.Duration+'</h4><br>'+calendar_string+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
         <h4 class="share" onclick="socialShare(1,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;);" >Tell your Friends</h4></li><hr>');
+      }
+      document.body.scrollTop = scrollPos;
     };
 
     var error   = function(message) {};
 
-    // seaarch for calendar event
-    window.plugins.calendar.findEvent(title,eventLocation,notes,s,e,success,error);
-  });
+    // if contest has not ended    
+    if(e>curTime){
+      // seaarch for calendar event
+      window.plugins.calendar.findEvent(title,eventLocation,notes,s,e,success,error);
+    }
 
+  });
 }
 
 
@@ -129,7 +156,7 @@ function addcalendarEvent(name,url,StartTime,EndTime){
   var eventLocation = url;
   var notes = " ";
   var success = function(message) { 
-    navigator.notification.alert("'"+name+"'  added to Calendar",function() {},"Notification","OK");
+    window.plugins.toast.show("'"+name+"'  added to Calendar", 'long', 'bottom', function(a){}, function(b){});
     restoredata();   
   };
   var error = function(message) { };
@@ -151,7 +178,7 @@ function delcalendarEvent(name,url,StartTime,EndTime){
   var eventLocation = url;
   var notes = " ";
   var success = function(message) { 
-    navigator.notification.alert("'"+name+"'  deleted from Calendar",function() {},"Notification","OK");
+    window.plugins.toast.show("'"+name+"'  deleted from Calendar", 'long', 'bottom', function(a){}, function(b){});
     restoredata();
   };
   var error = function(message) { };
@@ -187,11 +214,18 @@ function imgToggle(){
 
 document.addEventListener("deviceready", function(){
 
+  FastClick.attach(document.body);
+  
   restoredata();
 
   fetchdata();
+  // this mechanism makes sure that the data is fetched every 
+  // 10 minutes and the validy of entries is checked every minute.(Overkill?)
+  counter = 0;
   setInterval(function(){
-    fetchdata();
+    counter = counter+1;
+    if(counter%6==0) fetchdata();
+    else restoredata();
   }, 300000);
 
   // refresh only if icon is refresh icon.

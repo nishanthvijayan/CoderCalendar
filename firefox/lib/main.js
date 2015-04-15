@@ -17,8 +17,8 @@ var button = buttons.ActionButton({
   id: "CoderCalendar",
   label: "Displays upcoming and ongoing coding contests from various platforms",
   icon: {
-    "16": "./img/icon16.gif",
-    "32": "./img/icon16.gif"
+    "16": "./img/icon32.png",
+    "32": "./img/icon32.png"
   },
   onClick: popup 
 })

@@ -1,23 +1,3 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
-
-
 function icon(platform){
 
   if(platform=="CODECHEF")          return "cc32.jpg";
@@ -103,7 +83,7 @@ function putdata(json)
       $("hr").remove();
     document.getElementById("ongoing").innerHTML += ongoingHTML;
     document.getElementById("upcoming").innerHTML += upcomingHTML;
-  },2000);
+  },500);
 
 }
 
@@ -126,6 +106,7 @@ function fetchdata(){
   };
   req.onerror = function(){
     imgToggle();
+    restoredata();
     navigator.notification.alert("Connection Failed",function() {},"Error","OK");
   };
 }
@@ -162,8 +143,8 @@ function addcalendarEvent(name,url,StartTime,EndTime){
   var eventLocation = url;
   var notes = " ";
   var success = function(message) { 
-    window.plugins.toast.show("'"+name+"'  added to Calendar", 'long', 'bottom', function(a){}, function(b){});
-    restoredata();   
+    restoredata();
+    window.plugins.toast.show("'"+name+"'  added to Calendar", 'long', 'bottom', function(a){}, function(b){});   
   };
   var error = function(message) { };
 
@@ -184,8 +165,8 @@ function delcalendarEvent(name,url,StartTime,EndTime){
   var eventLocation = url;
   var notes = " ";
   var success = function(message) { 
-    window.plugins.toast.show("'"+name+"'  deleted from Calendar", 'long', 'bottom', function(a){}, function(b){});
     restoredata();
+    window.plugins.toast.show("'"+name+"'  deleted from Calendar", 'long', 'bottom', function(a){}, function(b){});
   };
   var error = function(message) { };
 
@@ -212,6 +193,7 @@ function socialShare(status,name,url,Time){
   );
 }
 
+// Toggles between the loading gif and the reload icon.
 function imgToggle(){
   src = $('.loading').attr('src');
   if(src=="img/refresh-white.png") $(".loading").attr("src","img/ajax-loader.gif");
@@ -226,7 +208,7 @@ document.addEventListener("deviceready", function(){
 
   fetchdata();
   // this mechanism makes sure that the data is fetched every 
-  // 10 minutes and the validy of entries is checked every minute.(Overkill?)
+  // 30 minutes and the validy of entries is checked every 5 minutes.(Overkill?)
   counter = 0;
   setInterval(function(){
     counter = counter+1;

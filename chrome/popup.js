@@ -1,5 +1,3 @@
-var now;
-
 // returns the relative path of the icon file
 // corresponding to the platform of each post
 function icon(platform){
@@ -11,21 +9,34 @@ function icon(platform){
   else if(platform=="HACKERRANK")   return "img/hr36.png";
 }
 
+// First, the present constest fields are cleared
+// Then add contest fields are added by going through the recieved json.
 function putdata(json)
 { 
-  
+  // removes the previous contest entries.
   $("#upcoming > a").remove();
   $("#ongoing > a").remove();
   $("hr").remove();
 
+  // the conditional statements that compare the start and end time with curTime
+  // verifies that each contest gets added to right section regardless of the 
+  // section it was present in the "json" variable.
+  
+  curTime  = new Date();
 
   $.each(json.result.ongoing , function(i,post){ 
-     
-    $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
-      <li><br><h3>'+post.Name+'</h3>\
-      <img src="'+icon(post.Platform)+'"></img><br>\
-      <h4>End: '+post.EndTime+'</h4><br>\
-      </li><hr></a>');
+    
+    endTime   = Date.parse(post.EndTime);
+    e = new Date(endTime);
+    
+    if(e>curTime){
+
+      $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
+        <li><br><h3>'+post.Name+'</h3>\
+        <img src="'+icon(post.Platform)+'"></img><br>\
+        <h4>End: '+post.EndTime+'</h4><br>\
+        </li><hr></a>');
+    }
   });
 
   $.each(json.result.upcoming , function(i,post){ 
@@ -40,18 +51,31 @@ function putdata(json)
     calendarTime = s+'/'+e
     calendarLink = "https://www.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(post.Name)+"&dates="+calendarTime+"&location="+post.url+"&pli=1&uid=&sf=true&output=xml#eventpage_6"
     
-    $("#upcoming").append('<a  data='+'"'+post.url+'"'+'>\
-      <li><br><h3>'+post.Name+'</h3>\
-      <img src="'+icon(post.Platform)+'"></img><br>\
-      <h4>Start: '+post.StartTime+'</h4><br>\
-      <h4>Duration: '+post.Duration+'</h4><br>\
-      <h4 data='+calendarLink+' class="calendar">Add to Calendar</h4>\
-      </li><hr></a>');
+    sT = new Date(startTime);
+    eT = new Date(endTime);
+
+    if(sT<curTime && eT>curTime){
+      $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
+        <li><br><h3>'+post.Name+'</h3>\
+        <img src="'+icon(post.Platform)+'"></img><br>\
+        <h4>End: '+post.EndTime+'</h4><br>\
+        </li><hr></a>');
+    }
+    else if(sT>curTime && eT>curTime){
+      $("#upcoming").append('<a  data='+'"'+post.url+'"'+'>\
+        <li><br><h3>'+post.Name+'</h3>\
+        <img src="'+icon(post.Platform)+'"></img><br>\
+        <h4>Start: '+post.StartTime+'</h4><br>\
+        <h4>Duration: '+post.Duration+'</h4><br>\
+        <h4 data='+calendarLink+' class="calendar">Add to Calendar</h4>\
+        </li><hr></a>');
+    }
   });
 
 }
 
-
+// sends a request to the backend,on recieving response
+// passes the recieved response to putdata()
 function fetchdata(){
 
   imgToggle();
@@ -72,9 +96,13 @@ function fetchdata(){
   };
   req.onerror = function(){
     imgToggle();
+    if(localStorage.cache){
+      localData = JSON.parse(localStorage.cache);
+      putdata(localData);
+    }
   };
 }
-
+// Toggles between the loading gif and the reload icon.
 function imgToggle(){
   src = $('.loading').attr('src');
   if(src=="img/refresh-white.png") $(".loading").attr("src","img/ajax-loader.gif");
@@ -84,7 +112,7 @@ function imgToggle(){
 $(document).ready(function(){
   
   now = (new Date()).getTime()/1000;
-  if(!localStorage.cache || now - parseInt(localStorage.time) > 5*60){
+  if(!localStorage.cache || now - parseInt(localStorage.time) > 30*60){
     // cache is old or not set
     fetchdata();
   
@@ -94,13 +122,27 @@ $(document).ready(function(){
     localData = JSON.parse(localStorage.cache);
     putdata(localData);
     //  restoring the scroll state from the localStorage
-    if(localStorage.scrollTop){
-        document.body.scrollTop = localStorage.scrollTop;
+    if(localStorage.scrollTop && now - parseInt(localStorage.time) < 5*60){
+      document.body.scrollTop = localStorage.scrollTop;
     }
 
   }
 
-  setInterval(function(){  fetchdata(); }, 300000)
+  // this mechanism makes sure that the data is fetched every 
+  // 30 minutes and the validy of entries is checked every 5 minutes.(Overkill?)
+  counter = 0;
+  setInterval(function(){
+    counter = counter+1;
+    if(counter%6==0) fetchdata();
+    else {
+      if(localStorage.cache){
+        localData = JSON.parse(localStorage.cache);
+        putdata(localData);
+      }else{
+        fetchdata();
+      }
+    }
+  }, 300000);
 
   // saves the scroll position of the document
   // which can be used to restore the scroll state later on

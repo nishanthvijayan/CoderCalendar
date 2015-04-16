@@ -10,20 +10,33 @@ function icon(platform){
 }
 
 // First, the present constest fields are cleared
-// Then add contest fields are added by going through the recieved json
+// Then add contest fields are added by going through the recieved json.
 function putdata(json)
 { 
+  // removes the previous contest entries.
   $("#upcoming > a").remove();
   $("#ongoing > a").remove();
   $("hr").remove();
+
+  // the conditional statements that compare the start and end time with curTime
+  // verifies that each contest gets added to right section regardless of the 
+  // section it was present in the "json" variable.
   
+  curTime  = new Date();
+
   $.each(json.result.ongoing , function(i,post){ 
-     
-    $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
-    	<li><br><h4>'+post.Name+'</h4>\
-    	<img src="'+icon(post.Platform)+'"></img><br>\
-    	<h5>End: '+post.EndTime+'</h5><br>\
-    	</li><hr></a>');
+    
+    endTime   = Date.parse(post.EndTime);
+    e = new Date(endTime);
+    
+    if(e>curTime){
+    
+      $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
+      	<li><br><h4>'+post.Name+'</h4>\
+      	<img src="'+icon(post.Platform)+'"></img><br>\
+      	<h5>End: '+post.EndTime+'</h5><br>\
+      	</li><hr></a>');
+    }
   });
   
   $.each(json.result.upcoming , function(i,post){ 
@@ -38,13 +51,25 @@ function putdata(json)
     calendarTime = s+'/'+e
     calendarLink = "https://www.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(post.Name)+"&dates="+calendarTime+"&location="+post.url+"&pli=1&uid=&sf=true&output=xml#eventpage_6"
     
-    $("#upcoming").append('<a  data='+'"'+post.url+'"'+'>\
-    	<li><br><h4>'+post.Name+'</h4>\
-    	<img src="'+icon(post.Platform)+'"></img><br>\
-    	<h5>Start: '+post.StartTime+'</h5><br>\
-    	<h5>Duration: '+post.Duration+'</h5><br>\
-    	<h5 data='+calendarLink+' class="calendar">Add to Calendar</h5>\
-    	</li><hr></a>');
+    sT = new Date(startTime);
+    eT = new Date(endTime);
+
+    if(sT<curTime && eT>curTime){
+      $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
+        <li><br><h4>'+post.Name+'</h4>\
+        <img src="'+icon(post.Platform)+'"></img><br>\
+        <h5>End: '+post.EndTime+'</h5><br>\
+        </li><hr></a>');
+    }
+    else if(sT>curTime && eT>curTime){
+      $("#upcoming").append('<a  data='+'"'+post.url+'"'+'>\
+        <li><br><h4>'+post.Name+'</h4>\
+        <img src="'+icon(post.Platform)+'"></img><br>\
+        <h5>Start: '+post.StartTime+'</h5><br>\
+        <h5>Duration: '+post.Duration+'</h5><br>\
+        <h5 data='+calendarLink+' class="calendar">Add to Calendar</h5>\
+        </li><hr></a>');
+    }
   });
 
 }
@@ -62,9 +87,18 @@ function fetchdata(){
     imgToggle();
     res = JSON.parse(req.responseText);
     putdata(res);
+
+    // cache creation
+    localStorage.cache  = JSON.stringify(res);
+
   };
   req.onerror = function(){
     imgToggle();
+    if(localStorage.cache){
+      localData = JSON.parse(localStorage.cache);
+      putdata(localData);
+    }
+
   };
 }
 
@@ -75,8 +109,22 @@ function imgToggle(){
 }
 
 $(document).ready(function(){
+
   fetchdata();
-  setInterval(function(){ fetchdata() }, 300000)
+
+  counter = 0;
+  setInterval(function(){
+    counter = counter+1;
+    if(counter%6==0) fetchdata();
+    else{
+      if(localStorage.cache){
+        localData = JSON.parse(localStorage.cache);
+        putdata(localData);
+      }else{
+        fetchdata();
+      }
+    }
+  }, 300000);
 
 
   //sends "link to be opened" to main.js

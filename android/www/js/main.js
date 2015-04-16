@@ -29,16 +29,14 @@ function icon(platform){
 
 function putdata(json)
 { 
-  scrollPos = document.body.scrollTop;
 
   // the conditional statements that compare the start and end time with curTime
   // verifies makes sure that each contest gets added to right section regardless of the 
   // section it was present in the "json" variable.
-  $("#ongoing > li").remove();
-  $("#upcoming > li").remove();
-  $("hr").remove();
 
   curTime  = new Date();
+  ongoingHTML = "";
+  upcomingHTML = "";
   
   $.each(json.result.ongoing , function(i,post){
 
@@ -47,11 +45,11 @@ function putdata(json)
     
     if(e>curTime){
 
-      $("#ongoing").append('<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
+      ongoingHTML+='<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
         <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
         <h4>End: '+post.EndTime+'</h4><br><br>\
         <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.EndTime+'&quot;);" >Tell your Friends</h4>\
-        </li><hr>');
+        </li><hr>';
     }
 
   });
@@ -74,20 +72,19 @@ function putdata(json)
       // if contest has already started add it to ongoing 
       if(s<curTime){
         
-        $("#ongoing").append('<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
+        ongoingHTML+='<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
         <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
         <h4>End: '+post.EndTime+'</h4><br><br>\
         <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.EndTime+'&quot;);" >Tell your Friends</h4>\
-        </li><hr>');
+        </li><hr>';
       }else{
 
-        $("#upcoming").append('<li><br><h3 onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
+        upcomingHTML+='<li><br><h3 onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
         <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
         <h4>Start: '+post.StartTime+'</h4><br>\
         <h4>Duration: '+post.Duration+'</h4><br>'+calendar_string+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
-        <h4 class="share" onclick="socialShare(1,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;);" >Tell your Friends</h4></li><hr>');
+        <h4 class="share" onclick="socialShare(1,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;);" >Tell your Friends</h4></li><hr>';
       }
-      document.body.scrollTop = scrollPos;
     };
 
     var error   = function(message) {};
@@ -99,6 +96,15 @@ function putdata(json)
     }
 
   });
+  // A better fix,the timeout is to wait for the callback to complete.
+  setTimeout(function(){
+      $("#ongoing > li").remove();
+      $("#upcoming > li").remove();
+      $("hr").remove();
+    document.getElementById("ongoing").innerHTML += ongoingHTML;
+    document.getElementById("upcoming").innerHTML += upcomingHTML;
+  },2000);
+
 }
 
 

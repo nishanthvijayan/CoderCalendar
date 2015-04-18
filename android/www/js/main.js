@@ -49,30 +49,27 @@ function putdata(json)
       }else{
         calendar_string = '<h4 onclick="addcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;,&quot;'+post.EndTime+'&quot;);" class="calendar">Add to Calendar</h4>';
       }
-      // if contest has already started add it to ongoing 
-      if(s<curTime){
-        
-        ongoingHTML+='<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
-        <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
-        <h4>End: '+post.EndTime+'</h4><br><br>\
-        <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.EndTime+'&quot;);" >Tell your Friends</h4>\
-        </li><hr>';
-      }else{
 
-        upcomingHTML+='<li><br><h3 onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
-        <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
-        <h4>Start: '+post.StartTime+'</h4><br>\
-        <h4>Duration: '+post.Duration+'</h4><br>'+calendar_string+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
-        <h4 class="share" onclick="socialShare(1,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;);" >Tell your Friends</h4></li><hr>';
-      }
+      upcomingHTML+='<li><br><h3 onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
+      <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
+      <h4>Start: '+post.StartTime+'</h4><br>\
+      <h4>Duration: '+post.Duration+'</h4><br>'+calendar_string+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
+      <h4 class="share" onclick="socialShare(1,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;);" >Tell your Friends</h4></li><hr>';
     };
 
     var error   = function(message) {};
 
     // if contest has not ended    
-    if(e>curTime){
+    if(e>curTime && s>curTime){
       // seaarch for calendar event
-      window.plugins.calendar.findEvent(title,eventLocation,notes,s,e,success,error);
+      window.plugins.calendar.findEvent(title,eventLocation,notes,s,e,success,error);;
+    }else if(e>curTime && s<curTime){
+
+      ongoingHTML+='<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
+        <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
+        <h4>End: '+post.EndTime+'</h4><br><br>\
+        <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.EndTime+'&quot;);" >Tell your Friends</h4>\
+        </li><hr>';
     }
 
   });

@@ -90,7 +90,7 @@ function fetchdata(){
 
     // cache creation
     now = (new Date()).getTime()/1000;
-    localStorage.cache  = JSON.stringify(res);
+    localStorage.cache  = req.responseText;
     localStorage.time = now;
         
   };

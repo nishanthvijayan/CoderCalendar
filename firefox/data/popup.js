@@ -89,7 +89,7 @@ function fetchdata(){
     putdata(res);
 
     // cache creation
-    localStorage.cache  = JSON.stringify(res);
+    localStorage.cache  = req.responseText;
 
   };
   req.onerror = function(){

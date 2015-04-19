@@ -178,7 +178,7 @@ def fetch():
     posts["timestamp"] = strftime("%a, %d %b %Y %H:%M:%S", localtime())
 
 @app.route('/')
-@app.cache.cached(timeout=300) # cache for 5 minutes
+@app.cache.cached(timeout=1800) # cache for 30 minutes
 def index():
     
     fetch()

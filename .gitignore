@@ -1,2 +1,3 @@
 *.xpi
 backend/env/
+*.pyc

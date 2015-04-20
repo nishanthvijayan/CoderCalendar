@@ -136,12 +136,10 @@ def getDataFromTopcoder():
     except Exception, e:
         pass
     
-def getDataFromHackerrank():
+def getDataFromHackerrankGeneral():
     cur_time = str(int(mktime(localtime())*1000))
     page = urlopen("https://www.hackerrank.com/rest/contests/upcoming?offset=0&limit=10&contest_slug=active&_="+cur_time)
     data = json.load(page)["models"]
-    page = urlopen("https://www.hackerrank.com/rest/contests/college?offset=0&limit=50&_="+cur_time)
-    for item in json.load(page)["models"]:data.append(item)
     for item in data:
         if not item["ended"]:
             start_time = strptime(item["get_starttimeiso"], "%Y-%m-%dT%H:%M:%SZ")
@@ -152,6 +150,19 @@ def getDataFromHackerrank():
             elif   item["started"]:
                 posts["ongoing"].append({  "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"]  , "EndTime"   : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)+19800))  ,"Platform":"HACKERRANK"  })
 
+def getDataFromHackerrankCollege():
+    cur_time = str(int(mktime(localtime())*1000))
+    page = urlopen("https://www.hackerrank.com/rest/contests/college?offset=0&limit=50&_="+cur_time)
+    data = json.load(page)["models"]
+    for item in data:
+        if not item["ended"]:
+            start_time = strptime(item["get_starttimeiso"], "%Y-%m-%dT%H:%M:%SZ")
+            end_time = strptime(item["get_endtimeiso"], "%Y-%m-%dT%H:%M:%SZ")
+            duration = getDuration(int(( mktime(end_time)-mktime(start_time) )/60 ))
+            if not item["started"]:
+                posts["upcoming"].append({ "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"] , "StartTime" :  strftime("%a, %d %b %Y %H:%M", localtime(mktime(start_time)+19800)),"EndTime" : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)+19800)),"Duration":duration,"Platform":"HACKERRANK"  })
+            elif   item["started"]:
+                posts["ongoing"].append({  "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"]  , "EndTime"   : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)+19800))  ,"Platform":"HACKERRANK"  })
 
 def fetch():
 
@@ -165,7 +176,8 @@ def fetch():
     thread_list.append( threading.Thread(target=getDataFromTopcoder) )
     thread_list.append( threading.Thread(target=getDataFromHackerearth) )
     thread_list.append( threading.Thread(target=getDataFromCodechef) )
-    thread_list.append( threading.Thread(target=getDataFromHackerrank) )
+    thread_list.append( threading.Thread(target=getDataFromHackerrankGeneral) )
+    thread_list.append( threading.Thread(target=getDataFromHackerrankCollege) )
 
     for thread in thread_list:
         thread.start()
@@ -178,7 +190,7 @@ def fetch():
     posts["timestamp"] = strftime("%a, %d %b %Y %H:%M:%S", localtime())
 
 @app.route('/')
-@app.cache.cached(timeout=1800) # cache for 30 minutes
+@app.cache.cached(timeout=900) # cache for 15 minutes
 def index():
     
     fetch()

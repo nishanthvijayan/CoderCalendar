@@ -9,6 +9,15 @@ function icon(platform){
   else if(platform=="HACKERRANK")   return "img/hr36.png";
 }
 
+// converts the input time(which is Indian Standard Time) to
+// the browser timezone.
+function changeTimezone(date){
+  d = new Date(date);
+  var offset = -(d.getTimezoneOffset());
+  var newDate = new Date(d.getTime() + offset*60000 - 19800000);
+  return newDate;
+}
+
 // First, the present constest fields are cleared
 // Then add contest fields are added by going through the recieved json.
 function putdata(json)
@@ -27,6 +36,7 @@ function putdata(json)
   $.each(json.result.ongoing , function(i,post){ 
     
     endTime   = Date.parse(post.EndTime);
+    timezonePerfectEndTime  = changeTimezone(endTime).toString().slice(0,21);
     e = new Date(endTime);
     
     if(e>curTime){
@@ -34,7 +44,7 @@ function putdata(json)
       $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
       	<li><br><h4>'+post.Name+'</h4>\
       	<img src="'+icon(post.Platform)+'"></img><br>\
-      	<h5>End: '+post.EndTime+'</h5><br>\
+      	<h5>End: '+timezonePerfectEndTime+'</h5><br>\
       	</li><hr></a>');
     }
   });
@@ -44,9 +54,12 @@ function putdata(json)
     // converts the startTime and Endtime revieved
     // to the format required for the Google Calender link to work
     startTime = Date.parse(post.StartTime)
+    timezonePerfectStartTime  = changeTimezone(startTime).toString().slice(0,21);
     endTime   = Date.parse(post.EndTime)
-    s = new Date(startTime+19800000).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"")
-    e = new Date(endTime+19800000).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"")
+    timezonePerfectEndTime  = changeTimezone(endTime).toString().slice(0,21);
+
+    s = new Date(changeTimezone(startTime).getTime() - ((curTime).getTimezoneOffset()*60000 )).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"");
+    e = new Date(changeTimezone(endTime).getTime() - ((curTime).getTimezoneOffset()*60000 )).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"");
     
     calendarTime = s+'/'+e
     calendarLink = "https://www.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(post.Name)+"&dates="+calendarTime+"&location="+post.url+"&pli=1&uid=&sf=true&output=xml#eventpage_6"
@@ -58,14 +71,14 @@ function putdata(json)
       $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
         <li><br><h4>'+post.Name+'</h4>\
         <img src="'+icon(post.Platform)+'"></img><br>\
-        <h5>End: '+post.EndTime+'</h5><br>\
+        <h5>End: '+timezonePerfectEndTime+'</h5><br>\
         </li><hr></a>');
     }
     else if(sT>curTime && eT>curTime){
       $("#upcoming").append('<a  data='+'"'+post.url+'"'+'>\
         <li><br><h4>'+post.Name+'</h4>\
         <img src="'+icon(post.Platform)+'"></img><br>\
-        <h5>Start: '+post.StartTime+'</h5><br>\
+        <h5>Start: '+timezonePerfectStartTime+'</h5><br>\
         <h5>Duration: '+post.Duration+'</h5><br>\
         <h5 data='+calendarLink+' class="calendar">Add to Calendar</h5>\
         </li><hr></a>');

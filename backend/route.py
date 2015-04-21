@@ -42,7 +42,7 @@ def getDataFromCodechef():
     page = urlopen("http://www.codechef.com/contests")
     soup = BeautifulSoup(page,"html.parser")
 
-    statusdiv = soup.findAll("div",attrs = {"id":"statusdiv"})
+    statusdiv = soup.findAll("div",attrs = {"class":"table-questions"})
     upcoming_contests = statusdiv[1].findAll("tr")
     if(len(upcoming_contests) <100):
         for upcoming_contest in upcoming_contests[1:]:

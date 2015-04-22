@@ -3,7 +3,7 @@ Android App and browser extensions for competitive programming enthusiasts.
 Shows a list of live & upcoming coding contests taking place in various popular competitive programming websites with the facility to add them to your google calender.
 Currently shows updates from Codechef , HackerEarth , Hackerrank, Topcoder and Codeforces.
 
-Note: Both the android app and the extensions currently supports the Indian Standard Time only.
+Note: The android app  currently supports the Indian Standard Time only.Extensions support all time-zones.
 
 Coder's Calendar is  available for download at:
 - Chrome Extension : https://chrome.google.com/webstore/detail/coders-calendar/bageaffklfkikjigoclfgengklfnidll

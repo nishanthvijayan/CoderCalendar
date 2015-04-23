@@ -185,6 +185,9 @@ $(document).ready(function(){
     src = $('.loading').attr('src');
     if(src=="img/refresh-white.png") fetchdata();
   });
+  setTimeout(function(){
+    $("footer a:first-child").after('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><iframe src="https://ghbtns.com/github-btn.html?user=nishanthvijayan&repo=codercalendar&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe></span>');
+  },1000);
 
 });
 

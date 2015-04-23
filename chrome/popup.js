@@ -135,7 +135,7 @@ $(document).ready(function(){
     localData = JSON.parse(localStorage.cache);
     putdata(localData);
     //  restoring the scroll state from the localStorage
-    if(localStorage.scrollTop && now - parseInt(localStorage.time) < 5*60){
+    if(localStorage.scrollTop && now - parseInt(localStorage.scrolltime) < 5*60){
       document.body.scrollTop = localStorage.scrollTop;
     }
 
@@ -161,6 +161,7 @@ $(document).ready(function(){
   // which can be used to restore the scroll state later on
   addEventListener('scroll', function(){
     localStorage.scrollTop = document.body.scrollTop;
+    localStorage.scrolltime = (new Date()).getTime()/1000;
   });
 
 

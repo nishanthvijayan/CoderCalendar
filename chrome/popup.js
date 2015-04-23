@@ -43,7 +43,7 @@ function putdata(json)
 
       $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
         <li><br><h3>'+post.Name+'</h3>\
-        <img src="'+icon(post.Platform)+'"></img><br>\
+        <img title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
         <h4>End: '+timezonePerfectEndTime+'</h4><br>\
         </li><hr></a>');
     }
@@ -70,14 +70,14 @@ function putdata(json)
     if(sT<curTime && eT>curTime){
       $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
         <li><br><h3>'+post.Name+'</h3>\
-        <img src="'+icon(post.Platform)+'"></img><br>\
+        <img title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
         <h4>End: '+timezonePerfectEndTime+'</h4><br>\
         </li><hr></a>');
     }
     else if(sT>curTime && eT>curTime){
       $("#upcoming").append('<a  data='+'"'+post.url+'"'+'>\
         <li><br><h3>'+post.Name+'</h3>\
-        <img src="'+icon(post.Platform)+'"></img><br>\
+        <img title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
         <h4>Start: '+timezonePerfectStartTime+'</h4><br>\
         <h4>Duration: '+post.Duration+'</h4><br>\
         <h4 data='+calendarLink+' class="calendar">Add to Calendar</h4>\

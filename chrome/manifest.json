@@ -4,7 +4,7 @@
   "name": "Coder's Calendar",
   "short_name": "Coder's Calendar",
   "description": "Shows a list of upcoming Programming Contests happeing on a variety of popular platforms.",
-  "version": "0.1",
+  "version": "0.2",
 
   "permissions": [
     "http://contesttrackerapi.herokuapp.com/",

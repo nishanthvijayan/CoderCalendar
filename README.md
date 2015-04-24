@@ -4,15 +4,16 @@ Shows a list of live & upcoming coding contests taking place in various popular 
 Currently shows updates from Codechef , HackerEarth , Hackerrank, Topcoder and Codeforces.
 
 Note: The android app  currently supports the Indian Standard Time only.Extensions support all time-zones.
-
+  
+## Download  
 Coder's Calendar is  available for download at:
 - Chrome Extension : https://chrome.google.com/webstore/detail/coders-calendar/bageaffklfkikjigoclfgengklfnidll
 - Firefox add-on : https://addons.mozilla.org/en-US/firefox/addon/coder-calendar/
   
-Found any bugs? Have any suggestions to make this project better?  
-Know any other cool coding sites?  
-Feel free to log them as an issue.  
-Happy Coding!  
+  
+## ScreenShots  
+![Chrome Extension](http://i.imgur.com/DXbGuZz.png?1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+![Android App](http://i.imgur.com/Etf0yiU.png?1)
   
 ## Android
 The Android app uses:
@@ -38,3 +39,12 @@ To test the app on an Android device connected to your computer using a USB cabl
 cordova platforms add android
 cordova run android
 ```
+## Bugs and Suggestions  
+Found any bugs? Have any suggestions to make this project better?  
+Know any other cool coding sites?  
+Feel free to log them as an issue.
+  
+You can also add them here:  
+http://feathub.com/nishanthvijayan/CoderCalendar  
+  
+Happy Coding!  

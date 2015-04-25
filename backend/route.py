@@ -80,8 +80,12 @@ def getDataFromHackerearth():
         end_time = strptime(item["end_tz"].strip()[:19], "%Y-%m-%d %H:%M:%S")
         duration = getDuration(int(( mktime(end_time)-mktime(start_time) )/60 ))
         duplicate_check.append(item["title"].strip())
+        
+        if item["challenge_type"]=='hiring':challenge_type = 'hiring'
+        else: challenge_type = 'contest'
+
         if item["status"].strip()=="UPCOMING":
-            posts["upcoming"].append({ "Name" :  item["title"].strip()  , "url" : item["url"].strip() , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time),"EndTime" : strftime("%a, %d %b %Y %H:%M", end_time),"Duration":duration,"Platform":"HACKEREARTH"  })
+            posts["upcoming"].append({ "Name" :  item["title"].strip()  , "url" : item["url"].strip() , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time),"EndTime" : strftime("%a, %d %b %Y %H:%M", end_time),"Duration":duration,"Platform":"HACKEREARTH","challenge_type": challenge_type  })
 
     page = urlopen("https://clients6.google.com/calendar/v3/calendars/hackerearth.com_73f0o8kl62rb5v1htv19p607e4@group.calendar.google.com/events?calendarId=hackerearth.com_73f0o8kl62rb5v1htv19p607e4%40group.calendar.google.com&singleEvents=true&timeZone=Asia%2FCalcutta&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin="+ref_date+"T00%3A00%3A00%2B05%3A30&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs")
     data = json.load(page)["items"]
@@ -89,10 +93,15 @@ def getDataFromHackerearth():
         start_time = strptime(item["start"]["dateTime"][:19], "%Y-%m-%dT%H:%M:%S")
         end_time = strptime(item["end"]["dateTime"][:19], "%Y-%m-%dT%H:%M:%S")
         duration = getDuration(int(( mktime(end_time)-mktime(start_time) )/60 ))
+
+        if 'hiring' in item["location"]: challenge_type = 'hiring'
+        elif (item.has_key('description') and 'hiring' in item["description"]):challenge_type = 'hiring'
+        else: challenge_type = 'contest'
+        
         if cur_time>start_time and cur_time<end_time and item["summary"].strip() not in duplicate_check:
-            posts["ongoing"].append({  "Name" :  item["summary"].strip()  , "url" : item["location"].strip() , "EndTime"   : strftime("%a, %d %b %Y %H:%M", end_time)  ,"Platform":"HACKEREARTH"  })
+            posts["ongoing"].append({  "Name" :  item["summary"].strip()  , "url" : item["location"].strip() , "EndTime"   : strftime("%a, %d %b %Y %H:%M", end_time)  ,"Platform":"HACKEREARTH" ,"challenge_type":challenge_type })
         elif cur_time<start_time and item["summary"].strip() not in duplicate_check:
-            posts["upcoming"].append({ "Name" :  item["summary"].strip()  , "url" : item["location"].strip() , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time),"EndTime" : strftime("%a, %d %b %Y %H:%M", end_time),"Duration":duration,"Platform":"HACKEREARTH"  })
+            posts["upcoming"].append({ "Name" :  item["summary"].strip()  , "url" : item["location"].strip() , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time),"EndTime" : strftime("%a, %d %b %Y %H:%M", end_time),"Duration":duration,"Platform":"HACKEREARTH" ,"challenge_type":challenge_type })
 
     
 

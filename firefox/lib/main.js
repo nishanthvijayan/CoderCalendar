@@ -34,23 +34,7 @@ newsfeed.port.on("linkClicked", function (text) {
   tabs.open(text);
 });
 
-
-preferences.on("Hackerearth", function(){
-  newsfeed.port.emit("Hackerearth_Changed",preferences.prefs['Hackerearth'] );
+preferences.on("", function(prefName){
+  newsfeed.port.emit(prefName+"_Changed",preferences.prefs[prefName] );
 });
 
-preferences.on("Hackerrank", function(){
-  newsfeed.port.emit("Hackerrank_Changed",preferences.prefs['Hackerrank'] );
-});
-
-preferences.on("Codechef", function(){
-  newsfeed.port.emit("Codechef_Changed",preferences.prefs['Codechef'] );
-});
-
-preferences.on("Codeforces", function(){
-  newsfeed.port.emit("Codeforces_Changed",preferences.prefs['Codeforces'] );
-});
-
-preferences.on("Topcoder", function(){
-  newsfeed.port.emit("Topcoder_Changed",preferences.prefs['Topcoder'] );
-});

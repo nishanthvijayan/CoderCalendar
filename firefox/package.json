@@ -6,33 +6,40 @@
   "author": "Nishanth Vijayan",
   "license": "MPL 2.0",
   "version": "0.2.4",
-  "preferences": [{
-    "name": "Hackerearth",
-    "title": "Show updates from Hackerearth?",
+  "preferences": [
+  {
+    "name": "Hackerearthhiring",
+    "title": "Show hiring contests from Hackerearth?",
     "type": "bool",
     "value": true
-	},
+  },
+  {
+    "name": "Hackerearthcontest",
+    "title": "Show non-hiring contests from Hackerearth?",
+    "type": "bool",
+    "value": true
+  },
 	{
     "name": "Hackerrank",
-    "title": "Show updates from Hackerrank?",
+    "title": "Show contests from Hackerrank?",
     "type": "bool",
     "value": true
 	},
 	{
     "name": "Codechef",
-    "title": "Show updates from Codechef?",
+    "title": "Show contests from Codechef?",
     "type": "bool",
     "value": true
 	},
 	{
     "name": "Codeforces",
-    "title": "Show updates from Codeforces?",
+    "title": "Show contest from Codeforces?",
     "type": "bool",
     "value": true
 	},
 	{
     "name": "Topcoder",
-    "title": "Show updates from Topcoder?",
+    "title": "Show contest from Topcoder?",
     "type": "bool",
     "value": true
 	}]

@@ -34,7 +34,13 @@ function putdata(json)
   curTime  = new Date();
 
   $.each(json.result.ongoing , function(i,post){ 
-    if(localStorage.getItem(post.Platform)=="true" ){
+    
+    flag=0;
+    if(post.Platform=="HACKEREARTH"){
+      if(localStorage.getItem(post.Platform+post.challenge_type)=="false")flag=1;
+    }
+    
+    if(localStorage.getItem(post.Platform)=="true" && flag==0){
       endTime   = Date.parse(post.EndTime);
       timezonePerfectEndTime  = changeTimezone(endTime).toString().slice(0,21);
       e = new Date(endTime);
@@ -51,7 +57,13 @@ function putdata(json)
   });
   
   $.each(json.result.upcoming , function(i,post){ 
-    if(localStorage.getItem(post.Platform)=="true" ){
+    
+    flag=0;
+    if(post.Platform=="HACKEREARTH"){
+      if(localStorage.getItem(post.Platform+post.challenge_type)=="false")flag=1;
+    }
+
+    if(localStorage.getItem(post.Platform)=="true" && flag==0){
       // converts the startTime and Endtime revieved
       // to the format required for the Google Calender link to work
       startTime = Date.parse(post.StartTime)
@@ -132,8 +144,10 @@ function imgToggle(){
 
 $(document).ready(function(){
   
+  //initializing preference values in care they are not set.
   if(!localStorage.HACKEREARTH)localStorage.HACKEREARTH = "true";
-  if(!localStorage.HACKERRANK)localStorage.HACKERRANK = 'true';
+  if(!localStorage.HACKEREARTH)localStorage.HACKEREARTHhiring = "true";
+  if(!localStorage.HACKEREARTH)localStorage.HACKEREARTHcontest = "true";
   if(!localStorage.CODECHEF)localStorage.CODECHEF = 'true';
   if(!localStorage.CODEFORCES)localStorage.CODEFORCES = 'true';
   if(!localStorage.TOPCODER)localStorage.TOPCODER = 'true';
@@ -178,8 +192,12 @@ $(document).ready(function(){
     $("footer a:first-child").after('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><iframe src="https://ghbtns.com/github-btn.html?user=nishanthvijayan&repo=codercalendar&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe></span>');
   },1000);
 
-  self.port.on("Hackerearth_Changed",function(data){
-    localStorage.HACKEREARTH = data;
+  self.port.on("Hackerearthcontest_Changed",function(data){
+    localStorage.HACKEREARTHcontest = data;
+    restoredata();
+  });
+  self.port.on("Hackerearthhiring_Changed",function(data){
+    localStorage.HACKEREARTHhiring = data;
     restoredata();
   });
   self.port.on("Hackerrank_Changed",function(data){

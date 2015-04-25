@@ -34,54 +34,56 @@ function putdata(json)
   curTime  = new Date();
 
   $.each(json.result.ongoing , function(i,post){ 
-    
-    endTime   = Date.parse(post.EndTime);
-    timezonePerfectEndTime  = changeTimezone(endTime).toString().slice(0,21);
-    e = new Date(endTime);
-    
-    if(e>curTime){
-    
-      $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
-      	<li><br><h4>'+post.Name+'</h4>\
-      	<img alt="'+post.Platform+'" title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
-      	<h5>End: '+timezonePerfectEndTime+'</h5><br>\
-      	</li><hr></a>');
+    if(localStorage.getItem(post.Platform)=="true" ){
+      endTime   = Date.parse(post.EndTime);
+      timezonePerfectEndTime  = changeTimezone(endTime).toString().slice(0,21);
+      e = new Date(endTime);
+      
+      if(e>curTime){
+      
+        $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
+        	<li><br><h4>'+post.Name+'</h4>\
+        	<img alt="'+post.Platform+'" title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
+        	<h5>End: '+timezonePerfectEndTime+'</h5><br>\
+        	</li><hr></a>');
+      }
     }
   });
   
   $.each(json.result.upcoming , function(i,post){ 
+    if(localStorage.getItem(post.Platform)=="true" ){
+      // converts the startTime and Endtime revieved
+      // to the format required for the Google Calender link to work
+      startTime = Date.parse(post.StartTime)
+      timezonePerfectStartTime  = changeTimezone(startTime).toString().slice(0,21);
+      endTime   = Date.parse(post.EndTime)
+      timezonePerfectEndTime  = changeTimezone(endTime).toString().slice(0,21);
 
-    // converts the startTime and Endtime revieved
-    // to the format required for the Google Calender link to work
-    startTime = Date.parse(post.StartTime)
-    timezonePerfectStartTime  = changeTimezone(startTime).toString().slice(0,21);
-    endTime   = Date.parse(post.EndTime)
-    timezonePerfectEndTime  = changeTimezone(endTime).toString().slice(0,21);
+      s = new Date(changeTimezone(startTime).getTime() - ((curTime).getTimezoneOffset()*60000 )).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"");
+      e = new Date(changeTimezone(endTime).getTime() - ((curTime).getTimezoneOffset()*60000 )).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"");
+      
+      calendarTime = s+'/'+e
+      calendarLink = "https://www.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(post.Name)+"&dates="+calendarTime+"&location="+post.url+"&pli=1&uid=&sf=true&output=xml#eventpage_6"
+      
+      sT = new Date(startTime);
+      eT = new Date(endTime);
 
-    s = new Date(changeTimezone(startTime).getTime() - ((curTime).getTimezoneOffset()*60000 )).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"");
-    e = new Date(changeTimezone(endTime).getTime() - ((curTime).getTimezoneOffset()*60000 )).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"");
-    
-    calendarTime = s+'/'+e
-    calendarLink = "https://www.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(post.Name)+"&dates="+calendarTime+"&location="+post.url+"&pli=1&uid=&sf=true&output=xml#eventpage_6"
-    
-    sT = new Date(startTime);
-    eT = new Date(endTime);
-
-    if(sT<curTime && eT>curTime){
-      $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
-        <li><br><h4>'+post.Name+'</h4>\
-        <img alt="'+post.Platform+'" title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
-        <h5>End: '+timezonePerfectEndTime+'</h5><br>\
-        </li><hr></a>');
-    }
-    else if(sT>curTime && eT>curTime){
-      $("#upcoming").append('<a  data='+'"'+post.url+'"'+'>\
-        <li><br><h4>'+post.Name+'</h4>\
-        <img alt="'+post.Platform+'" title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
-        <h5>Start: '+timezonePerfectStartTime+'</h5><br>\
-        <h5>Duration: '+post.Duration+'</h5><br>\
-        <h5 data='+calendarLink+' class="calendar">Add to Calendar</h5>\
-        </li><hr></a>');
+      if(sT<curTime && eT>curTime){
+        $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
+          <li><br><h4>'+post.Name+'</h4>\
+          <img alt="'+post.Platform+'" title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
+          <h5>End: '+timezonePerfectEndTime+'</h5><br>\
+          </li><hr></a>');
+      }
+      else if(sT>curTime && eT>curTime){
+        $("#upcoming").append('<a  data='+'"'+post.url+'"'+'>\
+          <li><br><h4>'+post.Name+'</h4>\
+          <img alt="'+post.Platform+'" title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
+          <h5>Start: '+timezonePerfectStartTime+'</h5><br>\
+          <h5>Duration: '+post.Duration+'</h5><br>\
+          <h5 data='+calendarLink+' class="calendar">Add to Calendar</h5>\
+          </li><hr></a>');
+      }
     }
   });
 
@@ -115,6 +117,13 @@ function fetchdata(){
   };
 }
 
+function restoredata(){
+  if(localStorage.cache){
+    localData = JSON.parse(localStorage.cache);
+    putdata(localData);
+  }
+}
+
 function imgToggle(){
   src = $('.loading').attr('src');
   if(src=="img/refresh-white.png") $(".loading").attr("src","img/ajax-loader.gif");
@@ -122,6 +131,12 @@ function imgToggle(){
 }
 
 $(document).ready(function(){
+  
+  if(!localStorage.HACKEREARTH)localStorage.HACKEREARTH = "true";
+  if(!localStorage.HACKERRANK)localStorage.HACKERRANK = 'true';
+  if(!localStorage.CODECHEF)localStorage.CODECHEF = 'true';
+  if(!localStorage.CODEFORCES)localStorage.CODEFORCES = 'true';
+  if(!localStorage.TOPCODER)localStorage.TOPCODER = 'true';
 
   fetchdata();
 
@@ -139,7 +154,7 @@ $(document).ready(function(){
     }
   }, 300000);
 
-
+  
   //sends "link to be opened" to main.js
   $("body").on('click',"a", function(){
     self.port.emit("linkClicked",$(this).attr('data'));
@@ -162,5 +177,29 @@ $(document).ready(function(){
   setTimeout(function(){
     $("footer a:first-child").after('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><iframe src="https://ghbtns.com/github-btn.html?user=nishanthvijayan&repo=codercalendar&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe></span>');
   },1000);
+
+  self.port.on("Hackerearth_Changed",function(data){
+    localStorage.HACKEREARTH = data;
+    restoredata();
+  });
+  self.port.on("Hackerrank_Changed",function(data){
+    localStorage.HACKERRANK = data;
+    restoredata();
+
+  });
+  self.port.on("Codechef_Changed",function(data){
+    localStorage.CODECHEF = data;
+    restoredata();
+
+  });
+  self.port.on("Codeforces_Changed",function(data){
+    localStorage.CODEFORCES = data;
+    restoredata();
+  });
+  self.port.on("Topcoder_Changed",function(data){
+    localStorage.TOPCODER = data;
+    restoredata();
+  });
+
 });
 

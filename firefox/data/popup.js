@@ -110,8 +110,11 @@ function fetchdata(){
   req.open("GET",'https://contesttrackerapi.herokuapp.com/',true);
   req.send();
   req.onload = function(){
-      
+
+    $("span").remove();
+    $("footer a:nth-child(2)").before('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<iframe src="https://ghbtns.com/github-btn.html?user=nishanthvijayan&repo=codercalendar&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe></span>');
     imgToggle();
+    
     res = JSON.parse(req.responseText);
     putdata(res);
 
@@ -187,10 +190,6 @@ $(document).ready(function(){
     src = $('.loading').attr('src');
     if(src=="img/refresh-white.png") fetchdata();
   });
-
-  setTimeout(function(){
-    $("footer a:first-child").after('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><iframe src="https://ghbtns.com/github-btn.html?user=nishanthvijayan&repo=codercalendar&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe></span>');
-  },1000);
 
   self.port.on("Hackerearthcontest_Changed",function(data){
     localStorage.HACKEREARTHcontest = data;

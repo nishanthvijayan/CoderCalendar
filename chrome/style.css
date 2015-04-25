@@ -90,6 +90,13 @@ li > img{
 .loading{
   position: fixed;
   margin-top: 15px;
+  left: 80%;
+  height: 20px;
+  width: 20px;
+}
+.settings-btn{
+  position: fixed;
+  margin-top: 15px;
   left: 90%;
   height: 20px;
   width: 20px;

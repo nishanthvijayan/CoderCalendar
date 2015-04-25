@@ -4,12 +4,13 @@
   "name": "Coder's Calendar",
   "short_name": "Coder's Calendar",
   "description": "Shows a list of upcoming Programming Contests happeing on a variety of popular platforms.",
-  "version": "0.2",
+  "version": "0.2.2",
 
   "permissions": [
     "http://contesttrackerapi.herokuapp.com/",
     "tabs"
   ],
+  "options_page": "options.html",
    "icons": { "16": "img/icon32.png",
               "32": "img/icon32.png",
            "48": "img/icon32.png",

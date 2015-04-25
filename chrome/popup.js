@@ -34,54 +34,66 @@ function putdata(json)
   curTime  = new Date();
 
   $.each(json.result.ongoing , function(i,post){ 
+    flag=0;
+    if(post.Platform=="HACKEREARTH"){
+      if(localStorage.getItem(post.Platform+post.challenge_type)=="false")flag=1;
+    }
     
-    endTime   = Date.parse(post.EndTime);
-    timezonePerfectEndTime  = changeTimezone(endTime).toString().slice(0,21);
-    e = new Date(endTime);
-    
-    if(e>curTime){
+    if(localStorage.getItem(post.Platform)=="true" && flag==0){
+      endTime   = Date.parse(post.EndTime);
+      timezonePerfectEndTime  = changeTimezone(endTime).toString().slice(0,21);
+      e = new Date(endTime);
+      
+      if(e>curTime){
 
-      $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
-        <li><br><h3>'+post.Name+'</h3>\
-        <img title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
-        <h4>End: '+timezonePerfectEndTime+'</h4><br>\
-        </li><hr></a>');
+        $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
+          <li><br><h3>'+post.Name+'</h3>\
+          <img title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
+          <h4>End: '+timezonePerfectEndTime+'</h4><br>\
+          </li><hr></a>');
+      }
     }
   });
 
   $.each(json.result.upcoming , function(i,post){ 
-    
-    // converts the startTime and Endtime revieved
-    // to the format required for the Google Calender link to work
-    startTime = Date.parse(post.StartTime)
-    timezonePerfectStartTime  = changeTimezone(startTime).toString().slice(0,21);
-    endTime   = Date.parse(post.EndTime)
-    timezonePerfectEndTime  = changeTimezone(endTime).toString().slice(0,21);
-
-    s = new Date(changeTimezone(startTime).getTime() - ((curTime).getTimezoneOffset()*60000 )).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"");
-    e = new Date(changeTimezone(endTime).getTime() - ((curTime).getTimezoneOffset()*60000 )).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"");
-    
-    calendarTime = s+'/'+e
-    calendarLink = "https://www.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(post.Name)+"&dates="+calendarTime+"&location="+post.url+"&pli=1&uid=&sf=true&output=xml#eventpage_6"
-    
-    sT = new Date(startTime);
-    eT = new Date(endTime);
-
-    if(sT<curTime && eT>curTime){
-      $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
-        <li><br><h3>'+post.Name+'</h3>\
-        <img title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
-        <h4>End: '+timezonePerfectEndTime+'</h4><br>\
-        </li><hr></a>');
+    flag=0;
+    if(post.Platform=="HACKEREARTH"){
+      if(localStorage.getItem(post.Platform+post.challenge_type)=="false")flag=1;
     }
-    else if(sT>curTime && eT>curTime){
-      $("#upcoming").append('<a  data='+'"'+post.url+'"'+'>\
-        <li><br><h3>'+post.Name+'</h3>\
-        <img title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
-        <h4>Start: '+timezonePerfectStartTime+'</h4><br>\
-        <h4>Duration: '+post.Duration+'</h4><br>\
-        <h4 data='+calendarLink+' class="calendar">Add to Calendar</h4>\
-        </li><hr></a>');
+
+    if(localStorage.getItem(post.Platform)=="true" && flag==0){
+      // converts the startTime and Endtime revieved
+      // to the format required for the Google Calender link to work
+      startTime = Date.parse(post.StartTime)
+      timezonePerfectStartTime  = changeTimezone(startTime).toString().slice(0,21);
+      endTime   = Date.parse(post.EndTime)
+      timezonePerfectEndTime  = changeTimezone(endTime).toString().slice(0,21);
+
+      s = new Date(changeTimezone(startTime).getTime() - ((curTime).getTimezoneOffset()*60000 )).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"");
+      e = new Date(changeTimezone(endTime).getTime() - ((curTime).getTimezoneOffset()*60000 )).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"");
+      
+      calendarTime = s+'/'+e
+      calendarLink = "https://www.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(post.Name)+"&dates="+calendarTime+"&location="+post.url+"&pli=1&uid=&sf=true&output=xml#eventpage_6"
+      
+      sT = new Date(startTime);
+      eT = new Date(endTime);
+
+      if(sT<curTime && eT>curTime){
+        $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
+          <li><br><h3>'+post.Name+'</h3>\
+          <img title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
+          <h4>End: '+timezonePerfectEndTime+'</h4><br>\
+          </li><hr></a>');
+      }
+      else if(sT>curTime && eT>curTime){
+        $("#upcoming").append('<a  data='+'"'+post.url+'"'+'>\
+          <li><br><h3>'+post.Name+'</h3>\
+          <img title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
+          <h4>Start: '+timezonePerfectStartTime+'</h4><br>\
+          <h4>Duration: '+post.Duration+'</h4><br>\
+          <h4 data='+calendarLink+' class="calendar">Add to Calendar</h4>\
+          </li><hr></a>');
+      }
     }
   });
 
@@ -123,6 +135,16 @@ function imgToggle(){
 }
 
 $(document).ready(function(){
+
+  //initializing preference values in care they are not set.
+  localStorage.HACKEREARTH = "true";
+  if(!localStorage.HACKEREARTHhiring)localStorage.HACKEREARTHhiring = "true";
+  if(!localStorage.HACKEREARTHcontest)localStorage.HACKEREARTHcontest = "true";
+  if(!localStorage.HACKERRANK)localStorage.HACKERRANK = "true";
+  if(!localStorage.CODECHEF)localStorage.CODECHEF = 'true';
+  if(!localStorage.CODEFORCES)localStorage.CODEFORCES = 'true';
+  if(!localStorage.TOPCODER)localStorage.TOPCODER = 'true';
+
   
   now = (new Date()).getTime()/1000;
   if(!localStorage.cache || now - parseInt(localStorage.time) > 30*60){
@@ -185,9 +207,15 @@ $(document).ready(function(){
     src = $('.loading').attr('src');
     if(src=="img/refresh-white.png") fetchdata();
   });
+
+  $("body").on('click',".settings-btn", function(){
+    chrome.tabs.create({ url: "options.html" });
+  });
+
   setTimeout(function(){
     $("footer a:first-child").after('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><iframe src="https://ghbtns.com/github-btn.html?user=nishanthvijayan&repo=codercalendar&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe></span>');
   },1000);
+
 
 });
 

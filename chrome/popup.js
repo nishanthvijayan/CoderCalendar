@@ -146,6 +146,8 @@ $(document).ready(function(){
   if(!localStorage.CODECHEF)localStorage.CODECHEF = 'true';
   if(!localStorage.CODEFORCES)localStorage.CODEFORCES = 'true';
   if(!localStorage.TOPCODER)localStorage.TOPCODER = 'true';
+  if(!localStorage.GOOGLE)localStorage.GOOGLE = 'true';
+  if(!localStorage.OTHER)localStorage.OTHER = 'true';
 
   
   now = (new Date()).getTime()/1000;

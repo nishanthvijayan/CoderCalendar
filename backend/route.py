@@ -197,6 +197,7 @@ def fetch():
     thread_list.append( threading.Thread(target=getDataFromCodechef) )
     thread_list.append( threading.Thread(target=getDataFromHackerrankGeneral) )
     thread_list.append( threading.Thread(target=getDataFromHackerrankCollege) )
+    thread_list.append( threading.Thread(target=getDataFromGoogle) )
 
     for thread in thread_list:
         thread.start()

@@ -23,8 +23,8 @@ function changeTimezone(date){
 function putdata(json)
 { 
   // removes the previous contest entries.
-  $("#upcoming > a").remove();
-  $("#ongoing > a").remove();
+  $("#upcoming > li").remove();
+  $("#ongoing > li").remove();
   $("hr").remove();
 
   // the conditional statements that compare the start and end time with curTime
@@ -47,11 +47,31 @@ function putdata(json)
       
       if(e>curTime){
       
-        $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
-        	<li><br><h4>'+post.Name+'</h4>\
-        	<img alt="'+post.Platform+'" title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
-        	<h5>End: '+timezonePerfectEndTime+'</h5><br>\
-        	</li><hr></a>');
+        var node = document.createElement("li");
+        node.data = post.url;
+
+        linebreak = document.createElement("br");
+        var nameText = document.createTextNode(post.Name);
+        var nameNode = document.createElement("h4");
+        nameNode.appendChild(nameText);
+        
+        var imageNode = document.createElement("img");
+        imageNode.src =  icon(post.Platform);
+        
+        var endTimeText = document.createTextNode('End: '+timezonePerfectEndTime);
+        var endTimeNode = document.createElement("h5");
+        endTimeNode.appendChild(endTimeText);
+
+        node.appendChild(document.createElement("br"));
+        node.appendChild(nameNode);
+        node.appendChild(imageNode);
+        node.appendChild(document.createElement("br"));
+        node.appendChild(endTimeNode);
+        node.appendChild(document.createElement("br"));
+
+        document.getElementById("ongoing").appendChild(node);
+        document.getElementById("ongoing").appendChild(document.createElement("hr"));
+
       }
     }
   });
@@ -65,7 +85,7 @@ function putdata(json)
 
     if(localStorage.getItem(post.Platform)=="true" && flag==0){
       // converts the startTime and Endtime revieved
-      // to the format required for the Google Calender link to work
+      // to the format required for the Google Calendar link to work
       startTime = Date.parse(post.StartTime)
       timezonePerfectStartTime  = changeTimezone(startTime).toString().slice(0,21);
       endTime   = Date.parse(post.EndTime)
@@ -81,20 +101,72 @@ function putdata(json)
       eT = new Date(endTime);
 
       if(sT<curTime && eT>curTime){
-        $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
-          <li><br><h4>'+post.Name+'</h4>\
-          <img alt="'+post.Platform+'" title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
-          <h5>End: '+timezonePerfectEndTime+'</h5><br>\
-          </li><hr></a>');
+        var node = document.createElement("li");
+        node.data = post.url;
+
+        linebreak = document.createElement("br");
+        var nameText = document.createTextNode(post.Name);
+        var nameNode = document.createElement("h4");
+        nameNode.appendChild(nameText);
+        
+        var imageNode = document.createElement("img");
+        imageNode.src =  icon(post.Platform);
+        
+        var endTimeText = document.createTextNode('End: '+timezonePerfectEndTime);
+        var endTimeNode = document.createElement("h5");
+        endTimeNode.appendChild(endTimeText);
+
+        node.appendChild(document.createElement("br"));
+        node.appendChild(nameNode);
+        node.appendChild(imageNode);
+        node.appendChild(document.createElement("br"));
+        node.appendChild(endTimeNode);
+        node.appendChild(document.createElement("br"));
+
+        document.getElementById("ongoing").appendChild(node);
+        document.getElementById("ongoing").appendChild(document.createElement("hr"));
+
       }
       else if(sT>curTime && eT>curTime){
-        $("#upcoming").append('<a  data='+'"'+post.url+'"'+'>\
-          <li><br><h4>'+post.Name+'</h4>\
-          <img alt="'+post.Platform+'" title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
-          <h5>Start: '+timezonePerfectStartTime+'</h5><br>\
-          <h5>Duration: '+post.Duration+'</h5><br>\
-          <h5 data='+calendarLink+' class="calendar">Add to Calendar</h5>\
-          </li><hr></a>');
+
+        var node = document.createElement("li");
+        node.data = post.url;
+
+        linebreak = document.createElement("br");
+        var nameText = document.createTextNode(post.Name);
+        var nameNode = document.createElement("h4");
+        nameNode.appendChild(nameText);
+        
+        var imageNode = document.createElement("img");
+        imageNode.src =  icon(post.Platform);
+        
+        var startTimeText = document.createTextNode('Start: '+timezonePerfectStartTime);
+        var startTimeNode = document.createElement("h5");
+        startTimeNode.appendChild(startTimeText);
+
+        var durationText  = document.createTextNode('Duration: '+post.Duration);
+        var durationNode  = document.createElement("h5");
+        durationNode.appendChild(durationText);
+        
+        var calendarText = document.createTextNode('Add to Calendar');
+        var calendarNode  = document.createElement("h5");
+        calendarNode.className = "calendar";
+        calendarNode.appendChild(calendarText);
+        calendarNode.data = calendarLink;
+        
+        node.appendChild(document.createElement("br"));
+        node.appendChild(nameNode);
+        node.appendChild(imageNode);
+        node.appendChild(document.createElement("br"));
+        node.appendChild(startTimeNode);
+        node.appendChild(document.createElement("br"));
+        node.appendChild(durationNode);
+        node.appendChild(document.createElement("br"));
+        node.appendChild(calendarNode);
+
+        document.getElementById("upcoming").appendChild(node);
+        document.getElementById("upcoming").appendChild(document.createElement("hr"));
+
       }
     }
   });
@@ -173,14 +245,14 @@ $(document).ready(function(){
 
   
   //sends "link to be opened" to main.js
-  $("body").on('click',"a", function(){
-    self.port.emit("linkClicked",$(this).attr('data'));
+  $("body").on('click',"li", function(){
+    self.port.emit("linkClicked",this.data);
     return false;
   });
   
   //sends "link to be opened" to main.js
   $("body").on('click',".calendar", function(){
-    self.port.emit("linkClicked",$(this).attr('data'));
+    self.port.emit("linkClicked",this.data);
     return false;
   });
 

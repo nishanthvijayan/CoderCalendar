@@ -46,10 +46,7 @@ li{
  
 }
 
-a{
-  text-decoration: none;
-}
-a li:hover{
+li:hover{
   background-color: #e0ebfd;
   font-weight: bold; 
 }

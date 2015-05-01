@@ -5,7 +5,7 @@
   "description": "Shows a list of upcoming & ongoing Programming Contests happeing on a variety of popular platforms.",
   "author": "Nishanth Vijayan",
   "license": "MPL 2.0",
-  "version": "0.2.4",
+  "version": "0.2.7",
   "preferences": [
   {
     "name": "Hackerearthhiring",
@@ -15,7 +15,7 @@
   },
   {
     "name": "Hackerearthcontest",
-    "title": "Show non-hiring contests from Hackerearth?",
+    "title": "Show other contests from Hackerearth?",
     "type": "bool",
     "value": true
   },

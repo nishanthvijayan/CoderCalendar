@@ -7,6 +7,8 @@ function icon(platform){
   else if (platform=="CODEFORCES")  return "img/cf32.png"; 
   else if(platform=="TOPCODER")     return "img/tc32.gif";
   else if(platform=="HACKERRANK")   return "img/hr36.png";
+  else if(platform=="GOOGLE")   return "img/google32.png";
+  else if(platform=="OTHER")   return "img/other32.png";
 }
 
 // converts the input time(which is Indian Standard Time) to

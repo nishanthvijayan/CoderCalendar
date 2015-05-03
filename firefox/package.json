@@ -5,7 +5,7 @@
   "description": "Shows a list of upcoming & ongoing Programming Contests happeing on a variety of popular platforms.",
   "author": "Nishanth Vijayan",
   "license": "MPL 2.0",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "preferences": [
   {
     "name": "Hackerearthhiring",

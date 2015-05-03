@@ -260,6 +260,12 @@ $(document).ready(function(){
     return false;
   });
 
+  //sends "link to be opened" to main.js
+  $("body").on('click',"a", function(){
+    self.port.emit("linkClicked",$(this).attr('data'));
+    return false;
+  });
+
   // refresh only if icon is refresh icon.
   // Makes sure that clicking a loading icon does not trigger fetchdata()
   $("body").on('click',".loading", function(){

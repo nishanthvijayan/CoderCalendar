@@ -123,20 +123,26 @@ def getDataFromCodeforces():
 
 def getDataFromTopcoder():
     try:
-        page = urlopen("http://api.topcoder.com/v2/data/srm/schedule?pageSize=5&sortColumn=registrationStartTime&sortOrder=desc")
-        data = json.load(page)["data"]
-
+        page = urlopen("https://clients6.google.com/calendar/v3/calendars/appirio.com_bhga3musitat85mhdrng9035jg@group.calendar.google.com/events?calendarId=appirio.com_bhga3musitat85mhdrng9035jg%40group.calendar.google.com&singleEvents=true&timeZone=Asia%2FCalcutta&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2015-04-26T00%3A00%3A00-04%3A00&timeMax=2016-06-07T00%3A00%3A00-04%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs",timeout=15)
+        data = json.load(page)["items"]
+        cur_time = localtime()
         for item in data:
-            if item["name"]=="Round 1" or item["roundType"]=="Tournament Round":
-                            
-                start_time = strptime(item["codingStartTime"][:19], "%Y-%m-%dT%H:%M:%S")
-                start_time_indian = strftime("%a, %d %b %Y %H:%M",gmtime(mktime(start_time)+54000))
-                
-                end_time = strptime(item["challengeEndTime"][:19], "%Y-%m-%dT%H:%M:%S")
-                end_time_indian = strftime("%a, %d %b %Y %H:%M",gmtime(mktime(end_time)+54000))
+                   
+                start_time = strptime(item["start"]["dateTime"][:19], "%Y-%m-%dT%H:%M:%S")
+                start_time_indian = strftime("%a, %d %b %Y %H:%M",start_time)
+                end_time = strptime(item["end"]["dateTime"][:19], "%Y-%m-%dT%H:%M:%S")
+                end_time_indian = strftime("%a, %d %b %Y %H:%M",end_time)
+
                 duration = getDuration(int(( mktime(end_time)-mktime(start_time) )/60 ))
+                name = item["summary"]
+                if "SRM" in name: url = "http://community.topcoder.com/tc?module=MatchDetails&rd="+ item["description"][110:115]
+                else :            url = "http://tco15.topcoder.com/algorithm/rules/"
                 
-                posts["upcoming"].append({ "Name" :  item["contestName"] , "url" : "http://community.topcoder.com/tc?module=MatchDetails&rd="+str(item["roundId"]) ,"EndTime" : end_time_indian,"Duration":duration, "StartTime" :  start_time_indian,"Platform":"TOPCODER"  })
+                if cur_time<start_time:
+                    posts["upcoming"].append({ "Name" :  name , "url" : url ,"EndTime" : end_time_indian,"Duration":duration, "StartTime" :  start_time_indian,"Platform":"TOPCODER"  })
+                elif cur_time>start_time and cur_time<end_time:
+                    posts["ongoing"].append({ "Name" :  name , "url" : url ,"EndTime" : end_time_indian,"Platform":"TOPCODER"  })
+                    
     except Exception, e:
         pass
     

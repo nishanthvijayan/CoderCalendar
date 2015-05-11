@@ -5,6 +5,8 @@ function icon(platform){
   else if (platform=="CODEFORCES")  return "cf32.png"; 
   else if(platform=="TOPCODER")     return "tc32.gif";
   else if(platform=="HACKERRANK")   return "hr36.png";
+  else if(platform=="GOOGLE")   	return "google32.png";
+  else if(platform=="OTHER")   		return "other32.png";
 }
 
 function putdata(json)

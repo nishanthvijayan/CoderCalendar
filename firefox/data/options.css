@@ -1,0 +1,51 @@
+* {
+  margin:0;
+  padding: 0;
+}
+
+header{
+  background-color: #4285f4;
+  height: 40px;
+  color : #ffffff;
+  position: fixed;
+  width: 60%;
+  top:0%;
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.ui-content{
+  margin-top: 50px;
+  margin-left: 50px;
+  padding: 5px;
+}
+
+header > h3{
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+  display: inline-block;
+}
+.settings-btn{
+  position: fixed;
+  margin-top: 15px;
+  left: 90%;
+  height: 20px;
+  width: 20px;
+}
+input{
+  padding: 10px;
+  margin: 10px;
+}
+
+.ui-content  > h3{
+  margin: 10px; 
+}
+.ui-content  > h5{
+  margin: 10px; 
+}
+.wrapper{
+  margin-left: 20%;
+  background-color: #e0ebfd;
+  width: 60%;
+}

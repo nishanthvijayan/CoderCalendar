@@ -2,45 +2,8 @@
   "name": "codercalendar",
   "title": "Coder's Calendar",
   "id": "jid1-ThQRNy5J1zU6Bg",
-  "description": "Shows a list of upcoming & ongoing Programming Contests happeing on a variety of popular platforms.",
+  "description": "Presents you with a list of upcoming & ongoing Programming Contests happeing on a variety of popular platforms.",
   "author": "Nishanth Vijayan",
   "license": "MPL 2.0",
-  "version": "0.2.8",
-  "preferences": [
-  {
-    "name": "Hackerearthhiring",
-    "title": "Show hiring contests from Hackerearth?",
-    "type": "bool",
-    "value": true
-  },
-  {
-    "name": "Hackerearthcontest",
-    "title": "Show other contests from Hackerearth?",
-    "type": "bool",
-    "value": true
-  },
-	{
-    "name": "Hackerrank",
-    "title": "Show contests from Hackerrank?",
-    "type": "bool",
-    "value": true
-	},
-	{
-    "name": "Codechef",
-    "title": "Show contests from Codechef?",
-    "type": "bool",
-    "value": true
-	},
-	{
-    "name": "Codeforces",
-    "title": "Show contest from Codeforces?",
-    "type": "bool",
-    "value": true
-	},
-	{
-    "name": "Topcoder",
-    "title": "Show contest from Topcoder?",
-    "type": "bool",
-    "value": true
-	}]
+  "version": "0.3.0"
 }

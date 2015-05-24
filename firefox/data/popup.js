@@ -222,9 +222,8 @@ function imgToggle(){
 $(document).ready(function(){
   
   //initializing preference values in care they are not set.
-  if(!localStorage.HACKEREARTH)localStorage.HACKEREARTH = "true";
-  if(!localStorage.HACKEREARTH)localStorage.HACKEREARTHhiring = "true";
-  if(!localStorage.HACKEREARTH)localStorage.HACKEREARTHcontest = "true";
+  if(!localStorage.HACKEREARTHhiring)localStorage.HACKEREARTHhiring = "true";
+  if(!localStorage.HACKEREARTHcontest)localStorage.HACKEREARTHcontest = "true";
   if(!localStorage.CODECHEF)localStorage.CODECHEF = 'true';
   if(!localStorage.CODEFORCES)localStorage.CODEFORCES = 'true';
   if(!localStorage.TOPCODER)localStorage.TOPCODER = 'true';
@@ -266,38 +265,15 @@ $(document).ready(function(){
     return false;
   });
 
+  $("body").on('click',".settings-btn", function(){
+    self.port.emit("linkClicked", "options.html" );
+  });
+
   // refresh only if icon is refresh icon.
   // Makes sure that clicking a loading icon does not trigger fetchdata()
   $("body").on('click',".loading", function(){
     src = $('.loading').attr('src');
     if(src=="img/refresh-white.png") fetchdata();
-  });
-
-  self.port.on("Hackerearthcontest_Changed",function(data){
-    localStorage.HACKEREARTHcontest = data;
-    restoredata();
-  });
-  self.port.on("Hackerearthhiring_Changed",function(data){
-    localStorage.HACKEREARTHhiring = data;
-    restoredata();
-  });
-  self.port.on("Hackerrank_Changed",function(data){
-    localStorage.HACKERRANK = data;
-    restoredata();
-
-  });
-  self.port.on("Codechef_Changed",function(data){
-    localStorage.CODECHEF = data;
-    restoredata();
-
-  });
-  self.port.on("Codeforces_Changed",function(data){
-    localStorage.CODEFORCES = data;
-    restoredata();
-  });
-  self.port.on("Topcoder_Changed",function(data){
-    localStorage.TOPCODER = data;
-    restoredata();
   });
 
 });

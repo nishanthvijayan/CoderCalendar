@@ -2,7 +2,6 @@ var buttons = require('sdk/ui/button/action');
 var panels = require("sdk/panel");
 var self = require("sdk/self");
 var tabs = require("sdk/tabs");
-var preferences = require("sdk/simple-prefs");
 
 
 var newsfeed = panels.Panel({
@@ -23,7 +22,6 @@ var button = buttons.ActionButton({
   onClick: popup 
 })
 
-
 function popup(){
   newsfeed.show({ position: button });
  };
@@ -33,8 +31,3 @@ newsfeed.port.on("linkClicked", function (text) {
   //open new tab with link
   tabs.open(text);
 });
-
-preferences.on("", function(prefName){
-  newsfeed.port.emit(prefName+"_Changed",preferences.prefs[prefName] );
-});
-

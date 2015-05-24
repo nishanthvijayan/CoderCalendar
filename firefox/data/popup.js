@@ -236,7 +236,8 @@ $(document).ready(function(){
   counter = 0;
   setInterval(function(){
     counter = counter+1;
-    if(counter%6==0) fetchdata();
+    timeIntervalMin = parseInt(localStorage.CHECKINTERVAL);
+    if(counter%timeIntervalMin==0) fetchdata();
     else{
       if(localStorage.cache){
         localData = JSON.parse(localStorage.cache);
@@ -245,7 +246,7 @@ $(document).ready(function(){
         fetchdata();
       }
     }
-  }, 300000);
+  }, 60000);
 
   
   //sends "link to be opened" to main.js

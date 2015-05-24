@@ -10,6 +10,8 @@ $(document).ready(function(){
 	if(!localStorage.GOOGLE)localStorage.GOOGLE = 'true';
 	if(!localStorage.OTHER)localStorage.OTHER = 'true';
 
+	if(!localStorage.CHECKINTERVAL)localStorage.CHECKINTERVAL = 5;
+
 	$('#Hackerearthhiring')[0].checked 	= ( localStorage.HACKEREARTHhiring=="true" );
 	$('#Hackerearthcontest')[0].checked = ( localStorage.HACKEREARTHcontest=="true" );
 	$('#Hackerrank')[0].checked 		= ( localStorage.HACKERRANK=="true" );
@@ -18,6 +20,8 @@ $(document).ready(function(){
 	$('#Topcoder')[0].checked 			= ( localStorage.TOPCODER=="true" );
 	$('#Google')[0].checked 			= ( localStorage.GOOGLE=="true" );
 	$('#Other')[0].checked 				= ( localStorage.OTHER=="true" );
+
+	$('#checkInterval')[0].value = localStorage.CHECKINTERVAL;
 
 	$(':checkbox').change( function(){
 		localStorage.HACKEREARTHhiring  = $('#Hackerearthhiring')[0].checked;
@@ -30,4 +34,7 @@ $(document).ready(function(){
 		localStorage.OTHER				= $('#Other')[0].checked;
 	});
 
+	$('#checkInterval').change(function(){
+		localStorage.CHECKINTERVAL = $('#checkInterval')[0].value;
+	})
 });

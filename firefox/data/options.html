@@ -2,7 +2,7 @@
 <html>
 <head>
 
-  <title>Options - Coder's Calendar</title>
+  <title>Coder's Calendar</title>
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="options.css">
   <script src="jquery.js"></script>
@@ -14,7 +14,7 @@
 	    <table width="100%"><tbody>
 	      	<tr>
 		        <td rowspan="2" class="icon"></td>
-		        <td class="title"><span>Options - Coder's Calendar</span></td>
+		        <td class="title"><span><h3>Coder's Calendar<h3></span></td>
 		        
 		        <td rowspan="2" class="links">
 		            <a class="donatebutton" href="https://gratipay.com/nishanthvijayan">Make a Donation</a></button>
@@ -39,42 +39,57 @@
   	<div id="content" class="flex">
     	<table width="100%"><tbody>
     		<tr>
-        		<td>Timings</td>
+        		<td>What's new?</td>
         		<td>
-          			<span>Check for updates every (in minutes):</span> <input name="checkInterval" id="checkInterval" min="5" type="number">
+        			<label><span >v0.3.0</span></label>
+          			<p class="note" >Minor Bug Fixes.</p>
+          			<p class="note" >Better settings page.</p>
+					<p class="spacer"></p>
+					<p class="note">If you like Coder's Calendar, please rate the extension or star our <a href="https://github.com/nishanthvijayan/CoderCalendar">Github repo</a>.</p>
+        		</td>
+      		</tr>
+    		<tr>
+        		<td>Updates:</td>
+        		<td>
+        			<!-- <label><input name="autoUpdate" id="autoUpdate" type="checkbox"> <span >Update Automatically</span></label>
+					<p class="spacer"></p><p class="spacer"></p> -->
+
+          			<span>Check for data updates every (in minutes):</span> <input id="checkInterval" min="5" type="number">
           			<p class="note" >Minimum period is 5 minutes.</p>
-          			<p class="spacer"></p>
-          			<span >Do not check for new contests on startup for (in minutes):</span> <input  name="firstCheckWait" id="firstCheckWait" min="0" type="number">
-          			<p class="note">Set the value to zero to check immediately on startup.</p>
+          			<p class="note" >Here update refers to fetching contest data from server.Not add-on update.</p>
+					<p class="spacer"></p>	
+          			<!-- May add later
+          			<span >On firefox startup, check for updates after (minutes):</span> <input  name="firstCheckWait" id="firstCheckWait" min="0" type="number">
+          			<p class="note">Set the value to zero to check immediately on startup.</p> -->
         		</td>
       		</tr>
 
-      		<tr>
+      		<tr><br>
         		<td >Subscribe:</td>
         		<td>
-          			<label><input name="Codechef" id="Codechef" type="checkbox"> <span >Codechef</span></label>
+          			<label><input id="Codechef" type="checkbox"> <span >Codechef</span></label>
           			<p class="spacer"></p>
           			
-          			<label><input name="Codeforces" id="Codeforces" type="checkbox"> <span >Codeforces</span></label>
+          			<label><input id="Codeforces" type="checkbox"> <span >Codeforces</span></label>
 		          	<p class="spacer"></p>
 
-		          	<label><input name="Hackerrank" id="Hackerrank" type="checkbox"> <span >Hackerrank</span></label>
+		          	<label><input id="Hackerrank" type="checkbox"> <span >Hackerrank</span></label>
 					<p class="spacer"></p>
 
-					<label><input name="Hackerearthhiring" id="Hackerearthhiring" type="checkbox"> <span >Hackerearth(Hiring)</span></label>
+					<label><input id="Hackerearthhiring" type="checkbox"> <span >Hackerearth(Hiring)</span></label>
 					<p class="spacer"></p>
 					
-					<label><input name="Hackerearthcontest" id="Hackerearthcontest" type="checkbox"> <span >Hackerearth(General)</span></label>
+					<label><input id="Hackerearthcontest" type="checkbox"> <span >Hackerearth(General)</span></label>
 					<p class="note">Contests other than hiring contests.This includes College contests as well.</p>
 					<p class="spacer"></p>
 					
-					<label><input name="Topcoder" id="Topcoder" type="checkbox"> <span >Topcoder</span></label>
+					<label><input id="Topcoder" type="checkbox"> <span >Topcoder</span></label>
 					<p class="spacer"></p>
 					
-					<label><input name="Google" id="Google" type="checkbox"> <span >Google Code Jam</span></label>
+					<label><input id="Google" type="checkbox"> <span >Google Code Jam</span></label>
 					<p class="spacer"></p>
 					
-					<label><input name="Other" id="Other" type="checkbox"> <span >Other</span></label>
+					<label><input id="Other" type="checkbox"> <span >Other</span></label>
 					<p class="spacer"></p>
 
 					<p class="note">Click the refresh button in the extension to see the changes take effect.</p>

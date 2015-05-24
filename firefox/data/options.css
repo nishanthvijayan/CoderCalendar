@@ -115,3 +115,5 @@ table {
   text-decoration: none;
   color: white;
 }
+h3{display: inline;}
+p > a{text-decoration: none;}

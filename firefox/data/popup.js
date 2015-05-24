@@ -224,6 +224,7 @@ $(document).ready(function(){
   //initializing preference values in care they are not set.
   if(!localStorage.HACKEREARTHhiring)localStorage.HACKEREARTHhiring = "true";
   if(!localStorage.HACKEREARTHcontest)localStorage.HACKEREARTHcontest = "true";
+  if(!localStorage.HACKERRANK)localStorage.HACKERRANK = "true";
   if(!localStorage.CODECHEF)localStorage.CODECHEF = 'true';
   if(!localStorage.CODEFORCES)localStorage.CODEFORCES = 'true';
   if(!localStorage.TOPCODER)localStorage.TOPCODER = 'true';

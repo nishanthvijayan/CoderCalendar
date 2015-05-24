@@ -1,5 +1,15 @@
 $(document).ready(function(){
-		
+	
+	//initializing preference values in care they are not set.
+	if(!localStorage.HACKEREARTHhiring)localStorage.HACKEREARTHhiring = "true";
+	if(!localStorage.HACKEREARTHcontest)localStorage.HACKEREARTHcontest = "true";
+	if(!localStorage.HACKERRANK)localStorage.HACKERRANK = "true";
+	if(!localStorage.CODECHEF)localStorage.CODECHEF = 'true';
+	if(!localStorage.CODEFORCES)localStorage.CODEFORCES = 'true';
+	if(!localStorage.TOPCODER)localStorage.TOPCODER = 'true';
+	if(!localStorage.GOOGLE)localStorage.GOOGLE = 'true';
+	if(!localStorage.OTHER)localStorage.OTHER = 'true';
+
 	$('#Hackerearthhiring')[0].checked 	= ( localStorage.HACKEREARTHhiring=="true" );
 	$('#Hackerearthcontest')[0].checked = ( localStorage.HACKEREARTHcontest=="true" );
 	$('#Hackerrank')[0].checked 		= ( localStorage.HACKERRANK=="true" );

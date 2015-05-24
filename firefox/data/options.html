@@ -1,28 +1,86 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Coder's Calendar Options</title>
-	<link rel="stylesheet" type="text/css" href="options.css">
-	<script src="jquery.js"></script>
-	<script src="options.js"></script>
+
+  <title>Options - Coder's Calendar</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="options.css">
+  <script src="jquery.js"></script>
+  <script src="options.js"></script>
+
 </head>
-<body>
-	<div class="wrapper">
-	    <header>
-	    	<h3>Options - Coder's Calendar</h3>
-	    </header>
-	    <div class="ui-content">
-	      	<br><br><h4>Subscribe:</h4><br>
-	      	<input type="checkbox" name="Hackerearthhiring" id="Hackerearthhiring">Hackerearth(hiring)<br>
-			<input type="checkbox" name="Hackerearthcontest" id="Hackerearthcontest" >Hackerearth (general)<br>
-			<input type="checkbox" name="Hackerrank" id="Hackerrank" >Hackerrank<br>
-			<input type="checkbox" name="Codechef" id="Codechef" >Codechef<br>
-			<input type="checkbox" name="Codeforces" id="Codeforces" >Codeforces<br>
-			<input type="checkbox" name="Topcoder" id="Topcoder">Topcoder<br>
-			<input type="checkbox" name="Google" id="Google" >Google<br>
-			<input type="checkbox" name="Other" id="Other" >Other<br><br>
-			<h5>(Click the refresh button in the extension to see the changes take effect.)</h5><br>
-		</div>
+<body class="flex">
+  	<div id="header" class="flex">
+	    <table width="100%"><tbody>
+	      	<tr>
+		        <td rowspan="2" class="icon"></td>
+		        <td class="title"><span>Options - Coder's Calendar</span></td>
+		        
+		        <td rowspan="2" class="links">
+		            <a class="donatebutton" href="https://gratipay.com/nishanthvijayan">Make a Donation</a></button>
+		        </td>
+		        
+		        <td rowspan="2" class="links">
+		            <span><iframe src="https://ghbtns.com/github-btn.html?user=nishanthvijayan&type=follow&count=false" frameborder="0" scrolling="0" width="220px" height="25px"></iframe></span>
+		        </td>
+
+		        <td rowspan="2" class="links">
+		          <a href="https://addons.mozilla.org/en-US/firefox/addon/coder-calendar/"><img src="img/firefox.png"></a>
+		          <a href="https://chrome.google.com/webstore/detail/coders-calendar/bageaffklfkikjigoclfgengklfnidll"><img src="img/chrome.png"></a>
+		          <a href="https://github.com/nishanthvijayan/CoderCalendar"><img src="img/github.png"></a>
+		        </td>
+	      	</tr>
+	      	<tr>
+	        	<td class="short"><span class="note">Never miss a Coding Competition ever again!</span></td>
+	      	</tr>
+		</tbody></table>
+  	</div>
+
+  	<div id="content" class="flex">
+    	<table width="100%"><tbody>
+    		<tr>
+        		<td>Timings</td>
+        		<td>
+          			<span>Check for updates every (in minutes):</span> <input name="checkInterval" id="checkInterval" min="5" type="number">
+          			<p class="note" >Minimum period is 5 minutes.</p>
+          			<p class="spacer"></p>
+          			<span >Do not check for new contests on startup for (in minutes):</span> <input  name="firstCheckWait" id="firstCheckWait" min="0" type="number">
+          			<p class="note">Set the value to zero to check immediately on startup.</p>
+        		</td>
+      		</tr>
+
+      		<tr>
+        		<td >Subscribe:</td>
+        		<td>
+          			<label><input name="Codechef" id="Codechef" type="checkbox"> <span >Codechef</span></label>
+          			<p class="spacer"></p>
+          			
+          			<label><input name="Codeforces" id="Codeforces" type="checkbox"> <span >Codeforces</span></label>
+		          	<p class="spacer"></p>
+
+		          	<label><input name="Hackerrank" id="Hackerrank" type="checkbox"> <span >Hackerrank</span></label>
+					<p class="spacer"></p>
+
+					<label><input name="Hackerearthhiring" id="Hackerearthhiring" type="checkbox"> <span >Hackerearth(Hiring)</span></label>
+					<p class="spacer"></p>
+					
+					<label><input name="Hackerearthcontest" id="Hackerearthcontest" type="checkbox"> <span >Hackerearth(General)</span></label>
+					<p class="note">Contests other than hiring contests.This includes College contests as well.</p>
+					<p class="spacer"></p>
+					
+					<label><input name="Topcoder" id="Topcoder" type="checkbox"> <span >Topcoder</span></label>
+					<p class="spacer"></p>
+					
+					<label><input name="Google" id="Google" type="checkbox"> <span >Google Code Jam</span></label>
+					<p class="spacer"></p>
+					
+					<label><input name="Other" id="Other" type="checkbox"> <span >Other</span></label>
+					<p class="spacer"></p>
+
+					<p class="note">Click the refresh button in the extension to see the changes take effect.</p>
+        		</td>
+      		</tr>
+    </tbody></table>
 	</div>
 </body>
 </html>

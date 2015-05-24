@@ -26,6 +26,11 @@ function popup(){
   newsfeed.show({ position: button });
  };
 
+exports.main = function (options, callbacks) {
+    if (options.loadReason === 'install' || options.loadReason === 'upgrade') {
+        tabs.open("./options.html");
+    }
+};
 
 newsfeed.port.on("linkClicked", function (text) {
   //open new tab with link

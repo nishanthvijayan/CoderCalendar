@@ -136,6 +136,27 @@ function imgToggle(){
   else $(".loading").attr("src","img/refresh-white.png");
 }
 
+function getVersion() {
+  var details = chrome.app.getDetails();
+  return details.version;
+}
+
+function checkRuntime(){
+  
+  // Check if the version has changed.
+  var currVersion = getVersion();
+  var prevVersion = localStorage['version']
+  if (currVersion != prevVersion) {
+    // Check if we just installed this extension.
+    if (typeof prevVersion == 'undefined') {
+      chrome.tabs.create({ url: "options.html" });
+    } else {
+      chrome.tabs.create({ url: "options.html" });
+    }
+    localStorage['version'] = currVersion;
+  }
+}
+
 $(document).ready(function(){
 
   //initializing preference values in care they are not set.
@@ -167,13 +188,12 @@ $(document).ready(function(){
 
   }
 
-  // this mechanism makes sure that the data is fetched every 
-  // 30 minutes and the validy of entries is checked every 5 minutes.(Overkill?)
   counter = 0;
   setInterval(function(){
     counter = counter+1;
-    if(counter%6==0) fetchdata();
-    else {
+    timeIntervalMin = parseInt(localStorage.CHECKINTERVAL);
+    if(counter%timeIntervalMin==0) fetchdata();
+    else{
       if(localStorage.cache){
         localData = JSON.parse(localStorage.cache);
         putdata(localData);
@@ -181,7 +201,9 @@ $(document).ready(function(){
         fetchdata();
       }
     }
-  }, 300000);
+  }, 60000);
+
+  checkRuntime();
 
   // saves the scroll position of the document
   // which can be used to restore the scroll state later on
@@ -217,7 +239,8 @@ $(document).ready(function(){
   });
 
   setTimeout(function(){
-    $("footer a:first-child").after('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><iframe src="https://ghbtns.com/github-btn.html?user=nishanthvijayan&repo=codercalendar&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe></span>');
+    $("span").remove();
+    $("footer a:first-child").after('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<iframe src="https://ghbtns.com/github-btn.html?user=nishanthvijayan&repo=codercalendar&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe></span>');
   },1000);
 
 

@@ -127,7 +127,8 @@ def getDataFromTopcoder():
         data = json.load(page)["items"]
         cur_time = localtime()
         for item in data:
-                   
+		if(item["start"].has_key("date")):continue
+		        
                 start_time = strptime(item["start"]["dateTime"][:19], "%Y-%m-%dT%H:%M:%S")
                 start_time_indian = strftime("%a, %d %b %Y %H:%M",start_time)
                 end_time = strptime(item["end"]["dateTime"][:19], "%Y-%m-%dT%H:%M:%S")

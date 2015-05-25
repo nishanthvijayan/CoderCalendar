@@ -8,7 +8,7 @@ function icon(platform){
   else if(platform=="TOPCODER")     return "img/tc32.gif";
   else if(platform=="HACKERRANK")   return "img/hr36.png";
   else if(platform=="GOOGLE")   return "img/google32.png";
-  else if(platform=="OTHER")   return "img/other32.png";
+  else return "img/other32.png";
 }
 
 // converts the input time(which is Indian Standard Time) to
@@ -230,6 +230,7 @@ $(document).ready(function(){
   if(!localStorage.TOPCODER)localStorage.TOPCODER = 'true';
   if(!localStorage.GOOGLE)localStorage.GOOGLE = 'true';
   if(!localStorage.OTHER)localStorage.OTHER = 'true';
+  if(!localStorage.CHECKINTERVAL)localStorage.CHECKINTERVAL = 5;
 
   fetchdata();
 

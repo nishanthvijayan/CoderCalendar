@@ -47,11 +47,12 @@ function putdata(json)
       e = new Date(endTime);
       
       if(e>curTime){
+        humanReadableEndTime = moment(timezonePerfectEndTime).fromNow();
 
         $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
           <li><br><h3>'+post.Name+'</h3>\
           <img title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
-          <h4>End: '+timezonePerfectEndTime+'</h4><br>\
+          <h4>End: '+timezonePerfectEndTime+' ( ' + humanReadableEndTime + ' )</h4><br>\
           </li><hr></a>');
       }
     }
@@ -70,6 +71,8 @@ function putdata(json)
       timezonePerfectStartTime  = changeTimezone(startTime).toString().slice(0,21);
       endTime   = Date.parse(post.EndTime)
       timezonePerfectEndTime  = changeTimezone(endTime).toString().slice(0,21);
+      humanReadableStartTime = moment(timezonePerfectStartTime).fromNow();
+      humanReadableEndTime = moment(timezonePerfectEndTime).fromNow();
 
       s = new Date(changeTimezone(startTime).getTime() - ((curTime).getTimezoneOffset()*60000 )).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"");
       e = new Date(changeTimezone(endTime).getTime() - ((curTime).getTimezoneOffset()*60000 )).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"");
@@ -84,14 +87,14 @@ function putdata(json)
         $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
           <li><br><h3>'+post.Name+'</h3>\
           <img title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
-          <h4>End: '+timezonePerfectEndTime+'</h4><br>\
+          <h4>End: '+timezonePerfectEndTime+' ( ' + humanReadableEndTime + ' )</h4><br>\
           </li><hr></a>');
       }
       else if(sT>curTime && eT>curTime){
         $("#upcoming").append('<a  data='+'"'+post.url+'"'+'>\
           <li><br><h3>'+post.Name+'</h3>\
           <img title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
-          <h4>Start: '+timezonePerfectStartTime+'</h4><br>\
+          <h4>Start: '+timezonePerfectStartTime+' ( ' + humanReadableStartTime + ' )</h4><br>\
           <h4>Duration: '+post.Duration+'</h4><br>\
           <h4 data='+calendarLink+' class="calendar">Add to Calendar</h4>\
           </li><hr></a>');

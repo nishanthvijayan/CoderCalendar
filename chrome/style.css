@@ -93,6 +93,7 @@ li > img{
   left: 80%;
   height: 20px;
   width: 20px;
+  cursor: pointer;
 }
 .settings-btn{
   position: fixed;
@@ -100,4 +101,5 @@ li > img{
   left: 90%;
   height: 20px;
   width: 20px;
+  cursor: pointer;
 }

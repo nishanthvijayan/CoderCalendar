@@ -74,7 +74,7 @@ def getDataFromHackerearth():
     duplicate_check=[]
 
     page = urlopen("https://www.hackerearth.com/chrome-extension/events/")
-    data = json.load(page)
+    data = json.load(page)["response"]
     for item in data:
         start_time = strptime(item["start_tz"].strip()[:19], "%Y-%m-%d %H:%M:%S")
         end_time = strptime(item["end_tz"].strip()[:19], "%Y-%m-%d %H:%M:%S")

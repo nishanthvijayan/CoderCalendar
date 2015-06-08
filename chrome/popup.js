@@ -241,11 +241,8 @@ $(document).ready(function(){
     chrome.tabs.create({ url: "options.html" });
   });
 
-  setTimeout(function(){
-    $("span").remove();
-    $("footer a:first-child").after('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<iframe src="https://ghbtns.com/github-btn.html?user=nishanthvijayan&repo=codercalendar&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe></span>');
-  },1000);
-
-
+  $("body").on('click',".gh-btn", function(){
+    chrome.tabs.create({ url: "https://github.com/nishanthvijayan/CoderCalendar" });
+  });
 });
 

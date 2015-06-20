@@ -46,7 +46,8 @@ function putdata(json)
       endTime   = Date.parse(post.EndTime);
       timezonePerfectEndTime  = changeTimezone(endTime).toString().slice(0,21);
       e = new Date(endTime);
-      
+      humanReadableEndTime = moment(timezonePerfectEndTime).fromNow();
+
       if(e>curTime){
       
         var node = document.createElement("li");
@@ -60,7 +61,7 @@ function putdata(json)
         var imageNode = document.createElement("img");
         imageNode.src =  icon(post.Platform);
         
-        var endTimeText = document.createTextNode('End: '+timezonePerfectEndTime);
+        var endTimeText = document.createTextNode('End: '+timezonePerfectEndTime+ ' ( '+humanReadableEndTime+' )');
         var endTimeNode = document.createElement("h5");
         endTimeNode.appendChild(endTimeText);
 
@@ -90,9 +91,11 @@ function putdata(json)
       // to the format required for the Google Calendar link to work
       startTime = Date.parse(post.StartTime)
       timezonePerfectStartTime  = changeTimezone(startTime).toString().slice(0,21);
+      humanReadableStartTime = moment(timezonePerfectStartTime).fromNow();
+
       endTime   = Date.parse(post.EndTime)
       timezonePerfectEndTime  = changeTimezone(endTime).toString().slice(0,21);
-
+      humanReadableEndTime = moment(timezonePerfectEndTime).fromNow();
       s = new Date(changeTimezone(startTime).getTime() - ((curTime).getTimezoneOffset()*60000 )).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"");
       e = new Date(changeTimezone(endTime).getTime() - ((curTime).getTimezoneOffset()*60000 )).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"");
       
@@ -114,7 +117,7 @@ function putdata(json)
         var imageNode = document.createElement("img");
         imageNode.src =  icon(post.Platform);
         
-        var endTimeText = document.createTextNode('End: '+timezonePerfectEndTime);
+        var endTimeText = document.createTextNode('End: '+timezonePerfectEndTime+ ' ( '+humanReadableEndTime+' )');
         var endTimeNode = document.createElement("h5");
         endTimeNode.appendChild(endTimeText);
 
@@ -142,7 +145,7 @@ function putdata(json)
         var imageNode = document.createElement("img");
         imageNode.src =  icon(post.Platform);
         
-        var startTimeText = document.createTextNode('Start: '+timezonePerfectStartTime);
+        var startTimeText = document.createTextNode('Start: '+timezonePerfectStartTime+ ' ( '+humanReadableStartTime+' )');
         var startTimeNode = document.createElement("h5");
         startTimeNode.appendChild(startTimeText);
 
@@ -185,8 +188,6 @@ function fetchdata(){
   req.send();
   req.onload = function(){
 
-    $("span").remove();
-    $("footer a:nth-child(2)").before('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<iframe src="https://ghbtns.com/github-btn.html?user=nishanthvijayan&repo=codercalendar&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe></span>');
     imgToggle();
     
     res = JSON.parse(req.responseText);
@@ -222,6 +223,7 @@ function imgToggle(){
 $(document).ready(function(){
   
   //initializing preference values in care they are not set.
+  localStorage.HACKEREARTH = "true";
   if(!localStorage.HACKEREARTHhiring)localStorage.HACKEREARTHhiring = "true";
   if(!localStorage.HACKEREARTHcontest)localStorage.HACKEREARTHcontest = "true";
   if(!localStorage.HACKERRANK)localStorage.HACKERRANK = "true";
@@ -270,6 +272,10 @@ $(document).ready(function(){
 
   $("body").on('click',".settings-btn", function(){
     self.port.emit("linkClicked", "options.html" );
+  });
+
+  $("body").on('click',".gh-btn", function(){
+    self.port.emit("linkClicked", "https://github.com/nishanthvijayan/CoderCalendar" );
   });
 
   // refresh only if icon is refresh icon.

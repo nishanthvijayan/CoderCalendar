@@ -6,7 +6,7 @@ function icon(platform){
   else if(platform=="TOPCODER")     return "tc32.gif";
   else if(platform=="HACKERRANK")   return "hr36.png";
   else if(platform=="GOOGLE")   	return "google32.png";
-  else if(platform=="OTHER")   		return "other32.png";
+  else   		return "other32.png";
 }
 
 function putdata(json)
@@ -30,7 +30,7 @@ function putdata(json)
       ongoingHTML+='<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
         <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
         <h4>End: '+post.EndTime+'</h4><br><br>\
-        <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.EndTime+'&quot;);" >Tell your Friends</h4>\
+        <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.EndTime+'&quot;);" >Share</h4>\
         </li><hr>';
     }
 
@@ -47,16 +47,16 @@ function putdata(json)
     var notes = " ";
     var success = function(message) {
       if(Object.keys(message).length>0){
-        calendar_string = '<h4 onclick="delcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;,&quot;'+post.EndTime+'&quot;);" class="calendar">Delete from Calendar</h4>';
+        calendar_string = '<h4 class="calDelete" onclick="delcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;,&quot;'+post.EndTime+'&quot;);" class="calendar">Delete from Calendar</h4>';
       }else{
-        calendar_string = '<h4 onclick="addcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;,&quot;'+post.EndTime+'&quot;);" class="calendar">Add to Calendar</h4>';
+        calendar_string = '<h4 class="calAdd" onclick="addcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;,&quot;'+post.EndTime+'&quot;);" class="calendar">Add to Calendar</h4>';
       }
 
       upcomingHTML+='<li><br><h3 onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
       <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
       <h4>Start: '+post.StartTime+'</h4><br>\
       <h4>Duration: '+post.Duration+'</h4><br>'+calendar_string+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
-      <h4 class="share" onclick="socialShare(1,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;);" >Tell your Friends</h4></li><hr>';
+      <h4 class="share" onclick="socialShare(1,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;);" >Share</h4></li><hr>';
     };
 
     var error   = function(message) {};
@@ -64,13 +64,13 @@ function putdata(json)
     // if contest has not ended    
     if(e>curTime && s>curTime){
       // seaarch for calendar event
-      window.plugins.calendar.findEvent(title,eventLocation,notes,s,e,success,error);;
+      window.plugins.calendar.findEvent(title,eventLocation,notes,s,e,success,error);
     }else if(e>curTime && s<curTime){
 
       ongoingHTML+='<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
         <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
         <h4>End: '+post.EndTime+'</h4><br><br>\
-        <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.EndTime+'&quot;);" >Tell your Friends</h4>\
+        <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.EndTime+'&quot;);" >Share</h4>\
         </li><hr>';
     }
 
@@ -228,7 +228,7 @@ document.addEventListener("deviceready", function(){
   });
 
   $(".info").click(function(){
-    navigator.notification.alert("Tap on the contest name to visit the contest page.\n\nTap on Add to Calendar/Delete from Calendar to add/delete the contest to/from your calendar.\n\nTap on 'Tell your Friends' to let others know about the contest.\n\nHappy Coding!",function() {},"Instructions","OK");
+    navigator.notification.alert("Tap on the contest name to visit the contest page.\n\nTap on Add to Calendar/Delete from Calendar to add/delete the contest to/from your calendar.\n\nTap on 'Share' to let others know about the contest.\n\nHappy Coding!",function() {},"Instructions","OK");
   });
 
 });

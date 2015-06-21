@@ -130,14 +130,17 @@ li{
   text-decoration: none;
   color: black;
 }
-
+li > *{
+  margin-left: 5%;
+}
+li > h3{
+  border-bottom: 1px solid #E2DEC9;
+}
 h3,h4,h5{
   font-weight: inherit;
 }
-h3{display: inline-block;}
-
-li > h3{
-  text-decoration: underline;
+h3{
+  display: inline-block;
 }
 .calendar{
   cursor: pointer;
@@ -186,4 +189,13 @@ hr {
   left: 80%;
   height: 20px;
   width: 20px; 
+}
+.calDelete{
+  color: #ff0000;
+  display: inline;
+  text-decoration: underline;
+}
+.calAdd{
+  text-decoration: underline;  
+  display: inline;
 }

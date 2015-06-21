@@ -21,11 +21,9 @@ The Android app uses:
 - jQuery
   
 And the following cordova plugins:
-- com.telerik.plugins.nativepagetransitions 0.2.14 "Native Page Transitions"
 - nl.x-services.plugins.calendar 4.3.1 "Calendar"
 - nl.x-services.plugins.socialsharing 4.3.17 "SocialSharing"
 - nl.x-services.plugins.toast 2.0.4 "Toast"
-- org.apache.cordova.console 0.2.12 "Console"
 - org.apache.cordova.device 0.2.13 "Device"
 - org.apache.cordova.dialogs 0.3.0 "Notification"
 - org.apache.cordova.inappbrowser 0.6.0 "InAppBrowser"  

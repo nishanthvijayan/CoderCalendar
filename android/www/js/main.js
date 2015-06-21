@@ -25,7 +25,7 @@ function putdata(json)
     endTime   = Date.parse(post.EndTime)
     e = new Date(endTime)
     
-    if(e>curTime){
+    if(e>curTime && localStorage.getItem(post.Platform)=="true" ){
 
       ongoingHTML+='<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
         <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
@@ -62,10 +62,10 @@ function putdata(json)
     var error   = function(message) {};
 
     // if contest has not ended    
-    if(e>curTime && s>curTime){
+    if(e>curTime && s>curTime && localStorage.getItem(post.Platform)=="true" ){
       // seaarch for calendar event
       window.plugins.calendar.findEvent(title,eventLocation,notes,s,e,success,error);
-    }else if(e>curTime && s<curTime){
+    }else if(e>curTime && s<curTime && localStorage.getItem(post.Platform)=="true" ){
 
       ongoingHTML+='<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
         <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
@@ -199,10 +199,25 @@ function imgToggle(){
   else $(".loading").attr("src","img/refresh-white.png");
 }
 
+function initializeSetting(){
+  
+  //initializing preference values in case they are not set.
+  if(!localStorage.HACKEREARTH)localStorage.HACKEREARTH = "true";
+  if(!localStorage.HACKERRANK)localStorage.HACKERRANK = "true";
+  if(!localStorage.CODECHEF)localStorage.CODECHEF = 'true';
+  if(!localStorage.CODEFORCES)localStorage.CODEFORCES = 'true';
+  if(!localStorage.TOPCODER)localStorage.TOPCODER = 'true';
+  if(!localStorage.GOOGLE)localStorage.GOOGLE = 'true';
+  if(!localStorage.OTHER)localStorage.OTHER = 'true';
+  if(!localStorage.CHECKINTERVAL)localStorage.CHECKINTERVAL = 5;
+}
+
 document.addEventListener("deviceready", function(){
 
   FastClick.attach(document.body);
   
+  initializeSetting();
+
   restoredata();
 
   fetchdata();
@@ -211,7 +226,8 @@ document.addEventListener("deviceready", function(){
   counter = 0;
   setInterval(function(){
     counter = counter+1;
-    if(counter%6==0) fetchdata();
+    timeIntervalMin = parseInt(localStorage.CHECKINTERVAL);
+    if(counter%timeIntervalMin==0) fetchdata();
     else restoredata();
   }, 300000);
 

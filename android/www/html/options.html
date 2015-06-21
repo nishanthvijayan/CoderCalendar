@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html lang='en'>
+<head>
+    <meta charset="UTF-8" /> 
+    <title>
+        Options - Coder's Calendar
+    </title>
+
+    <link rel="stylesheet" type="text/css" href="../css/options.css" />
+    <script type="text/javascript" src="../js/jquery/jquery-1.11.2.js"></script>
+    <script type="text/javascript" src="../js/options.js"></script>
+</head>
+<body>
+	<header><h2>Settings - Coder's Calendar</h2></header>
+	<div class="ui-content">
+
+        <div id="changelog">
+            <div class='title'><h3>What's new?</h3></div>
+            <div class="changelogContent">
+    			<h3>v0.1.0</h3><br>
+      			<p>Hope everything works fine.Still testing.</p>
+      			<p>Feel free to report bugs and make suggestions</p>
+			</div>
+        </div>
+
+        <div id="updates">
+            <div class='title'><h3>Updates</h3></div>
+            <div class="updatesContent">
+      			<span>Refresh interval (in minutes):</span> <input id="checkInterval" type="number">
+      			<p class="note" >Minimum period is 5 minutes.</p>
+            </div>
+        </div>
+        
+        <div id="subscribe">
+            <div class='title'><h3>Subscribe</h3></div>
+            <div class="subscribeContent">
+				<li>
+					<label><input id="Codechef" type="checkbox"> <span >Codechef</span></label>
+					<img class="platformIcon" src="../img/cc32.jpg"/>
+				</li>
+				<hr>
+				
+				<li>
+					<label><input id="Codeforces" type="checkbox"> <span >Codeforces</span></label>
+					<img class="platformIcon" src="../img/cf32.png"/>
+				</li>
+				<hr>
+
+				<li>
+					<label><input id="Hackerrank" type="checkbox"> <span >Hackerrank</span></label>
+					<img class="platformIcon" src="../img/hr36.png"/>
+				</li>
+				<hr>
+				
+				<li>
+					<label><input id="Hackerearth" type="checkbox"> <span >Hackerearth</span></label>
+					<img class="platformIcon" src="../img/he32.png"/>
+				</li>
+				<hr>
+					
+				<li>			
+					<label><input id="Topcoder" type="checkbox"> <span >Topcoder</span></label>
+					<img class="platformIcon" src="../img/tc32.gif"/>
+				</li>
+				<hr>
+				
+				<li>
+					<label><input id="Google" type="checkbox"> <span >Google Code Jam</span></label>
+					<img class="platformIcon" src="../img/google32.png"/>
+				</li>
+				<hr>
+				
+				<li>
+					<label><input id="Other" type="checkbox"> <span >Other</span></label>
+					<img class="platformIcon" src="../img/other32.png"/>
+				</li>
+				<hr>
+
+            </div>
+        </div>
+
+    </div>
+    <footer>
+        <a onclick="window.open('https://www.linkedin.com/in/nishanthvijayan', '_system');">Contact Us</a>
+        <a onclick="window.open('https://github.com/nishanthvijayan/CoderCalendar/issues', '_system');">Bugs/Suggestions?</a>
+        <a onclick="window.open('https://gratipay.com/nishanthvijayan', '_system');">Donate</a>
+    </footer>
+</body>
+</html>

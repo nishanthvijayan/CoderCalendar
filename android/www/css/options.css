@@ -1,0 +1,101 @@
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+  	margin:0;
+  	padding: 0;
+  	text-transform: none;
+}
+
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-attachment:fixed;
+    background-color: #ffffff;
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size:12px;
+    height:100%;
+    margin:0px;
+    padding:0px;
+    text-transform:uppercase;
+    width:100%;
+}
+header{
+  background-color: #4285f4;
+  height: 70px;
+  color : #ffffff;
+  position: fixed;
+  width: 100%;
+  top:0%;
+  text-align: center;
+}
+header > h2{
+  text-align: center;
+  margin-top: 25px;
+  display: inline-block;
+}
+
+.title{
+  padding: 15px;
+  background-color: #5491f5;
+  color: #ffffff;
+}
+.title > h3{margin-left: 5%;}
+
+#changelog{
+  margin-top: 70px;
+}
+
+.changelogContent{margin: 10%;}
+
+.updatesContent{margin: 10%;}
+
+.subscribeContent > li{
+	margin: 0% 10% 0% 10%;
+	padding-top: 8%;
+	padding-bottom: 8%;
+}
+
+.updatesContent > input{
+	width: 20%;
+	margin-left: 10%;
+}
+.subscribeContent > label{
+	display: block;
+	font-size: 120%;
+}
+
+p{font-size: 120%;}
+span{font-size: 120%;}
+
+li{
+	list-style: none;
+}
+
+.platformIcon{
+	float: right;
+}
+.note {
+  color: #707070 !important;
+  padding: 0;
+  margin: 5px 0 0 0;
+  font-size: 90%;
+}
+hr {
+  border: none;
+  height: 1px;
+  color: #e0ebfd;
+  background-color: #e0ebfd;
+}
+
+footer{
+  padding: 15px;
+  color: white;
+  background-color: #5491f5;
+  text-align: center;
+}
+footer > a{
+  padding-left: 5%;
+  color: white;
+  font-weight: bold;
+  text-decoration: underline;
+}

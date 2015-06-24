@@ -7,8 +7,9 @@ Note: The android app  currently supports the Indian Standard Time only.Extensio
   
 ## Download  
 Coder's Calendar is  available for download at:
-- Chrome Extension : https://chrome.google.com/webstore/detail/coders-calendar/bageaffklfkikjigoclfgengklfnidll
-- Firefox add-on : https://addons.mozilla.org/en-US/firefox/addon/coder-calendar/
+- ![Android app](https://play.google.com/store/apps/details?id=com.corphots.coderscalendar/)
+- ![Chrome Extension](https://chrome.google.com/webstore/detail/coders-calendar/bageaffklfkikjigoclfgengklfnidll)
+- ![Firefox add-on](https://addons.mozilla.org/en-US/firefox/addon/coder-calendar/)
   
   
 ## ScreenShots  

@@ -34,6 +34,21 @@ header > h2{
   display: inline-block;
 }
 
+.back-btn{
+  position: fixed;
+  margin-top: 25px;
+  left: 5%;
+  height: 22px;
+  width: 22px; 
+}
+.rate-btn{
+  position: fixed;
+  margin-top: 25px;
+  left: 90%;
+  height: 22px;
+  width: 22px; 
+}
+
 .title{
   padding: 15px;
   background-color: #5491f5;

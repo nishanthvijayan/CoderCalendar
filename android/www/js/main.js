@@ -264,4 +264,8 @@ document.addEventListener("deviceready", function(){
     navigator.notification.alert("Tap on the contest name to visit the contest page.\n\nTap on Add to Calendar/Delete from Calendar to add/delete the contest to/from your calendar.\n\nTap on 'Share' to let others know about the contest.\n\nHappy Coding!",function() {},"Instructions","OK");
   });
 
+  $(".share-btn").click(function(){
+    window.plugins.socialsharing.share( "Check out this app: Coder's Calendar , https://play.google.com/store/apps/details?id=com.corphots.coderscalendar " );
+  });
+
 });

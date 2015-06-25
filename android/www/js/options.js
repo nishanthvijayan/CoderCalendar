@@ -23,5 +23,16 @@ $(document).ready(function(){
 	$('#checkInterval').change(function(){
 		if($('#checkInterval')[0].value<5)$('#checkInterval')[0].value = 5;
 		localStorage.CHECKINTERVAL = $('#checkInterval')[0].value;
-	})
+	});
+
+	$(".rate-btn").click(function(){
+		navigator.notification.confirm("Rate Coder's Calendar?",
+			function( index ) {
+      			if(index==2)	window.open("https://play.google.com/store/apps/details?id=com.corphots.coderscalendar", "_system");
+    		},
+    		"Rate Us",
+    		[ "No","Yes" ]
+  		);
+	});
+
 });

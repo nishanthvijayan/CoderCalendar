@@ -9,6 +9,13 @@ function icon(platform){
   else   		return "other32.png";
 }
 
+function changeTimezone(date){
+  d = new Date(date);
+  var offset = -(d.getTimezoneOffset());
+  var newDate = new Date(d.getTime() + offset*60000 - 19800000);
+  return newDate;
+}
+
 function putdata(json)
 { 
 
@@ -27,10 +34,13 @@ function putdata(json)
     
     if(e>curTime && localStorage.getItem(post.Platform)=="true" ){
 
+      timezonePerfectEndTime  = changeTimezone(Date.parse(post.EndTime)).toString().slice(0,21);
+      timezonePerfectStartTime  = changeTimezone(Date.parse(post.StartTime)).toString().slice(0,21);
+
       ongoingHTML+='<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
         <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
-        <h4>End: '+post.EndTime+'</h4><br><br>\
-        <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.EndTime+'&quot;);" >Share</h4>\
+        <h4>End: '+timezonePerfectEndTime+'</h4><br><br>\
+        <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectEndTime+'&quot;);" >Share</h4>\
         </li><hr>';
     }
 
@@ -46,17 +56,21 @@ function putdata(json)
     var eventLocation = post.url;
     var notes = " ";
     var success = function(message) {
+      
+      timezonePerfectEndTime  = changeTimezone(Date.parse(post.EndTime)).toString().slice(0,21);
+      timezonePerfectStartTime  = changeTimezone(Date.parse(post.StartTime)).toString().slice(0,21);
+
       if(Object.keys(message).length>0){
-        calendar_string = '<h4 class="calDelete" onclick="delcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;,&quot;'+post.EndTime+'&quot;);" class="calendar">Delete from Calendar</h4>';
+        calendar_string = '<h4 class="calDelete" onclick="delcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectStartTime+'&quot;,&quot;'+timezonePerfectEndTime+'&quot;);" class="calendar">Delete from Calendar</h4>';
       }else{
-        calendar_string = '<h4 class="calAdd" onclick="addcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;,&quot;'+post.EndTime+'&quot;);" class="calendar">Add to Calendar</h4>';
+        calendar_string = '<h4 class="calAdd" onclick="addcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectStartTime+'&quot;,&quot;'+timezonePerfectEndTime+'&quot;);" class="calendar">Add to Calendar</h4>';
       }
 
       upcomingHTML+='<li><br><h3 onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
       <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
-      <h4>Start: '+post.StartTime+'</h4><br>\
+      <h4>Start: '+timezonePerfectStartTime+'</h4><br>\
       <h4>Duration: '+post.Duration+'</h4><br>'+calendar_string+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
-      <h4 class="share" onclick="socialShare(1,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.StartTime+'&quot;);" >Share</h4></li><hr>';
+      <h4 class="share" onclick="socialShare(1,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectStartTime+'&quot;);" >Share</h4></li><hr>';
     };
 
     var error   = function(message) {};
@@ -67,10 +81,13 @@ function putdata(json)
       window.plugins.calendar.findEvent(title,eventLocation,notes,s,e,success,error);
     }else if(e>curTime && s<curTime && localStorage.getItem(post.Platform)=="true" ){
 
+      timezonePerfectEndTime  = changeTimezone(Date.parse(post.EndTime)).toString().slice(0,21);
+      timezonePerfectStartTime  = changeTimezone(Date.parse(post.StartTime)).toString().slice(0,21);
+
       ongoingHTML+='<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
         <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
-        <h4>End: '+post.EndTime+'</h4><br><br>\
-        <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+post.EndTime+'&quot;);" >Share</h4>\
+        <h4>End: '+timezonePerfectEndTime+'</h4><br><br>\
+        <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectEndTime+'&quot;);" >Share</h4>\
         </li><hr>';
     }
 

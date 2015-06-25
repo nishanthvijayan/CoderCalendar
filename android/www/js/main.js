@@ -97,6 +97,8 @@ function putdata(json)
       $("#ongoing > li").remove();
       $("#upcoming > li").remove();
       $("hr").remove();
+      $(".ui-content").show();
+      $("footer").show();
     document.getElementById("ongoing").innerHTML += ongoingHTML;
     document.getElementById("upcoming").innerHTML += upcomingHTML;
   },500);
@@ -108,9 +110,10 @@ function fetchdata(){
 
   imgToggle();
   req =  new XMLHttpRequest();
-  req.open("GET",'https://contesttrackerapi.herokuapp.com/',true);
+  req.open("GET",'https://contesttrackerapi.herokuapp.com/android/',true);
   req.send();
   req.onload = function(){
+
 
     res = JSON.parse(req.responseText);
 
@@ -138,11 +141,7 @@ function load(url){
   navigator.notification.confirm(
     "Would you like to open the contest page?",
     function( index ) {
-      switch ( index ) {
-        case 2:
-          window.open(url, "_system");
-          break;
-        }
+      if ( index==2 )   window.open(url, "_system");
     },
     "Confirm", // a title
     [ "No","Yes" ]    // text of the buttons
@@ -155,19 +154,14 @@ function addcalendarEvent(name,url,StartTime,EndTime){
   endTime   = Date.parse(EndTime)
   s = new Date(startTime)
   e = new Date(endTime)
-  var title = name;
-  var eventLocation = url;
-  var notes = " ";
+
   var success = function(message) { 
     restoredata();
     window.plugins.toast.show("'"+name+"'  added to Calendar", 'long', 'bottom', function(a){}, function(b){});   
   };
-  var error = function(message) { };
 
-  // create an event Interactively
-  // window.plugins.calendar.createEventInteractively(title,eventLocation,notes,s,e,success,error);
   // create an event silently
-  window.plugins.calendar.createEvent(title,eventLocation,notes,s,e,success,error);
+  window.plugins.calendar.createEvent(name,url," ",s,e,success, function(m){} );
   
 }
 
@@ -177,16 +171,13 @@ function delcalendarEvent(name,url,StartTime,EndTime){
   endTime   = Date.parse(EndTime)
   s = new Date(startTime)
   e = new Date(endTime)
-  var title = name;
-  var eventLocation = url;
-  var notes = " ";
+
   var success = function(message) { 
     restoredata();
     window.plugins.toast.show("'"+name+"'  deleted from Calendar", 'long', 'bottom', function(a){}, function(b){});
   };
-  var error = function(message) { };
 
-  window.plugins.calendar.deleteEvent(title,eventLocation,notes,s,e,success,error)
+  window.plugins.calendar.deleteEvent(name,url," ",s,e,success, function(m){} );
   
 }
 
@@ -194,18 +185,16 @@ function socialShare(status,name,url,Time){
   navigator.notification.confirm(
     "Are you sure you want to tell others about this contest? ",
     function( index ) {
-      switch ( index ) {
-        case 2:
-          if(status==1){
-            window.plugins.socialsharing.share( 'Hey, Check out this coding contest: \n'+name+' \nLink: '+ url + " \nStarts at: "+Time,'Coding Contest' );
-          }else{
-            window.plugins.socialsharing.share( 'Hey, Check out this coding contest: \n'+name+' , taking place now at '+ url + " \nEnds at: "+Time,'Coding Contest' );
-          }
-          break;
+      if ( index==2 ) {
+        if(status==1){
+          window.plugins.socialsharing.share( 'Hey, Check out this coding contest: \n'+name+' \nLink: '+ url + " \nStarts at: "+Time,'Coding Contest' );
+        }else{
+          window.plugins.socialsharing.share( 'Hey, Check out this coding contest: \n'+name+' , taking place now at '+ url + " \nEnds at: "+Time,'Coding Contest' );
+        }
       }
     },
-    "Confirm", // a title
-    [ "No","Yes" ]    // text of the buttons
+    "Confirm",
+    [ "No","Yes" ]
   );
 }
 
@@ -234,8 +223,6 @@ document.addEventListener("deviceready", function(){
   FastClick.attach(document.body);
   
   initializeSetting();
-
-  restoredata();
 
   fetchdata();
   // this mechanism makes sure that the data is fetched every 

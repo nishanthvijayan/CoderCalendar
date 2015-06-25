@@ -66,7 +66,9 @@ body {
   padding: 0;
   text-transform: none;
 }
-
+.ui-content{
+  display: none;
+}
 header{
   background-color: #4285f4;
   height: 70px;
@@ -87,6 +89,7 @@ footer{
   color: white;
   background-color: #5491f5;
   text-align: center;
+  display: none;
 }
 footer > a{
   padding-left: 5%;

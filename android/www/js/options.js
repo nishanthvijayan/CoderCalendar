@@ -36,3 +36,7 @@ $(document).ready(function(){
 	});
 
 });
+
+document.addEventListener("deviceready", function(){
+	window.analytics.trackView('Settings');
+});

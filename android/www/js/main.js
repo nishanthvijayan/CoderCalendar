@@ -222,18 +222,21 @@ document.addEventListener("deviceready", function(){
 
   FastClick.attach(document.body);
   
+  window.analytics.startTrackerWithId('UA-64496539-1');
+  window.analytics.trackView('Home');
+
   initializeSetting();
 
+  restoredata();
   fetchdata();
-  // this mechanism makes sure that the data is fetched every 
-  // 30 minutes and the validy of entries is checked every 5 minutes.(Overkill?)
+  
   counter = 0;
   setInterval(function(){
     counter = counter+1;
     timeIntervalMin = parseInt(localStorage.CHECKINTERVAL);
     if(counter%timeIntervalMin==0) fetchdata();
     else restoredata();
-  }, 300000);
+  }, 60000);
 
   // refresh only if icon is refresh icon.
   // Makes sure that clicking a loading icon does not trigger fetchdata()

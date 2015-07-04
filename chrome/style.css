@@ -10,14 +10,28 @@ body {
 
 }
 header{
-  background-color: #4285f4;
+  background-color: #1565c0;
   height: 50px;
   color : #ffffff;
   position: fixed;
   width: 100%;
   top:0%;
   text-align: center;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08), 0 3px 6px rgba(0, 0, 0, 0.08);
 }
+
+.fa{
+  position: fixed;
+  margin-top: 15px;
+  cursor: pointer;  
+}
+.fa-refresh{
+  left: 90%;
+}
+.fa-gear{
+  left:5%;
+}
+
 
 footer{
   padding: 15px;
@@ -35,8 +49,9 @@ footer > a{
 .title{
   text-align: center;
   padding: 10px;
-  background-color: #5491f5;
+  background-color: #1e88e5 ;
   color: #ffffff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08), 0 3px 6px rgba(0, 0, 0, 0.08);
 }
 
 li{
@@ -86,23 +101,6 @@ li > img{
   margin-top: 50px;
 }
 
-
-.loading{
-  position: fixed;
-  margin-top: 15px;
-  left: 80%;
-  height: 20px;
-  width: 20px;
-  cursor: pointer;
-}
-.settings-btn{
-  position: fixed;
-  margin-top: 15px;
-  left: 90%;
-  height: 20px;
-  width: 20px;
-  cursor: pointer;
-}
 .gh-btn{
   padding-left: 20px;
   padding-right: 20px;

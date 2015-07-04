@@ -134,9 +134,7 @@ function fetchdata(){
 }
 // Toggles between the loading gif and the reload icon.
 function imgToggle(){
-  src = $('.loading').attr('src');
-  if(src=="img/refresh-white.png") $(".loading").attr("src","img/ajax-loader.gif");
-  else $(".loading").attr("src","img/refresh-white.png");
+  $( ".fa-refresh" ).toggleClass( "fa-spin" );
 }
 
 function getVersion() {
@@ -230,14 +228,11 @@ $(document).ready(function(){
     return false;
   });
 
-  // refresh only if icon is refresh icon.
-  // Makes sure that clicking a loading icon does not trigger fetchdata()
-  $("body").on('click',".loading", function(){
-    src = $('.loading').attr('src');
-    if(src=="img/refresh-white.png") fetchdata();
+  $("body").on('click',".fa-refresh", function(){
+    if(!$( ".fa-refresh" ).hasClass( "fa-spin" )) fetchdata();
   });
 
-  $("body").on('click',".settings-btn", function(){
+  $("body").on('click',".fa-gear", function(){
     chrome.tabs.create({ url: "options.html" });
   });
 

@@ -215,9 +215,7 @@ function restoredata(){
 }
 
 function imgToggle(){
-  src = $('.loading').attr('src');
-  if(src=="img/refresh-white.png") $(".loading").attr("src","img/ajax-loader.gif");
-  else $(".loading").attr("src","img/refresh-white.png");
+  $( ".fa-refresh" ).toggleClass( "fa-spin" );
 }
 
 $(document).ready(function(){
@@ -270,7 +268,7 @@ $(document).ready(function(){
     return false;
   });
 
-  $("body").on('click',".settings-btn", function(){
+  $("body").on('click',".fa-gear", function(){
     self.port.emit("linkClicked", "options.html" );
   });
 
@@ -278,11 +276,8 @@ $(document).ready(function(){
     self.port.emit("linkClicked", "https://github.com/nishanthvijayan/CoderCalendar" );
   });
 
-  // refresh only if icon is refresh icon.
-  // Makes sure that clicking a loading icon does not trigger fetchdata()
-  $("body").on('click',".loading", function(){
-    src = $('.loading').attr('src');
-    if(src=="img/refresh-white.png") fetchdata();
+  $("body").on('click',".fa-refresh", function(){
+    if(!$( ".fa-refresh" ).hasClass( "fa-spin" )) fetchdata();
   });
 
 });

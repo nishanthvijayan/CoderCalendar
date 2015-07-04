@@ -4,10 +4,9 @@
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
 
-
+        <link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css" />
         <script src="js/jquery/jquery-1.11.2.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <script type="text/javascript" src="cordova.js"></script>
@@ -20,11 +19,10 @@
     <body>
         <section id="firstpage" data-role="page">
             <header data-role="header">
-              <a href="html/options.html"><img class="settings-btn" src="img/settings.png" /></a>
-              <img class="info" src="img/info-white.png" />
-              <h2>Coder's Calendar</h2>
-              <img class="share-btn" src="img/share-white.png" />
-              <img class="loading" src="img/refresh-white.png" />
+              <a href="html/options.html"><i class="fa fa-gear fa-lg settings-btn"></i></a>
+              <h2>All Contests</h2>
+               <a><i class="fa fa-info-circle fa-lg info-btn"></i></a>
+               <a><i class="fa fa-star fa-lg rate-btn"></i></a>
             </header>
             <div class="ui-content">
                 <div id="ongoing">
@@ -34,11 +32,7 @@
                     <div class='title'><h3>Upcoming Contests</h3></div>
                 </div>
             </div>
-            <footer>
-                <a onclick="window.open('https://github.com/nishanthvijayan/', '_system');">View Project</a>
-                <a onclick="window.open('https://github.com/nishanthvijayan/CoderCalendar/issues', '_system');">Bugs/Suggestions?</a>
-                <a onclick="window.open('https://gratipay.com/nishanthvijayan', '_system');">Donate</a>
-            </footer>
+            <a class="btn-floating red"><i class="fa fa-refresh fa-lg"></i></a>
         </section>
     </body>
 </html>

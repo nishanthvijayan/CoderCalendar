@@ -1,9 +1,15 @@
+* {
+  margin:0;
+  padding: 0;
+  text-transform: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
 body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
     background-attachment:fixed;
-    background-color: #ffffff;
+    background-color: #F8F8F8;
     font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
     font-size:12px;
     height:100%;
@@ -13,73 +19,63 @@ body {
     width:100%;
 }
 
-* {
-  margin:0;
-  padding: 0;
-  text-transform: none;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-}
 .ui-content{
   display: none;
+  margin-top: 70px;
 }
 header{
-  background-color: #4285f4;
+  background-color: #1565c0;
   height: 70px;
   color : #ffffff;
   position: fixed;
   width: 100%;
   top:0%;
   text-align: center;
+  margin:0px;
+  width: 100%;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.13);
+  z-index: 3;
 }
 header > h2{
-  text-align: center;
+  float: left;
+  margin-left: 20%;
   margin-top: 25px;
   display: inline-block;
 }
 
-footer{
-  padding: 15px;
-  color: white;
-  background-color: #5491f5;
-  text-align: center;
-  display: none;
-}
-footer > a{
-  padding-left: 5%;
-  color: white;
-  font-weight: bold;
-  text-decoration: underline;
-}
-
 li{
-  
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.13);
   list-style-type:none;
-  padding: 15px;
   display: block;  
   text-decoration: none;
   color: black;
+  background-color: #ffffff;
+  margin:3%;
 }
-li > *{
+.contest-wrapper{
   margin-left: 5%;
+  padding: 15px;
 }
-li > h3{
-  border-bottom: 1px solid #E2DEC9;
+.contest-action{
+  margin-left: 5%;
+  padding: 5px 15px 15px;
 }
+.contest-action > i{
+  padding: 0px 20px;
+}
+
+.card-icon{
+  font-size: 150%;  
+}
+
 h3,h4,h5{
   font-weight: inherit;
 }
 h3{
   display: inline-block;
 }
-.calendar{
-  cursor: pointer;
-  text-decoration: underline;
-  display: inline-block;
-}
-.share{
-  text-decoration: underline;
-  display: inline-block;
-}
+
+
 .contest_image{
   display: inline-block;
   float: right;
@@ -88,57 +84,78 @@ h3{
 .title{
   text-align: center;
   padding: 15px;
-  background-color: #5491f5;
+  background-color: #1e88e5 ;
   color: #ffffff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.13);
 }
-li:hover{
-  background-color: #e0ebfd;
-  font-weight: bold;
-}
+
 hr {
   border: none;
   height: 1px;
-  color: #e0ebfd;
-  background-color: #e0ebfd;
-}
-#ongoing{
-  margin-top: 70px;
+  background-color: #EBEBEB;
+  width: 100%;
+  margin-left: 0px;
+  padding: 0px;
 }
 
-.loading{
-  position: fixed;
-  margin-top: 25px;
-  left: 90%;
-  height: 20px;
-  width: 20px;
-}
-.info{
-  position: fixed;
-  margin-top: 25px;
-  left: 15%;
-  height: 20px;
-  width: 20px; 
-}
+
+/********************** Header Buttons ******************/
+
 .settings-btn{
   position: fixed;
   margin-top: 25px;
   left: 5%;
-  height: 22px;
-  width: 22px; 
+  font-size: 240%;
+  color:white;
+  text-decoration: none;
 }
-.share-btn{
+.info-btn{
   position: fixed;
   margin-top: 25px;
   left: 80%;
-  height: 22px;
-  width: 22px; 
+  font-size: 220%; 
 }
-.calDelete{
-  color: #ff0000;
-  display: inline;
-  text-decoration: underline;
+.rate-btn{
+  position: fixed;
+  margin-top: 25px;
+  left: 90%;
+  font-size: 220%;
 }
-.calAdd{
-  text-decoration: underline;  
-  display: inline;
+
+/***************** Floating Button ****************/
+
+.btn-floating::before {
+    border-radius: 0;
+}
+.btn-floating {
+    height: 55.5px;
+    width: 55.5px;
+    bottom: 5%;
+    position: fixed;
+    right: 7%;
+    line-height: 56px;
+    border-radius: 50%;
+    color: #fff;
+    padding: 0;
+    letter-spacing: 0.5px;
+    text-align: center;
+    text-decoration: none;
+    border: medium none;
+    outline: 0 none;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+/************* COLORS****************/
+.red {
+    background-color: #f44336;
+}
+.red-text {
+    color: #f44336;
+}
+.green-text{
+  color:  #4caf50;
+}
+.grey-text{
+  color: #757575;
 }

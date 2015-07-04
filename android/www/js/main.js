@@ -37,11 +37,13 @@ function putdata(json)
       timezonePerfectEndTime  = changeTimezone(Date.parse(post.EndTime)).toString().slice(0,21);
       timezonePerfectStartTime  = changeTimezone(Date.parse(post.StartTime)).toString().slice(0,21);
 
-      ongoingHTML+='<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
+      ongoingHTML+='<li><div class="contest-wrapper"><br><h3 >'+post.Name+'</h3>\
         <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
-        <h4>End: '+timezonePerfectEndTime+'</h4><br><br>\
-        <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectEndTime+'&quot;);" >Share</h4>\
-        </li><hr>';
+        <h4>End: '+timezonePerfectEndTime+'</h4></div><hr><br>\
+        <div class="contest-action">\
+        <i class="fa fa-link card-icon grey-text" onclick="load(&quot;'+post.url+'&quot;)" ></i>\
+        <i class="fa fa-share-alt card-icon grey-text" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectEndTime+'&quot;);" ></i>\
+        </div></li>';
     }
 
   });
@@ -61,16 +63,19 @@ function putdata(json)
       timezonePerfectStartTime  = changeTimezone(Date.parse(post.StartTime)).toString().slice(0,21);
 
       if(Object.keys(message).length>0){
-        calendar_string = '<h4 class="calDelete" onclick="delcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectStartTime+'&quot;,&quot;'+timezonePerfectEndTime+'&quot;);" class="calendar">Delete from Calendar</h4>';
+        calendar_string = '<i id="calButton'+i+'" class="red-text fa fa-trash card-icon" onclick="decideCalendarEvent('+i+',&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectStartTime+'&quot;,&quot;'+timezonePerfectEndTime+'&quot;);"></i>';
       }else{
-        calendar_string = '<h4 class="calAdd" onclick="addcalendarEvent(&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectStartTime+'&quot;,&quot;'+timezonePerfectEndTime+'&quot;);" class="calendar">Add to Calendar</h4>';
+        calendar_string = '<i id="calButton'+i+'" class="green-text fa fa-calendar card-icon" onclick="decideCalendarEvent('+i+',&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectStartTime+'&quot;,&quot;'+timezonePerfectEndTime+'&quot;);"></i>';
       }
 
-      upcomingHTML+='<li><br><h3 onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
+      upcomingHTML+='<li><div class="contest-wrapper"><br><h3>'+post.Name+'</h3>\
       <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
       <h4>Start: '+timezonePerfectStartTime+'</h4><br>\
-      <h4>Duration: '+post.Duration+'</h4><br>'+calendar_string+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
-      <h4 class="share" onclick="socialShare(1,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectStartTime+'&quot;);" >Share</h4></li><hr>';
+      <h4>Duration: '+post.Duration+'</h4></div>\
+      <hr><br><div class="contest-action">'+calendar_string+
+      '<i class="fa fa-link card-icon grey-text " onclick="load(&quot;'+post.url+'&quot;)" ></i>\
+      <i class="fa fa-share-alt card-icon grey-text" onclick="socialShare(1,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectStartTime+'&quot;);" ></i>\
+      </div></li>';
     };
 
     var error   = function(message) {};
@@ -78,17 +83,19 @@ function putdata(json)
     // if contest has not ended    
     if(e>curTime && s>curTime && localStorage.getItem(post.Platform)=="true" ){
       // seaarch for calendar event
-      window.plugins.calendar.findEvent(title,eventLocation,notes,s,e,success,error);
+      window.plugins.calendar.findEvent(post.Name,post.url," ",s,e,success,error);
     }else if(e>curTime && s<curTime && localStorage.getItem(post.Platform)=="true" ){
 
       timezonePerfectEndTime  = changeTimezone(Date.parse(post.EndTime)).toString().slice(0,21);
       timezonePerfectStartTime  = changeTimezone(Date.parse(post.StartTime)).toString().slice(0,21);
 
-      ongoingHTML+='<li><br><h3  onclick="load(&quot;'+post.url+'&quot;)">'+post.Name+'</h3>\
+      ongoingHTML+='<li><div class="contest-wrapper"><br><h3 >'+post.Name+'</h3>\
         <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
-        <h4>End: '+timezonePerfectEndTime+'</h4><br><br>\
-        <h4 class="share" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectEndTime+'&quot;);" >Share</h4>\
-        </li><hr>';
+        <h4>End: '+timezonePerfectEndTime+'</h4></div><hr><br>\
+        <div class="contest-action">\
+        <i class="fa fa-link card-icon grey-text" onclick="load(&quot;'+post.url+'&quot;)" ></i>\
+        <i class="fa fa-share-alt card-icon grey-text" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectEndTime+'&quot;);" ></i>\
+        </div></li>';
     }
 
   });
@@ -108,7 +115,7 @@ function putdata(json)
 
 function fetchdata(){
 
-  imgToggle();
+  $( ".btn-floating" ).toggleClass( "fa-spin" );
   req =  new XMLHttpRequest();
   req.open("GET",'https://contesttrackerapi.herokuapp.com/android/',true);
   req.send();
@@ -120,13 +127,13 @@ function fetchdata(){
     data = JSON.stringify(res);
     window.localStorage.setItem('last_collected_data', data);
     
-    imgToggle();
+    $( ".btn-floating" ).toggleClass( "fa-spin" );
     putdata(res);
   };
   req.onerror = function(){
-    imgToggle();
+    $( ".btn-floating" ).toggleClass( "fa-spin" );
     restoredata();
-    navigator.notification.alert("Connection Failed",function() {},"Error","OK");
+    window.plugins.toast.show("No Connection", 'long', 'bottom', function(a){}, function(b){});
   };
 }
 
@@ -139,7 +146,7 @@ function restoredata(){
 
 function load(url){
   navigator.notification.confirm(
-    "Would you like to open the contest page?",
+    "Go to contest page?",
     function( index ) {
       if ( index==2 )   window.open(url, "_system");
     },
@@ -148,7 +155,17 @@ function load(url){
   );
 }
 
-function addcalendarEvent(name,url,StartTime,EndTime){
+function decideCalendarEvent(id,name,url,StartTime,EndTime){
+  if($("#calButton"+id).hasClass("fa-trash")){
+    
+    delcalendarEvent(id,name,url,StartTime,EndTime);
+  }else{
+    
+    addcalendarEvent(id,name,url,StartTime,EndTime);
+  }
+}
+
+function addcalendarEvent(id,name,url,StartTime,EndTime){
 
   startTime = Date.parse(StartTime)
   endTime   = Date.parse(EndTime)
@@ -156,8 +173,16 @@ function addcalendarEvent(name,url,StartTime,EndTime){
   e = new Date(endTime)
 
   var success = function(message) { 
-    restoredata();
-    window.plugins.toast.show("'"+name+"'  added to Calendar", 'long', 'bottom', function(a){}, function(b){});   
+    $("#calButton"+id).addClass('fa-trash').addClass("red-text").removeClass('fa-calendar').removeClass('green-text');
+    window.plugins.calendar.findEvent(name,url," ",s,e,function(message){
+      if(Object.keys(message).length>0){
+        window.plugins.toast.show("'"+name+"'  added to Calendar", 'short', 'bottom', function(a){}, function(b){});
+      }else{
+        $("#calButton"+id).removeClass('fa-trash').removeClass("red-text").addClass('fa-calendar').addClass('green-text');
+        window.plugins.toast.show("Error! Incompatible Calendar App. Install/Update Google Calendar", 'short', 'bottom', function(a){}, function(b){});
+      }
+    },function(b){});
+    
   };
 
   // create an event silently
@@ -165,7 +190,7 @@ function addcalendarEvent(name,url,StartTime,EndTime){
   
 }
 
-function delcalendarEvent(name,url,StartTime,EndTime){
+function delcalendarEvent(id,name,url,StartTime,EndTime){
 
   startTime = Date.parse(StartTime)
   endTime   = Date.parse(EndTime)
@@ -173,8 +198,8 @@ function delcalendarEvent(name,url,StartTime,EndTime){
   e = new Date(endTime)
 
   var success = function(message) { 
-    restoredata();
-    window.plugins.toast.show("'"+name+"'  deleted from Calendar", 'long', 'bottom', function(a){}, function(b){});
+    $("#calButton"+id).removeClass('fa-trash').removeClass("red-text").addClass('fa-calendar').addClass('green-text');
+    window.plugins.toast.show("'"+name+"'  deleted from Calendar", 'short', 'bottom', function(a){}, function(b){});
   };
 
   window.plugins.calendar.deleteEvent(name,url," ",s,e,success, function(m){} );
@@ -182,27 +207,11 @@ function delcalendarEvent(name,url,StartTime,EndTime){
 }
 
 function socialShare(status,name,url,Time){
-  navigator.notification.confirm(
-    "Are you sure you want to tell others about this contest? ",
-    function( index ) {
-      if ( index==2 ) {
-        if(status==1){
-          window.plugins.socialsharing.share( 'Hey, Check out this coding contest: \n'+name+' \nLink: '+ url + " \nStarts at: "+Time,'Coding Contest' );
-        }else{
-          window.plugins.socialsharing.share( 'Hey, Check out this coding contest: \n'+name+' , taking place now at '+ url + " \nEnds at: "+Time,'Coding Contest' );
-        }
-      }
-    },
-    "Confirm",
-    [ "No","Yes" ]
-  );
-}
-
-// Toggles between the loading gif and the reload icon.
-function imgToggle(){
-  src = $('.loading').attr('src');
-  if(src=="img/refresh-white.png") $(".loading").attr("src","img/ajax-loader.gif");
-  else $(".loading").attr("src","img/refresh-white.png");
+  if(status==1){
+    window.plugins.socialsharing.share( 'Hey, Check out this coding contest: \n'+name+' \nLink: '+ url + " \nStarts at: "+Time,'Coding Contest' );
+  }else{
+    window.plugins.socialsharing.share( 'Hey, Check out this coding contest: \n'+name+' , taking place now at '+ url + " \nEnds at: "+Time,'Coding Contest' );
+  }
 }
 
 function initializeSetting(){
@@ -215,7 +224,6 @@ function initializeSetting(){
   if(!localStorage.TOPCODER)localStorage.TOPCODER = 'true';
   if(!localStorage.GOOGLE)localStorage.GOOGLE = 'true';
   if(!localStorage.OTHER)localStorage.OTHER = 'true';
-  if(!localStorage.CHECKINTERVAL)localStorage.CHECKINTERVAL = 5;
 }
 
 document.addEventListener("deviceready", function(){
@@ -233,29 +241,27 @@ document.addEventListener("deviceready", function(){
   counter = 0;
   setInterval(function(){
     counter = counter+1;
-    timeIntervalMin = parseInt(localStorage.CHECKINTERVAL);
-    if(counter%timeIntervalMin==0) fetchdata();
+    if(counter%5==0) fetchdata();
     else restoredata();
-  }, 60000);
+  }, 120000);
 
-  // refresh only if icon is refresh icon.
-  // Makes sure that clicking a loading icon does not trigger fetchdata()
-  $(".loading").click(function(){
-    src = $('.loading').attr('src');
-    if(src=="img/refresh-white.png") fetchdata();
-    
-    // the loading gif get stucks sometimes and starts spinning again only when the 
-    // user scrolls or selects some item.This works around this by scrolling down & up by 1px.
-    window.scrollBy(0,1);
-    window.scrollBy(0,-1);
+  // refresh only if icon is refresh icon and not spinning already.
+  $(".btn-floating").click(function(){
+    if(!$( ".btn-floating" ).hasClass( "fa-spin" )) fetchdata();
   });
 
-  $(".info").click(function(){
-    navigator.notification.alert("Tap on the contest name to visit the contest page.\n\nTap on Add to Calendar/Delete from Calendar to add/delete the contest to/from your calendar.\n\nTap on 'Share' to let others know about the contest.\n\nHappy Coding!",function() {},"Instructions","OK");
+  $(".info-btn").click(function(){
+    navigator.notification.alert("Select the link icon to visit the contest page.\n\nTap on calendar/trash icon to add/delete a contest to/from your calendar.\n\nTap on the share icon to share the details of a contest.\n\nHappy Coding!",function() {},"Instructions","OK");
   });
 
-  $(".share-btn").click(function(){
-    window.plugins.socialsharing.share( "Check out this app: Coder's Calendar , https://play.google.com/store/apps/details?id=com.corphots.coderscalendar " );
+  $(".rate-btn").click(function(){
+  navigator.notification.confirm("Rate Coder's Calendar?",
+    function( index ) {
+          if(index==2)  window.open("https://bit.ly/1KqFi3U", "_system");
+      },
+      "Rate Us",
+      [ "Later","Yes" ]
+    );
   });
 
 });

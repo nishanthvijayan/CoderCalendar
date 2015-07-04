@@ -1,39 +1,34 @@
 $(document).ready(function(){
-
-	$('#Hackerearth')[0].checked 	= ( localStorage.HACKEREARTH=="true" );
-	$('#Hackerrank')[0].checked 		= ( localStorage.HACKERRANK=="true" );
-	$('#Codechef')[0].checked 			= ( localStorage.CODECHEF=="true" );
-	$('#Codeforces')[0].checked 		= ( localStorage.CODEFORCES=="true" );
-	$('#Topcoder')[0].checked 			= ( localStorage.TOPCODER=="true" );
-	$('#Google')[0].checked 			= ( localStorage.GOOGLE=="true" );
-	$('#Other')[0].checked 				= ( localStorage.OTHER=="true" );
-
-	$('#checkInterval')[0].value = localStorage.CHECKINTERVAL;
-
-	$(':checkbox').change( function(){
-		localStorage.HACKEREARTH = $('#Hackerearth')[0].checked;
-		localStorage.HACKERRANK 		= $('#Hackerrank')[0].checked;
-		localStorage.CODECHEF 			= $('#Codechef')[0].checked;
-		localStorage.CODEFORCES 		= $('#Codeforces')[0].checked;
-		localStorage.TOPCODER 			= $('#Topcoder')[0].checked;
-		localStorage.GOOGLE 			= $('#Google')[0].checked;
-		localStorage.OTHER				= $('#Other')[0].checked;
+	
+	$("li > .fa").each(function(){
+		id = $(this).attr("id");
+		if(localStorage.getItem(id)=="true"){
+			$(this).addClass("fa-check green-text");
+			$(this).removeClass("fa-times red-text");
+		}else{
+			$(this).removeClass("fa-check green-text");
+			$(this).addClass("fa-times red-text");
+		}
 	});
 
-	$('#checkInterval').change(function(){
-		if($('#checkInterval')[0].value<5)$('#checkInterval')[0].value = 5;
-		localStorage.CHECKINTERVAL = $('#checkInterval')[0].value;
-	});
+	$("li > .fa").click(function(){
+		id = $(this).attr("id");
+		if($(this).hasClass("fa-check")){
+			localStorage.setItem(id,"false");
+			$(this).removeClass("fa-check green-text");
+			$(this).addClass("fa-times red-text");
+		}else{
+			localStorage.setItem(id,"true");
+			$(this).addClass("fa-check green-text");
+			$(this).removeClass("fa-times red-text");
+		}
+	})	
 
-	$(".rate-btn").click(function(){
-		navigator.notification.confirm("Rate Coder's Calendar?",
-			function( index ) {
-      			if(index==2)	window.open("https://play.google.com/store/apps/details?id=com.corphots.coderscalendar", "_system");
-    		},
-    		"Rate Us",
-    		[ "No","Yes" ]
-  		);
-	});
+
+	$('.orange-text').click(function(){
+		url = $(this).attr('data-url');
+		window.open(url, "_system");
+	})
 
 });
 

@@ -145,6 +145,7 @@ function restoredata(){
 }
 
 function load(url){
+  window.analytics.trackEvent('LoadPage', 'Click');
   navigator.notification.confirm(
     "Go to contest page?",
     function( index ) {
@@ -157,10 +158,8 @@ function load(url){
 
 function decideCalendarEvent(id,name,url,StartTime,EndTime){
   if($("#calButton"+id).hasClass("fa-trash")){
-    
     delcalendarEvent(id,name,url,StartTime,EndTime);
   }else{
-    
     addcalendarEvent(id,name,url,StartTime,EndTime);
   }
 }
@@ -173,13 +172,23 @@ function addcalendarEvent(id,name,url,StartTime,EndTime){
   e = new Date(endTime)
 
   var success = function(message) { 
-    $("#calButton"+id).addClass('fa-trash').addClass("red-text").removeClass('fa-calendar').removeClass('green-text');
+    // Okay.So let me explain.Some calendar apps don't support silent event creation,
+    // So everytime an event is to be added after trying silent creation,it searches whether
+    // the event has been actually added.If yes,hurray.Else,interactiveCreate is called().
+    // The success callback of createEventInteractively() is fired regardless of whether
+    // the user clicked save or cancel.But verifying this again is too complex,
+    // so I'm going to assume the user always clicks 'save'.
+
     window.plugins.calendar.findEvent(name,url," ",s,e,function(message){
       if(Object.keys(message).length>0){
+        window.analytics.trackEvent('Calendar', 'Click',"AddSilent");
+        $("#calButton"+id).addClass('fa-trash').addClass("red-text").removeClass('fa-calendar').removeClass('green-text');
         window.plugins.toast.show("'"+name+"'  added to Calendar", 'short', 'bottom', function(a){}, function(b){});
       }else{
-        $("#calButton"+id).removeClass('fa-trash').removeClass("red-text").addClass('fa-calendar').addClass('green-text');
-        window.plugins.toast.show("Error! Incompatible Calendar App. Install/Update Google Calendar", 'short', 'bottom', function(a){}, function(b){});
+        window.plugins.calendar.createEventInteractively(name,url," ",s,e,function(n){
+          window.analytics.trackEvent('Calendar', 'Click',"AddInteractive");
+          $("#calButton"+id).addClass('fa-trash').addClass("red-text").removeClass('fa-calendar').removeClass('green-text');
+        }, function(m){} );
       }
     },function(b){});
     
@@ -191,7 +200,9 @@ function addcalendarEvent(id,name,url,StartTime,EndTime){
 }
 
 function delcalendarEvent(id,name,url,StartTime,EndTime){
-
+  
+  window.analytics.trackEvent('Calendar', 'Click', 'Delete');
+  
   startTime = Date.parse(StartTime)
   endTime   = Date.parse(EndTime)
   s = new Date(startTime)
@@ -207,6 +218,7 @@ function delcalendarEvent(id,name,url,StartTime,EndTime){
 }
 
 function socialShare(status,name,url,Time){
+  window.analytics.trackEvent('Share', 'Click');
   if(status==1){
     window.plugins.socialsharing.share( 'Hey, Check out this coding contest: \n'+name+' \nLink: '+ url + " \nStarts at: "+Time,'Coding Contest' );
   }else{
@@ -251,17 +263,19 @@ document.addEventListener("deviceready", function(){
   });
 
   $(".info-btn").click(function(){
+    window.analytics.trackEvent('Info', 'Click');
     navigator.notification.alert("Select the link icon to visit the contest page.\n\nTap on calendar/trash icon to add/delete a contest to/from your calendar.\n\nTap on the share icon to share the details of a contest.\n\nHappy Coding!",function() {},"Instructions","OK");
   });
 
   $(".rate-btn").click(function(){
-  navigator.notification.confirm("Rate Coder's Calendar?",
-    function( index ) {
-          if(index==2)  window.open("https://bit.ly/1KqFi3U", "_system");
-      },
-      "Rate Us",
-      [ "Later","Yes" ]
-    );
+    window.analytics.trackEvent('Rate', 'Click');
+    navigator.notification.confirm("Rate Coder's Calendar?",
+      function( index ) {
+            if(index==2)  window.open("https://bit.ly/1KqFi3U", "_system");
+        },
+        "Rate Us",
+        [ "Later","Yes" ]
+      );
   });
 
 });

@@ -272,12 +272,20 @@ $(document).ready(function(){
     self.port.emit("linkClicked", "options.html" );
   });
 
-  $("body").on('click',".gh-btn", function(){
-    self.port.emit("linkClicked", "https://github.com/nishanthvijayan/CoderCalendar" );
+  $("body").on('click',".fa-code", function(){
+    self.port.emit("linkClicked", "https://bit.ly/1LUziPN" );
   });
 
   $("body").on('click',".fa-refresh", function(){
     if(!$( ".fa-refresh" ).hasClass( "fa-spin" )) fetchdata();
+  });
+
+  $("body").on('click',".fa-star", function(){
+    self.port.emit("linkClicked", "https://addons.mozilla.org/en-US/firefox/addon/coder-calendar/reviews/add" );
+  });
+
+  $("body").on('click',".fa-android", function(){
+    self.port.emit("linkClicked", " https://bit.ly/1KqFi3U" );
   });
 
 });

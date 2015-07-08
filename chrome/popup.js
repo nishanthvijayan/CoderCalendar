@@ -236,8 +236,13 @@ $(document).ready(function(){
     chrome.tabs.create({ url: "options.html" });
   });
 
-  $("body").on('click',".gh-btn", function(){
-    chrome.tabs.create({ url: "https://github.com/nishanthvijayan/CoderCalendar" });
+  $("body").on('click',".fa-code", function(){
+    chrome.tabs.create({ url: "https://bit.ly/1LUziPN" });
   });
+
+  $("body").on('click',".fa-star", function(){
+    chrome.tabs.create({ url: "https://chrome.google.com/webstore/detail/coders-calendar/bageaffklfkikjigoclfgengklfnidll/reviews" });
+  });
+  
 });
 

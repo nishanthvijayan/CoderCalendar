@@ -175,9 +175,8 @@ function addcalendarEvent(id,name,url,StartTime,EndTime){
     // Okay.So let me explain.Some calendar apps don't support silent event creation,
     // So everytime an event is to be added after trying silent creation,it searches whether
     // the event has been actually added.If yes,hurray.Else,interactiveCreate is called().
-    // The success callback of createEventInteractively() is fired regardless of whether
-    // the user clicked save or cancel.But verifying this again is too complex,
-    // so I'm going to assume the user always clicks 'save'.
+    // In that case the corresponding icon change is managed by calling restoredata()
+    // under document.addEventListener("resume")
 
     window.plugins.calendar.findEvent(name,url," ",s,e,function(message){
       if(Object.keys(message).length>0){
@@ -187,7 +186,6 @@ function addcalendarEvent(id,name,url,StartTime,EndTime){
       }else{
         window.plugins.calendar.createEventInteractively(name,url," ",s,e,function(n){
           window.analytics.trackEvent('Calendar', 'Click',"AddInteractive");
-          $("#calButton"+id).addClass('fa-trash').addClass("red-text").removeClass('fa-calendar').removeClass('green-text');
         }, function(m){} );
       }
     },function(b){});
@@ -279,3 +277,7 @@ document.addEventListener("deviceready", function(){
   });
 
 });
+
+document.addEventListener("resume",function(){
+  restoredata();
+})

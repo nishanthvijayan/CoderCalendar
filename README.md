@@ -13,8 +13,10 @@ Coder's Calendar is  available for download at:
   
   
 ## ScreenShots  
-![Chrome Extension](http://i.imgur.com/DXbGuZz.png?1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-![Android App](http://i.imgur.com/Etf0yiU.png?1)
+![Android App](http://i.imgur.com/q9DUsgZ.png?1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+![Android App](http://i.imgur.com/6l9efxF.png?1)  
+  
+![Chrome Extension](http://i.imgur.com/DXbGuZz.png?1)  
   
 ## Android
 The Android app uses:

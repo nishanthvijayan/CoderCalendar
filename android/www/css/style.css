@@ -112,10 +112,16 @@ hr {
 .info-btn{
   position: fixed;
   margin-top: 25px;
-  left: 80%;
+  left: 70%;
   font-size: 220%; 
 }
 .rate-btn{
+  position: fixed;
+  margin-top: 25px;
+  left: 80%;
+  font-size: 220%;
+}
+.share-btn{
   position: fixed;
   margin-top: 25px;
   left: 90%;

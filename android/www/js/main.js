@@ -266,14 +266,21 @@ document.addEventListener("deviceready", function(){
   });
 
   $(".rate-btn").click(function(){
-    window.analytics.trackEvent('Rate', 'Click');
     navigator.notification.confirm("Rate Coder's Calendar?",
       function( index ) {
-            if(index==2)  window.open("https://bit.ly/1KqFi3U", "_system");
+            if(index==2) {
+              window.analytics.trackEvent('Rate', 'Click');
+              window.open("https://bit.ly/1KqFi3U", "_system");
+            }
         },
         "Rate Us",
         [ "Later","Yes" ]
       );
+  });
+
+  $(".share-btn").click(function(){
+    window.analytics.trackEvent('ShareApp', 'Click');
+    window.plugins.socialsharing.share( "Check out this app: Coder's Calendar , https://play.google.com/store/apps/details?id=com.corphots.coderscalendar " );
   });
 
 });

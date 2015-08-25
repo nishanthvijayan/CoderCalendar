@@ -280,10 +280,6 @@ $(document).ready(function(){
     if(!$( ".fa-refresh" ).hasClass( "fa-spin" )) fetchdata();
   });
 
-  $("body").on('click',".fa-star", function(){
-    self.port.emit("linkClicked", "https://addons.mozilla.org/en-US/firefox/addon/coder-calendar/reviews/add" );
-  });
-
   $("body").on('click',".fa-android", function(){
     self.port.emit("linkClicked", " https://bit.ly/1KqFi3U" );
   });

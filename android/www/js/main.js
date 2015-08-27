@@ -129,6 +129,12 @@ function fetchdata(){
     
     $( ".btn-floating" ).toggleClass( "fa-spin" );
     putdata(res);
+
+    if(parseInt(localStorage.COUNT)>=10){
+      localStorage.removeItem("COUNT");
+      $(".rate-btn").trigger("click");
+    }
+
   };
   req.onerror = function(){
     $( ".btn-floating" ).toggleClass( "fa-spin" );
@@ -234,6 +240,10 @@ function initializeSetting(){
   if(!localStorage.TOPCODER)localStorage.TOPCODER = 'true';
   if(!localStorage.GOOGLE)localStorage.GOOGLE = 'true';
   if(!localStorage.OTHER)localStorage.OTHER = 'true';
+  
+  if(!localStorage.COUNT)localStorage.COUNT = '0';
+  localStorage.COUNT = (parseInt(localStorage.COUNT)+1);
+  
 }
 
 document.addEventListener("deviceready", function(){

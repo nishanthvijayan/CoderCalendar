@@ -244,5 +244,9 @@ $(document).ready(function(){
     chrome.tabs.create({ url: "https://chrome.google.com/webstore/detail/coders-calendar/bageaffklfkikjigoclfgengklfnidll/reviews" });
   });
   
+  $("body").on('click',".fa-android", function(){
+    chrome.tabs.create({ url: "https://bit.ly/1KqFi3U" });
+  });
+  
 });
 

@@ -132,10 +132,23 @@ function fetchdata(){
 
     if(parseInt(localStorage.COUNT)>=10){
       localStorage.removeItem("COUNT");
-      $(".rate-btn").trigger("click");
+      navigator.notification.confirm("Enjoying Coder's Calendar?",
+      function( index ) {
+            if(index==2) {
+              window.analytics.trackEvent('yesEnjoying', 'Click');
+              $(".rate-btn").trigger("click");
+            }else if(index==1){
+              window.analytics.trackEvent('notEnjoying', 'Click');
+              navigator.notification.alert("Please let us know your suggestions to make Code's Calendar better.",function() {},"Feedback","OK");
+            }
+        },
+        "Feedback",
+        [ "No","Yes" ]
+      );
     }
 
   };
+  
   req.onerror = function(){
     $( ".btn-floating" ).toggleClass( "fa-spin" );
     restoredata();
@@ -276,7 +289,7 @@ document.addEventListener("deviceready", function(){
   });
 
   $(".rate-btn").click(function(){
-    navigator.notification.confirm("Rate Coder's Calendar?",
+    navigator.notification.confirm("How about a rating on the Play Store?",
       function( index ) {
             if(index==2) {
               window.analytics.trackEvent('Rate', 'Click');
@@ -284,7 +297,7 @@ document.addEventListener("deviceready", function(){
             }
         },
         "Rate Us",
-        [ "Later","Yes" ]
+        [ "No, thanks","Ok, sure" ]
       );
   });
 
@@ -297,4 +310,4 @@ document.addEventListener("deviceready", function(){
 
 document.addEventListener("resume",function(){
   restoredata();
-})
+});

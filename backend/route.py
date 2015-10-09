@@ -23,7 +23,7 @@ app.cache = Cache(app)
 
 
 posts= {"ongoing":[] , "upcoming":[]}
-hackerrank_contests_urls = []
+hackerrank_contests = {"urls":[]}
 
 def get_duration(duration):
     days = duration/(60*24)
@@ -136,15 +136,15 @@ def fetch_hackerrank_general():
     page = urlopen("https://www.hackerrank.com/rest/contests/upcoming?offset=0&limit=10&contest_slug=active&_="+cur_time)
     data = json.load(page)["models"]
     for item in data:
-        if not item["ended"] and ("https://www.hackerrank.com/"+item["slug"]) not in hackerrank_contests_urls:
+        if not item["ended"] and ("https://www.hackerrank.com/"+item["slug"]) not in hackerrank_contests["urls"]:
             start_time = strptime(item["get_starttimeiso"], "%Y-%m-%dT%H:%M:%SZ")
             end_time = strptime(item["get_endtimeiso"], "%Y-%m-%dT%H:%M:%SZ")
             duration = get_duration(int(( mktime(end_time)-mktime(start_time) )/60 ))
             if not item["started"]:
-                hackerrank_contests_urls.append("https://www.hackerrank.com/"+item["slug"])
+                hackerrank_contests["urls"].append("https://www.hackerrank.com/"+item["slug"])
                 posts["upcoming"].append({ "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"] , "StartTime" :  strftime("%a, %d %b %Y %H:%M", localtime(mktime(start_time)+19800)),"EndTime" : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)+19800)),"Duration":duration,"Platform":"HACKERRANK"  })
             elif   item["started"]:
-                hackerrank_contests_urls.append("https://www.hackerrank.com/"+item["slug"])
+                hackerrank_contests["urls"].append("https://www.hackerrank.com/"+item["slug"])
                 posts["ongoing"].append({  "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"]  , "EndTime"   : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)+19800))  ,"Platform":"HACKERRANK"  })
 
 def fetch_hackerrank_college():
@@ -152,15 +152,15 @@ def fetch_hackerrank_college():
     page = urlopen("https://www.hackerrank.com/rest/contests/college?offset=0&limit=50&_="+cur_time)
     data = json.load(page)["models"]
     for item in data:
-        if not item["ended"] and ("https://www.hackerrank.com/"+item["slug"]) not in hackerrank_contests_urls:
+        if not item["ended"] and ("https://www.hackerrank.com/"+item["slug"]) not in hackerrank_contests["urls"]:
             start_time = strptime(item["get_starttimeiso"], "%Y-%m-%dT%H:%M:%SZ")
             end_time = strptime(item["get_endtimeiso"], "%Y-%m-%dT%H:%M:%SZ")
             duration = get_duration(int(( mktime(end_time)-mktime(start_time) )/60 ))
             if not item["started"]:
-                hackerrank_contests_urls.append("https://www.hackerrank.com/"+item["slug"])
+                hackerrank_contests["urls"].append("https://www.hackerrank.com/"+item["slug"])
                 posts["upcoming"].append({ "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"] , "StartTime" :  strftime("%a, %d %b %Y %H:%M", localtime(mktime(start_time)+19800)),"EndTime" : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)+19800)),"Duration":duration,"Platform":"HACKERRANK"  })
             elif   item["started"]:
-                hackerrank_contests_urls.append("https://www.hackerrank.com/"+item["slug"])
+                hackerrank_contests["urls"].append("https://www.hackerrank.com/"+item["slug"])
                 posts["ongoing"].append({  "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"]  , "EndTime"   : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)+19800))  ,"Platform":"HACKERRANK"  })
 
 def fetch_google():
@@ -183,7 +183,7 @@ def fetch():
 
     posts["upcoming"]=[]
     posts["ongoing"]=[]
-    hackerrank_contests_urls = []
+    hackerrank_contests["urls"] = []
     thread_list = []
     
     thread_list.append( threading.Thread(target=fetch_codeforces) )

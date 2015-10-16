@@ -49,3 +49,6 @@ You can also add them here:
 http://feathub.com/nishanthvijayan/CoderCalendar  
   
 Happy Coding!  
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/nishanthvijayan/codercalendar/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+

@@ -120,7 +120,7 @@ def fetch_topcoder():
 
                 duration = get_duration(int(( mktime(end_time)-mktime(start_time) )/60 ))
                 name = item["summary"]
-                if "SRM" in name: url = "http://community.topcoder.com/tc?module=MatchDetails&rd="+ item["description"][110:115]
+                if "SRM" in name and "description" in item: url = "http://community.topcoder.com/tc?module=MatchDetails&rd="+ item["description"][110:115]
                 else :            url = "http://tco15.topcoder.com/algorithm/rules/"
                 
                 if cur_time<start_time:

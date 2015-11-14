@@ -36,10 +36,11 @@ function putdata(json)
 
       timezonePerfectEndTime  = changeTimezone(Date.parse(post.EndTime)).toString().slice(0,21);
       timezonePerfectStartTime  = changeTimezone(Date.parse(post.StartTime)).toString().slice(0,21);
+      humanReadableEndTime = moment(timezonePerfectEndTime).fromNow();
 
       ongoingHTML+='<li><div class="contest-wrapper"><br><h3 >'+post.Name+'</h3>\
         <img class="contest_image" src="img/'+icon(post.Platform)+'"></img><br><br>\
-        <h4>End: '+timezonePerfectEndTime+'</h4></div><hr><br>\
+        <h4>End: '+timezonePerfectEndTime+' ( ' + humanReadableEndTime + ' )</h4></div><hr><br>\
         <div class="contest-action">\
         <i class="fa fa-link card-icon grey-text" onclick="load(&quot;'+post.url+'&quot;)" ></i>\
         <i class="fa fa-share-alt card-icon grey-text" onclick="socialShare(0,&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectEndTime+'&quot;);" ></i>\
@@ -61,6 +62,8 @@ function putdata(json)
       
       timezonePerfectEndTime  = changeTimezone(Date.parse(post.EndTime)).toString().slice(0,21);
       timezonePerfectStartTime  = changeTimezone(Date.parse(post.StartTime)).toString().slice(0,21);
+      humanReadableStartTime = moment(timezonePerfectStartTime).fromNow();
+      humanReadableEndTime = moment(timezonePerfectEndTime).fromNow();
 
       if(Object.keys(message).length>0){
         calendar_string = '<i id="calButton'+i+'" class="red-text fa fa-trash card-icon" onclick="decideCalendarEvent('+i+',&quot;'+post.Name+'&quot;,&quot;'+post.url+'&quot;,&quot;'+timezonePerfectStartTime+'&quot;,&quot;'+timezonePerfectEndTime+'&quot;);"></i>';

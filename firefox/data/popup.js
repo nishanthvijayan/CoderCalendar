@@ -281,7 +281,7 @@ $(document).ready(function(){
   });
 
   $("body").on('click',".fa-android", function(){
-    self.port.emit("linkClicked", " https://bit.ly/1KqFi3U" );
+    self.port.emit("linkClicked", "https://bit.ly/1KqFi3U" );
   });
 
 });

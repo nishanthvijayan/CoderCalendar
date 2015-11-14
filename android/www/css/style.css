@@ -24,7 +24,7 @@ body {
   margin-top: 70px;
 }
 header{
-  background-color: #1565c0;
+  background-color: #166ECC;
   height: 70px;
   color : #ffffff;
   position: fixed;
@@ -36,6 +36,7 @@ header{
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.13);
   z-index: 3;
 }
+
 header > h2{
   float: left;
   margin-left: 20%;

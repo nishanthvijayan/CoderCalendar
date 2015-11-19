@@ -7,9 +7,9 @@ Currently shows updates from Codechef , HackerEarth , Hackerrank, Topcoder and C
   
 ## Download  
 Coder's Calendar is  available for download at:
-- ![Android app](https://play.google.com/store/apps/details?id=com.corphots.coderscalendar/)
-- ![Chrome Extension](https://chrome.google.com/webstore/detail/coders-calendar/bageaffklfkikjigoclfgengklfnidll)
-- ![Firefox add-on](https://addons.mozilla.org/en-US/firefox/addon/coder-calendar/)
+- [Android App] (https://play.google.com/store/apps/details?id=com.corphots.coderscalendar)
+- [Chrome Extension] (https://chrome.google.com/webstore/detail/coders-calendar/bageaffklfkikjigoclfgengklfnidll)
+- [Firefox Add-on] (https://addons.mozilla.org/en-US/firefox/addon/coder-calendar/)
   
   
 ## ScreenShots  

@@ -1,91 +1,105 @@
 * {
-  margin:0;
+  margin: 0;
   padding: 0;
   text-transform: none;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-}
-body {
-    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
-    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
-    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-attachment:fixed;
-    background-color: #F8F8F8;
-    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
-    font-size:12px;
-    height:100%;
-    margin:0px;
-    padding:0px;
-    text-transform:uppercase;
-    width:100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.ui-content{
+body {
+  -webkit-touch-callout: none;
+
+  /* prevent callout to copy image, etc when tap to hold */
+  -webkit-text-size-adjust: none;
+
+  /* prevent webkit from resizing text to fit */
+  -webkit-user-select: none;
+
+  /* prevent copy paste, to allow, change 'none' to 'text' */
+  background-attachment: fixed;
+  background-color: #F8F8F8;
+  font-family: 'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.ui-content {
   display: none;
   margin-top: 70px;
 }
-header{
+
+header {
   background-color: #166ECC;
   height: 70px;
-  color : #ffffff;
+  color: #ffffff;
   position: fixed;
   width: 100%;
-  top:0%;
+  top: 0%;
   text-align: center;
-  margin:0px;
+  margin: 0px;
   width: 100%;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.13);
   z-index: 3;
 }
 
-header > h2{
+header > h2 {
   float: left;
   margin-left: 20%;
   margin-top: 25px;
   display: inline-block;
 }
 
-li{
+li {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.13);
-  list-style-type:none;
-  display: block;  
+  list-style-type: none;
+  display: block;
   text-decoration: none;
   color: black;
   background-color: #ffffff;
-  margin:3%;
+  margin: 3%;
 }
-.contest-wrapper{
+
+.contest-wrapper {
   margin-left: 5%;
   padding: 15px;
 }
-.contest-action{
+
+.contest-action {
   margin-left: 5%;
   padding: 5px 15px 15px;
 }
-.contest-action > i{
+
+.contest-action > i {
   padding: 0px 20px;
 }
 
-.card-icon{
-  font-size: 150%;  
+.card-icon {
+  font-size: 150%;
 }
 
-h3,h4,h5{
+h3,
+h4,
+h5 {
   font-weight: inherit;
 }
-h3{
+
+h3 {
   display: inline-block;
 }
 
-
-.contest_image{
+.contest_image {
   display: inline-block;
   float: right;
   margin: 5px;
 }
-.title{
+
+.title {
   text-align: center;
   padding: 15px;
-  background-color: #1e88e5 ;
+  background-color: #1e88e5;
   color: #ffffff;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.13);
 }
@@ -99,30 +113,31 @@ hr {
   padding: 0px;
 }
 
-
 /********************** Header Buttons ******************/
-
-.settings-btn{
+.settings-btn {
   position: fixed;
   margin-top: 25px;
   left: 5%;
   font-size: 240%;
-  color:white;
+  color: white;
   text-decoration: none;
 }
-.info-btn{
+
+.info-btn {
   position: fixed;
   margin-top: 25px;
   left: 70%;
-  font-size: 220%; 
+  font-size: 220%;
 }
-.rate-btn{
+
+.rate-btn {
   position: fixed;
   margin-top: 25px;
   left: 80%;
   font-size: 220%;
 }
-.share-btn{
+
+.share-btn {
   position: fixed;
   margin-top: 25px;
   left: 90%;
@@ -130,39 +145,42 @@ hr {
 }
 
 /***************** Floating Button ****************/
-
 .btn-floating::before {
-    border-radius: 0;
+  border-radius: 0;
 }
+
 .btn-floating {
-    height: 55.5px;
-    width: 55.5px;
-    bottom: 5%;
-    position: fixed;
-    right: 7%;
-    line-height: 56px;
-    border-radius: 50%;
-    color: #fff;
-    padding: 0;
-    letter-spacing: 0.5px;
-    text-align: center;
-    text-decoration: none;
-    border: medium none;
-    outline: 0 none;
-    text-transform: uppercase;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  height: 55.5px;
+  width: 55.5px;
+  bottom: 5%;
+  position: fixed;
+  right: 7%;
+  line-height: 56px;
+  border-radius: 50%;
+  color: #fff;
+  padding: 0;
+  letter-spacing: 0.5px;
+  text-align: center;
+  text-decoration: none;
+  border: medium none;
+  outline: 0 none;
+  text-transform: uppercase;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
 /************* COLORS****************/
 .red {
-    background-color: #f44336;
+  background-color: #f44336;
 }
+
 .red-text {
-    color: #f44336;
+  color: #f44336;
 }
-.green-text{
-  color:  #4caf50;
+
+.green-text {
+  color: #4caf50;
 }
-.grey-text{
+
+.grey-text {
   color: #757575;
 }

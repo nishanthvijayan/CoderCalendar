@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from operator import itemgetter
 from time import strptime,strftime,mktime,gmtime,localtime
 import json
-from urllib2 import urlopen
+from urllib2 import urlopen,Request
 import threading
 # import the flask extension
 from flask.ext.cache import Cache   
@@ -163,36 +163,58 @@ def fetch_hackerrank_college():
                 hackerrank_contests["urls"].append("https://www.hackerrank.com/"+item["slug"])
                 posts["ongoing"].append({  "Name" :  item["name"] , "url" : "https://www.hackerrank.com/"+item["slug"]  , "EndTime"   : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)+19800))  ,"Platform":"HACKERRANK"  })
 
-def fetch_google():
-	cur_time = localtime()
-	page = urlopen("https://clients6.google.com/calendar/v3/calendars/google.com_jqv7qt9iifsaj94cuknckrabd8@group.calendar.google.com/events?calendarId=google.com_jqv7qt9iifsaj94cuknckrabd8%40group.calendar.google.com&singleEvents=true&timeZone=Asia%2FCalcutta&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2015-04-26T00%3A00%3A00-07%3A00&timeMax=2016-06-07T00%3A00%3A00-07%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs")
-	data = json.load(page)["items"]
-	for item in data:
-		if item["start"].has_key("dateTime"):
-		    start_time = strptime(item["start"]["dateTime"][:19], "%Y-%m-%dT%H:%M:%S")
-		    end_time = strptime(item["end"]["dateTime"][:19], "%Y-%m-%dT%H:%M:%S")
-		    duration = get_duration(int(( mktime(end_time)-mktime(start_time) )/60 ))
+# def fetch_google():
+# 	cur_time = localtime()
+# 	page = urlopen("https://clients6.google.com/calendar/v3/calendars/google.com_jqv7qt9iifsaj94cuknckrabd8@group.calendar.google.com/events?calendarId=google.com_jqv7qt9iifsaj94cuknckrabd8%40group.calendar.google.com&singleEvents=true&timeZone=Asia%2FCalcutta&maxAttendees=1&maxResults=250&sanitizeHtml=true&timeMin=2015-04-26T00%3A00%3A00-07%3A00&timeMax=2016-06-07T00%3A00%3A00-07%3A00&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs")
+# 	data = json.load(page)["items"]
+# 	for item in data:
+# 		if item["start"].has_key("dateTime"):
+# 		    start_time = strptime(item["start"]["dateTime"][:19], "%Y-%m-%dT%H:%M:%S")
+# 		    end_time = strptime(item["end"]["dateTime"][:19], "%Y-%m-%dT%H:%M:%S")
+# 		    duration = get_duration(int(( mktime(end_time)-mktime(start_time) )/60 ))
 
-		    if cur_time>start_time and cur_time<end_time:
-		        posts["ongoing"].append({  "Name" :  "Google Code Jam "+item["summary"]  , "url" : "https://code.google.com/codejam" , "EndTime"   : strftime("%a, %d %b %Y %H:%M", end_time)  ,"Platform":"GOOGLE"  })
-		    elif cur_time<start_time:
-		        posts["upcoming"].append({ "Name" :  "Google Code Jam "+item["summary"]  , "url" : "https://code.google.com/codejam" , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time),"EndTime" : strftime("%a, %d %b %Y %H:%M", end_time),"Duration":duration,"Platform":"GOOGLE" })
+# 		    if cur_time>start_time and cur_time<end_time:
+# 		        posts["ongoing"].append({  "Name" :  "Google Code Jam "+item["summary"]  , "url" : "https://code.google.com/codejam" , "EndTime"   : strftime("%a, %d %b %Y %H:%M", end_time)  ,"Platform":"GOOGLE"  })
+# 		    elif cur_time<start_time:
+# 		        posts["upcoming"].append({ "Name" :  "Google Code Jam "+item["summary"]  , "url" : "https://code.google.com/codejam" , "StartTime" : strftime("%a, %d %b %Y %H:%M", start_time),"EndTime" : strftime("%a, %d %b %Y %H:%M", end_time),"Duration":duration,"Platform":"GOOGLE" })
 
-def fetch_facebook():
-    cur_time = localtime()
-    data = [{ "Name" :  "Facebook 2016 Hacker Cup Round 1" , "url" : "https://www.facebook.com/hackercup/timeline" , "StartTime" : "Sat, 16 Jan 2016 23:30" ,"EndTime" : "Sun, 17 Jan 2016 23:30", "Duration": "1 day" ,"Platform":"OTHER" },
-    { "Name" :  "Facebook 2016 Hacker Cup Round 2" , "url" : "https://www.facebook.com/hackercup/timeline" , "StartTime" : "Sat, 23 Jan 2016 23:30" ,"EndTime" : "Sun, 24 Jan 2016 2:30" , "Duration": "3h" ,"Platform":"OTHER" },
-    { "Name" :  "Facebook 2016 Hacker Cup Round 3" , "url" : "https://www.facebook.com/hackercup/timeline" , "StartTime" : "Sat, 30 Jan 2016 23:30" ,"EndTime" : "Sun, 31 Jan 2016 2:30" , "Duration": "3h" ,"Platform":"OTHER" },]
+# def fetch_facebook():
+#     cur_time = localtime()
+#     data = [{ "Name" :  "Facebook 2016 Hacker Cup Round 1" , "url" : "https://www.facebook.com/hackercup/timeline" , "StartTime" : "Sat, 16 Jan 2016 23:30" ,"EndTime" : "Sun, 17 Jan 2016 23:30", "Duration": "1 day" ,"Platform":"OTHER" },
+#     { "Name" :  "Facebook 2016 Hacker Cup Round 2" , "url" : "https://www.facebook.com/hackercup/timeline" , "StartTime" : "Sat, 23 Jan 2016 23:30" ,"EndTime" : "Sun, 24 Jan 2016 2:30" , "Duration": "3h" ,"Platform":"OTHER" },
+#     { "Name" :  "Facebook 2016 Hacker Cup Round 3" , "url" : "https://www.facebook.com/hackercup/timeline" , "StartTime" : "Sat, 30 Jan 2016 23:30" ,"EndTime" : "Sun, 31 Jan 2016 2:30" , "Duration": "3h" ,"Platform":"OTHER" },]
     
+#     for item in data:
+#             start_time = strptime(item["StartTime"], "%a, %d %b %Y %H:%M")
+#             end_time = strptime(item["EndTime"], "%a, %d %b %Y %H:%M")
+#             if cur_time>start_time and cur_time<end_time:
+#                 posts["ongoing"].append(item)
+#             elif cur_time<start_time:
+#                 posts["upcoming"].append(item)
+
+def fetch_hackalist():
+    cur_time = str(int(mktime(localtime())*1000))
+    cur_month = localtime().tm_mon 
+    cur_month_padded = str(cur_month) if cur_month > 9 else "0" + str(cur_month)
+    cur_month_name = strftime("%B",localtime())
+    cur_year = str(localtime().tm_year)
+    
+    req = Request("http://www.hackalist.org/api/1.0/"+ cur_year +"/"+ cur_month_padded +".json")
+    req.add_header('User-agent', 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:37.0) Gecko/20100101 Firefox/37.0')
+    page = urlopen(req)
+    
+    data = json.load(page)[cur_month_name]
     for item in data:
-            start_time = strptime(item["StartTime"], "%a, %d %b %Y %H:%M")
-            end_time = strptime(item["EndTime"], "%a, %d %b %Y %H:%M")
-            if cur_time>start_time and cur_time<end_time:
-                posts["ongoing"].append(item)
-            elif cur_time<start_time:
-                posts["upcoming"].append(item)
-
-
+        start_time = strptime(item["startDate"]+" "+cur_year, "%B %d %Y")
+        end_time = strptime(item["endDate"]+" "+cur_year , "%B %d %Y")
+        duration = get_duration(int(( mktime(end_time)-mktime(start_time) )/60 ))
+        
+        if cur_time < start_time:
+            posts["upcoming"].append({ "Name" :  item["title"]+" ["+item["city"]+"]" , "url" : item["url"] , "StartTime" :  strftime("%a, %d %b %Y %H:%M", localtime(mktime(start_time))),"EndTime" : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time))),"Duration":duration,"Platform":"OTHER"  })
+        elif   cur_time > start_time and cur_time < end_time:
+            posts["ongoing"].append({  "Name" :  item["title"]+" ["+item["city"]+"]" , "url" : item["url"]  , "EndTime"   : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)))  ,"Platform":"OTHER"  })
+     
+        
 def fetch():
 
 
@@ -207,8 +229,9 @@ def fetch():
     thread_list.append( threading.Thread(target=fetch_codechef) )
     thread_list.append( threading.Thread(target=fetch_hackerrank_general) )
     thread_list.append( threading.Thread(target=fetch_hackerrank_college) )
-    thread_list.append( threading.Thread(target=fetch_facebook) )
-    thread_list.append( threading.Thread(target=fetch_google) )
+    # thread_list.append( threading.Thread(target=fetch_facebook) )
+    thread_list.append( threading.Thread(target=fetch_hackalist) )
+    # thread_list.append( threading.Thread(target=fetch_google) )
 
     for thread in thread_list:
         thread.start()

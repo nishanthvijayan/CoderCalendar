@@ -33,6 +33,15 @@ function putdata(json)
   // verifies that each contest gets added to right section regardless of the 
   // section it was present in the "json" variable.
   
+  //storing locally for notification purpose
+  var FetchedContestURLs = {};
+
+  // for unread Tag
+  var localStorageData = localStorage.getItem("FetchedContestURLs");
+  if((localStorageData === null) || (localStorageData.length === 0)){ localStorageData = "{}";}
+  var prevFetchContestURLs = JSON.parse(localStorageData);
+  var notifierTag = false;
+
   curTime  = new Date();
 
   $.each(json.result.ongoing , function(i,post){ 
@@ -83,6 +92,8 @@ function putdata(json)
       sT = new Date(startTime);
       eT = new Date(endTime);
 
+      FetchedContestURLs[post.url] = 1;
+
       if(sT<curTime && eT>curTime){
         $("#ongoing").append('<a  data='+'"'+post.url+'"'+'>\
           <li><br><h3>'+post.Name+'</h3>\
@@ -91,17 +102,28 @@ function putdata(json)
           </li><hr></a>');
       }
       else if(sT>curTime && eT>curTime){
-        $("#upcoming").append('<a  data='+'"'+post.url+'"'+'>\
+        //checking whether new contest has been added or not
+        unreadTag = '';
+        if(!(post.url in prevFetchContestURLs)){
+          unreadTag = '<div class="unread">new</div>';
+          notifierTag = true;
+        }
+        $("#upcoming").append('<div class="unread-bg">' + unreadTag + '<a  data='+'"'+post.url+'"'+'>\
           <li><br><h3>'+post.Name+'</h3>\
           <img title="'+post.Platform+'" src="'+icon(post.Platform)+'"></img><br>\
           <h4>Start: '+timezonePerfectStartTime+' ( ' + humanReadableStartTime + ' )</h4><br>\
           <h4>Duration: '+post.Duration+'</h4><br>\
           <h4 data='+calendarLink+' class="calendar">Add to Calendar</h4>\
-          </li><hr></a>');
+          </li><hr></a></div>');
       }
     }
   });
 
+  //saving into local storage
+  localStorage.setItem("FetchedContestURLs",JSON.stringify(FetchedContestURLs));
+  if(notifierTag){document.getElementById('scroll-info').style.display = "inline";}
+  chrome.browserAction.setBadgeText({text: ""}); // We have 0 unread items.
+  setTimeout(function(){$("#scroll-info").fadeOut(700);},5000);
 }
 
 // sends a request to the backend,on recieving response

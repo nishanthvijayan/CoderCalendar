@@ -25,6 +25,10 @@ app.cache = Cache(app)
 posts= {"ongoing":[] , "upcoming":[]}
 hackerrank_contests = {"urls":[]}
 
+notification_count = 0 # To store the number that is going to be displayed on the icon of the extension
+                       # can be used to display any type of number thus generalised, for instance in this code
+                       # no of ongoing contest will get displayed over the icon of the extension
+
 def get_duration(duration):
     days = duration/(60*24)
     duration %= 60*24
@@ -243,6 +247,11 @@ def fetch():
     posts["ongoing"] = sorted(posts["ongoing"], key=lambda k: strptime(k['EndTime'], "%a, %d %b %Y %H:%M"))
     posts["timestamp"] = strftime("%a, %d %b %Y %H:%M:%S", localtime())
 
+    global notification_count
+    notification_count = len(posts["ongoing"]) # calculating the no of ongoing contest to be displayed on top of the
+                                               # extensions icon
+
+
 @app.route('/')
 @app.cache.cached(timeout=900) # cache for 15 minutes
 def index():
@@ -254,6 +263,10 @@ def index():
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
+@app.route('/notification_count') # adding a route to get the notification count
+def index2():
+    global notification_count
+    return str(notification_count)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

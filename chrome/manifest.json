@@ -8,7 +8,8 @@
 
   "permissions": [
     "http://contesttrackerapi.herokuapp.com/",
-    "tabs"
+    "tabs",
+    "http://contesttrackerapi.herokuapp.com/notification_count"
   ],
   "options_page": "options.html",
    "icons": { "16": "img/icon32.png",
@@ -18,5 +19,8 @@
   "browser_action": {
     "default_icon": "img/icon32.png",
     "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": ["bg.js"]
   }
 }

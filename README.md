@@ -11,7 +11,26 @@ Coder's Calendar is  available for download at:
 - [Chrome Extension] (https://chrome.google.com/webstore/detail/coders-calendar/bageaffklfkikjigoclfgengklfnidll)
 - [Firefox Add-on] (https://addons.mozilla.org/en-US/firefox/addon/coder-calendar/)
   
+## Bugs and Suggestions  
+Found any bugs? Have any suggestions to make this project better?  
+Know any other cool coding sites?  
+Feel free to log them as an issue.  
+When adding an issue specific to Chrome extension, Firefox add-on or Android app  
+please mention it in the title/description clearly.  
   
+## How To Contribute
+
+- Create a topic branch: `git checkout -b awesome_feature`
+- Commit your changes
+- Keep up to date: `git fetch && git rebase origin/master`
+
+Once you’re ready:
+
+- Fork the project on GitHub
+- Add your repository as a remote: `git remote add your_remote your_repo`
+- Push up your branch: `git push your_remote awesome_feature`
+- Create a Pull Request for the topic branch, asking for review.
+
 ## ScreenShots  
 ![Android App](http://i.imgur.com/q9DUsgZ.png?1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 ![Android App](http://i.imgur.com/6l9efxF.png?1)  
@@ -40,15 +59,6 @@ To test the app on an Android device connected to your computer using a USB cabl
 cordova platforms add android
 cordova run android
 ```
-## Bugs and Suggestions  
-Found any bugs? Have any suggestions to make this project better?  
-Know any other cool coding sites?  
-Feel free to log them as an issue.
   
-You can also add them here:  
-http://feathub.com/nishanthvijayan/CoderCalendar  
   
 Happy Coding!  
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/nishanthvijayan/codercalendar/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-

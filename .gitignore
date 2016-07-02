@@ -1,3 +1,4 @@
 *.xpi
 backend/env/
 *.pyc
+chrome/node_modules/

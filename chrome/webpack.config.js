@@ -3,8 +3,8 @@ module.exports = {
 		'./app/index.js'
 	],
 	output:{
-		path: __dirname + '/dist', 
-		filename: 'popup.js'
+		path: __dirname + '/dist/js', 
+		filename: 'index.js'
 	},
 	module: {
 		loaders: [

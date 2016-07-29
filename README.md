@@ -1,3 +1,4 @@
+[![Codewake](https://www.codewake.com/badges/codewake.svg)](https://www.codewake.com/p/coder-calendar)
 # CoderCalendar
 Android App and browser extensions for competitive programming enthusiasts.
 Shows a list of live & upcoming coding contests taking place in various popular competitive programming websites with the facility to add them to your google calender.

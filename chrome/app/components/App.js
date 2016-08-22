@@ -36,7 +36,7 @@ var App = React.createClass({
         //  reset scroll pos if last scrolled time < 5 minutes ?
     },
     render: function(){
-        return(<Main contests = {this.state.contests}/>)
+        return <Main contests = {this.state.contests}/>
     }
 });
 

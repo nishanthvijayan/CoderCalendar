@@ -12,6 +12,7 @@ var ContestTime = React.createClass({
             }
             var timezoneCorrectedTime  = UtilHelpers.changeTimezone(time).toString().slice(0,21);
             var humanReadableTime = moment(timezoneCorrectedTime).fromNow();
+
             return (<h4>{timeText}: {timezoneCorrectedTime} ({humanReadableTime})</h4>)
         }
 });

@@ -16,11 +16,11 @@ var Header = React.createClass({
     render: function(){
         return(
            <header>
-              <i className="fa fa-code fa-2x gh-btn" onClick={this.onClickGitHub}></i>
-              <i className="fa fa-star fa-2x" onClick={this.onClickRate}></i>
-              <i className="fa fa-android fa-2x"  onClick={this.onClickAndroid}></i>
+              <i className="fa fa-code fa-2x gh-btn" onClick={this.onClickGitHub} />
+              <i className="fa fa-star fa-2x" onClick={this.onClickRate} />
+              <i className="fa fa-android fa-2x"  onClick={this.onClickAndroid} />
               <h3>Coder Calendar</h3>
-              <i className="fa fa-gear fa-2x" onClick={this.onClickSettings}></i>
+              <i className="fa fa-gear fa-2x" onClick={this.onClickSettings} />
             </header>
         )
     }

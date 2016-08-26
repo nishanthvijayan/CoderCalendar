@@ -10,13 +10,22 @@ var changeTimezone = function (date){
 // returns the relative path of the icon file
 // corresponding to the platform of each contest
 var icon = function (platform){
-  if(platform=="CODECHEF")          return "img/cc32.jpg";
-  else if (platform=="HACKEREARTH") return "img/he32.png";
-  else if (platform=="CODEFORCES")  return "img/cf32.png"; 
-  else if(platform=="TOPCODER")     return "img/tc32.gif";
-  else if(platform=="HACKERRANK")   return "img/hr36.png";
-  else if(platform=="GOOGLE")   return "img/google32.png";
-  else return "img/other32.png";
+  switch (platform){
+  case "CODECHEF":
+    return "img/cc32.jpg";
+  case "HACKEREARTH":
+    return "img/he32.png";
+  case "CODEFORCES":
+    return "img/cf32.png";
+  case "TOPCODER":
+    return "img/tc32.gif";
+  case "HACKERRANK":
+    return "img/hr36.png";
+  case "GOOGLE":
+    return "img/google32.png";
+  default:
+    return "img/other32.png";
+  }
 }
 
 var constructGoogleCalendarLink = function(contest){

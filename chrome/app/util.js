@@ -7,17 +7,6 @@ var changeTimezone = function (date){
   return newDate;
 }
 
-var constructGoogleCalendarLink = function(contest){
-  var curTime  = new Date();
-  var startTime = Date.parse(contest.StartTime);
-  var endTime = Date.parse(contest.EndTime);
-  var s = new Date(changeTimezone(startTime).getTime() - ((curTime).getTimezoneOffset()*60000 )).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"");
-  var e = new Date(changeTimezone(endTime).getTime() - ((curTime).getTimezoneOffset()*60000 )).toISOString().slice(0,19).replace(/-/g,"").replace(/:/g,"");    
-  var calendarTime = s+'/'+e
-  return "https://www.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(contest.Name)+
-               "&dates="+calendarTime+"&location="+contest.url+"&pli=1&uid=&sf=true&output=xml#eventpage_6";
-}
-
 // var getVersion = function () {
 //   var details = chrome.app.getDetails();
 //   return details.version;
@@ -85,7 +74,6 @@ var appCache = {
 
 module.exports = {
   changeTimezone: changeTimezone,
-  constructGoogleCalendarLink: constructGoogleCalendarLink,
   changeTimezone: changeTimezone,
   initializeSettings: initializeSettings,
   filterContestsBySettings: filterContestsBySettings,

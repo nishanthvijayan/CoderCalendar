@@ -24,6 +24,6 @@ var Contest = React.createClass({
             </a>
         )
     }
-});     
+});
 
 module.exports = Contest;

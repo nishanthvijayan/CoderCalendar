@@ -5,4 +5,3 @@ var App = require('./components/App')
 $(document).ready(function(){
     ReactDOM.render(<App />, document.getElementById('ui-content'));
 });
-

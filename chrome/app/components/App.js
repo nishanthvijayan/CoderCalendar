@@ -9,6 +9,7 @@ var App = React.createClass({
         }
     },
     processData: function(contests){
+        // TODO: Filter contests by time in client side as well for better accuracy
         return {
             ongoing: UtilHelpers.filterContestsBySettings(contests.ongoing),
             upcoming: UtilHelpers.filterContestsBySettings(contests.upcoming)
@@ -22,7 +23,7 @@ var App = React.createClass({
                 contests = data.result;
 
                 UtilHelpers.appCache.store(contests);
-                
+
                 component.setState({
                     contests: this.processData(contests)
                 });
@@ -33,7 +34,7 @@ var App = React.createClass({
         component = this;
         UtilHelpers.initializeSettings();
         this.getData();
-        //  reset scroll pos if last scrolled time < 5 minutes ?
+        //  TODO: Reset scroll position if last scrolled time < 5 minutes ?
     },
     render: function(){
         return <Main contests = {this.state.contests}/>

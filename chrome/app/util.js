@@ -60,8 +60,9 @@ var constructGoogleCalendarLink = function(contest){
 //   }
 // }
 
-//initializing preference values in care they are not set.
-var initializeLocalStorage = function(){
+//initializing preference values in case they are not set.
+//Preferences are stored in localStorage
+var initializeSettings = function(){
   supportedPlatforms = ['HACKEREARTH', 'HACKERRANK', 'CODECHEF', 'CODEFORCES', 'TOPCODER', 'GOOGLE', 'OTHER'];
   $.each(supportedPlatforms,function(i, platform){
     if(!localStorage.getItem(platform)) localStorage.setItem(platform,'true');
@@ -108,7 +109,7 @@ module.exports = {
   changeTimezone: changeTimezone,
   constructGoogleCalendarLink: constructGoogleCalendarLink,
   changeTimezone: changeTimezone,
-  initializeLocalStorage: initializeLocalStorage,
+  initializeSettings: initializeSettings,
   filterContestsBySettings: filterContestsBySettings,
   appCache: appCache
 };

@@ -31,7 +31,7 @@ var App = React.createClass({
     },
     componentDidMount: function(){
         component = this;
-        UtilHelpers.initializeLocalStorage();
+        UtilHelpers.initializeSettings();
         this.getData();
         //  reset scroll pos if last scrolled time < 5 minutes ?
     },

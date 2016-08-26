@@ -7,27 +7,6 @@ var changeTimezone = function (date){
   return newDate;
 }
 
-// returns the relative path of the icon file
-// corresponding to the platform of each contest
-var icon = function (platform){
-  switch (platform){
-  case "CODECHEF":
-    return "img/cc32.jpg";
-  case "HACKEREARTH":
-    return "img/he32.png";
-  case "CODEFORCES":
-    return "img/cf32.png";
-  case "TOPCODER":
-    return "img/tc32.gif";
-  case "HACKERRANK":
-    return "img/hr36.png";
-  case "GOOGLE":
-    return "img/google32.png";
-  default:
-    return "img/other32.png";
-  }
-}
-
 var constructGoogleCalendarLink = function(contest){
   var curTime  = new Date();
   var startTime = Date.parse(contest.StartTime);
@@ -105,7 +84,6 @@ var appCache = {
 };
 
 module.exports = {
-  icon: icon,
   changeTimezone: changeTimezone,
   constructGoogleCalendarLink: constructGoogleCalendarLink,
   changeTimezone: changeTimezone,

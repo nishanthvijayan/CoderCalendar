@@ -3,3 +3,4 @@ backend/env/
 *.pyc
 chrome/node_modules/
 npm-debug.log
+chrome/dist/js/index.js

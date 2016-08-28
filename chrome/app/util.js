@@ -28,22 +28,6 @@ var changeTimezone = function (date){
 //   }
 // }
 
-//initializing preference values in case they are not set.
-//Preferences are stored in localStorage
-var initializeSettings = function(){
-  supportedPlatforms = ['HACKEREARTH', 'HACKERRANK', 'CODECHEF', 'CODEFORCES', 'TOPCODER', 'GOOGLE', 'OTHER'];
-  $.each(supportedPlatforms,function(i, platform){
-    if(!localStorage.getItem(platform)) localStorage.setItem(platform,'true');
-  });
-}
-
-var filterContestsBySettings = function(contests){
-  filteredContests = contests.filter(function(contest){
-    return !!(localStorage.getItem(contest.Platform));
-  });
-  return filteredContests;
-};
-
 var appCache = {
   store: function(contests){
     now = (new Date()).getTime()/1000;
@@ -74,8 +58,5 @@ var appCache = {
 
 module.exports = {
   changeTimezone: changeTimezone,
-  changeTimezone: changeTimezone,
-  initializeSettings: initializeSettings,
-  filterContestsBySettings: filterContestsBySettings,
   appCache: appCache
 };

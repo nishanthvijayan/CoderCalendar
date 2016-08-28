@@ -3,6 +3,7 @@ var Contest = require('./Contest');
 
 var ContestList = React.createClass({
     render: function(){
+        component = this;
         return(
             <div className = 'contest-list'>
                 {this.props.contests.map(function(contest) {

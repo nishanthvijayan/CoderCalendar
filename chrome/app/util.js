@@ -7,27 +7,23 @@ var changeTimezone = function (date){
   return newDate;
 }
 
-// var getVersion = function () {
-//   var details = chrome.app.getDetails();
-//   return details.version;
-// }
+var getVersion = function () {
+  var details = chrome.app.getDetails();
+  return details.version;
+}
 
-// var checkRuntime = function (){
-  
-//   // Check if the version has changed.
-//   var currVersion = getVersion();
-//   var prevVersion = localStorage['version']
-//   if (currVersion != prevVersion) {
-//     // Check if we just installed this extension.
-//     if (typeof prevVersion == 'undefined') {
-//       chrome.tabs.create({ url: "options.html" });
-//     } else {
-//       chrome.tabs.create({ url: "options.html" });
-//     }
-//     localStorage['version'] = currVersion;
-//   }
-// }
+// Checks if the app version has changed
+// Opens settings page on first run after install/upgrade
+var checkIfFirstRun = function (){
+  var currVersion = getVersion();
+  var prevVersion = localStorage['version']
+  if (currVersion != prevVersion) {
+      chrome.tabs.create({ url: "http://nishanthvijayan.github.io/CoderCalendar" });
+    localStorage['version'] = currVersion;
+  }
+}
 
 module.exports = {
-  changeTimezone: changeTimezone
+  changeTimezone: changeTimezone,
+  checkIfFirstRun: checkIfFirstRun
 };

@@ -27,14 +27,14 @@ var App = React.createClass({
         // Remove contests that are already over from ongoing contests list
         filteredContests.ongoing = allContests.ongoing.filter(function(contest){
             endTime   = Date.parse(contest.EndTime);
-            return (endTime > curTime);
+            return (endTime > currentTime);
         });
 
         // Move contests that have started, to ongoing events list
         $.each(allContests.upcoming, function(i, contest){
             startTime = Date.parse(contest.StartTime);
             endTime   = Date.parse(contest.EndTime);
-            if(startTime < curTime && endTime > curTime){
+            if(startTime < currentTime && endTime > currentTime){
                 filteredContests.ongoing.push(contest)
             }
         });
@@ -43,7 +43,7 @@ var App = React.createClass({
         filteredContests.upcoming = allContests.upcoming.filter(function(contest){
             startTime = Date.parse(contest.StartTime);
             endTime   = Date.parse(contest.EndTime);
-            return (startTime > curTime && endTime > curTime);
+            return (startTime > currentTime && endTime > currentTime);
         });
 
         return filteredContests;

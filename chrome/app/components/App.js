@@ -1,11 +1,11 @@
 var React = require('react');
-var UtilHelpers = require('../util');
 var Main = require('./Main');
+var Cache = require('../appCache');
 
 var App = React.createClass({
     getInitialState: function(){
         return{
-            contests: this.processContestList(UtilHelpers.appCache.fetch().data)
+            contests: this.processContestList(Cache.fetch().data)
         }
     },
     initializeSettings: function(){
@@ -59,11 +59,11 @@ var App = React.createClass({
         // If cache is empty or old, fetch data from backend
         // TODO: Handle ajax fail case
         component = this;
-        if (UtilHelpers.appCache.empty() || UtilHelpers.appCache.dataOlderThan(5)) {
+        if (Cache.empty() || Cache.dataOlderThan(5)) {
             $.when( $.ajax( "https://contesttrackerapi.herokuapp.com/" )).then(function(data, textStatus, jqXHR){
                 contests = data.result;
 
-                UtilHelpers.appCache.store(contests);
+                Cache.store(contests);
 
                 component.setState({
                     contests: this.processContestList(contests)

@@ -4,9 +4,6 @@ var Header = React.createClass({
     onClickGitHub: function(){
         chrome.tabs.create({ url: "https://bit.ly/1LUziPN" });
     },
-    onClickRate: function(){
-        chrome.tabs.create({ url: "https://chrome.google.com/webstore/detail/coders-calendar/bageaffklfkikjigoclfgengklfnidll/reviews" });
-    },
     onClickAndroid: function(){
         chrome.tabs.create({ url: "https://bit.ly/1KqFi3U" });
     },
@@ -17,7 +14,6 @@ var Header = React.createClass({
         return(
            <header>
               <i className="fa fa-code fa-2x gh-btn" onClick={this.onClickGitHub} />
-              <i className="fa fa-star fa-2x" onClick={this.onClickRate} />
               <i className="fa fa-android fa-2x"  onClick={this.onClickAndroid} />
               <h3>Coder Calendar</h3>
               <i className="fa fa-gear fa-2x" onClick={this.onClickSettings} />

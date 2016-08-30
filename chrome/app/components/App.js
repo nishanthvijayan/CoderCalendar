@@ -85,7 +85,6 @@ var App = React.createClass({
         if (Cache.empty() || Cache.dataOlderThan(5)) {
             this.getContestList();
         }
-        //  TODO: Reset scroll position if last scrolled time < 5 minutes ?
     },
     render: function(){
         return (

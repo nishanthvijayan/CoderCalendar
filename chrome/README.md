@@ -19,6 +19,6 @@ Now from the extensions panel in Chrome,
  - [x] Process and filter contests based on start/end time on client side
  - [x] Documentation for react setup
  - [x] Fix reload button
- - [ ] Save and restore scroll position
+ - [x] Save and restore scroll position
  - [x] Handle case where ajax requrest to server fails
  - [ ] Test Suite for the components

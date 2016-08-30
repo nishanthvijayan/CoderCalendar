@@ -17,8 +17,8 @@ Now from the extensions panel in Chrome,
 
 ## To-Do
  - [x] Process and filter contests based on start/end time on client side
+ - [x] Documentation for react setup
  - [ ] Fix reload button
  - [ ] Save and restore scroll position
  - [ ] Handle case where ajax requrest to server fails
- - [ ] Documentation for react setup
- 
+ - [ ] Test Suite for the components

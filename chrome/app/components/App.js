@@ -11,31 +11,31 @@ var App = React.createClass({
         }
     },
     initializeSettings: function(){
-        supportedPlatforms = ['HACKEREARTH', 'HACKERRANK', 'CODECHEF', 'CODEFORCES', 'TOPCODER', 'GOOGLE', 'OTHER'];
+        var supportedPlatforms = ['HACKEREARTH', 'HACKERRANK', 'CODECHEF', 'CODEFORCES', 'TOPCODER', 'GOOGLE', 'OTHER'];
         $.each(supportedPlatforms,function(i, platform){
             if(!localStorage.getItem(platform)) localStorage.setItem(platform,'true');
         });
     },
     filterContestsBySettings: function(contests){
-        filteredContests = contests.filter(function(contest){
+        var filteredContests = contests.filter(function(contest){
             return !!(localStorage.getItem(contest.Platform));
         });
         return filteredContests;
     },
     filterContestsByTime: function(allContests){
-        currentTime  = new Date().getTime();
-        filteredContests = {}
+        var currentTime  = new Date().getTime();
+        var filteredContests = {}
 
         // Remove contests that are already over from ongoing contests list
         filteredContests.ongoing = allContests.ongoing.filter(function(contest){
-            endTime   = Date.parse(contest.EndTime);
+            var endTime   = Date.parse(contest.EndTime);
             return (endTime > currentTime);
         });
 
         // Move contests that have started, to ongoing events list
         $.each(allContests.upcoming, function(i, contest){
-            startTime = Date.parse(contest.StartTime);
-            endTime   = Date.parse(contest.EndTime);
+            var startTime = Date.parse(contest.StartTime);
+            var endTime   = Date.parse(contest.EndTime);
             if(startTime < currentTime && endTime > currentTime){
                 filteredContests.ongoing.push(contest)
             }
@@ -43,15 +43,15 @@ var App = React.createClass({
 
         //  Remove contests that have started/ended from upcoming contests list
         filteredContests.upcoming = allContests.upcoming.filter(function(contest){
-            startTime = Date.parse(contest.StartTime);
-            endTime   = Date.parse(contest.EndTime);
+            var startTime = Date.parse(contest.StartTime);
+            var endTime   = Date.parse(contest.EndTime);
             return (startTime > currentTime && endTime > currentTime);
         });
 
         return filteredContests;
     },
     processContestList: function(contests){
-        contestsFilteredBySettings =  {
+        var contestsFilteredBySettings =  {
             ongoing: this.filterContestsBySettings(contests.ongoing),
             upcoming: this.filterContestsBySettings(contests.upcoming)
         };
@@ -65,7 +65,7 @@ var App = React.createClass({
         var component = this;
         $.when( $.ajax( "https://contesttrackerapi.herokuapp.com/" )).then(function(data, textStatus, jqXHR){
 
-            contests = data.result;
+            var contests = data.result;
 
             Cache.store(contests);
 

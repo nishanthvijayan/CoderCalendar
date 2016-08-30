@@ -1,6 +1,6 @@
 var appCache = {
     store: function(contests){
-        now = (new Date()).getTime()/1000;
+        var now = (new Date()).getTime()/1000;
         localStorage.CACHED_DATA  = JSON.stringify(contests);
         localStorage.CACHED_TIME = now;
     },
@@ -17,7 +17,7 @@ var appCache = {
     },
 
     dataOlderThan: function(minutes = 5){
-        now = (new Date()).getTime()/1000;
+        var now = (new Date()).getTime()/1000;
         return !!((now-(minutes*60)) > localStorage.CACHED_TIME);
     },
 

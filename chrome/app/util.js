@@ -1,7 +1,7 @@
 // converts the input time(which is Indian Standard Time) to
 // the browser timezone.
 var convertToBrowzerTimezone = function (date){
-    d = new Date(date);
+    var d = new Date(date);
     var offset = -(d.getTimezoneOffset());
     var newDate = new Date(d.getTime() + offset*60000 - 19800000);
     return newDate;

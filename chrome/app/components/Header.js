@@ -10,6 +10,14 @@ var Header = React.createClass({
     onClickSettings: function(){
         chrome.tabs.create({ url: "options.html" });
     },
+    refreshButtonSpinState: function(){
+        if (this.props.isLoading){
+            return 'fa fa-refresh fa-2x fa-spin'
+        }
+        else{
+            return 'fa fa-refresh fa-2x'
+        }
+    },
     render: function(){
         return(
             <header>
@@ -17,6 +25,7 @@ var Header = React.createClass({
                 <i className="fa fa-android fa-2x"  onClick={this.onClickAndroid} />
                 <h3>Coder Calendar</h3>
                 <i className="fa fa-gear fa-2x" onClick={this.onClickSettings} />
+                <i className={this.refreshButtonSpinState()}  onClick={this.props.onClickRefresh} />
             </header>
         )
     }

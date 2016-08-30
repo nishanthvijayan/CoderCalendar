@@ -1,10 +1,12 @@
 var React = require('react');
-var Main = require('./Main');
+var MainContainer = require('./MainContainer');
+var Header = require('./Header');
 var Cache = require('../appCache');
 
 var App = React.createClass({
     getInitialState: function(){
         return{
+            isLoading: false,
             contests: this.processContestList(Cache.fetch().data)
         }
     },
@@ -56,28 +58,45 @@ var App = React.createClass({
         return this.filterContestsByTime(contestsFilteredBySettings);
     },
     getContestList: function(){
-        // If cache is empty or old, fetch data from backend
-        // TODO: Handle ajax fail case
-        component = this;
-        if (Cache.empty() || Cache.dataOlderThan(5)) {
-            $.when( $.ajax( "https://contesttrackerapi.herokuapp.com/" )).then(function(data, textStatus, jqXHR){
-                contests = data.result;
+        this.setState({
+            isLoading: true
+        });
 
-                Cache.store(contests);
+        var component = this;
+        $.when( $.ajax( "https://contesttrackerapi.herokuapp.com/" )).then(function(data, textStatus, jqXHR){
 
-                component.setState({
-                    contests: this.processContestList(contests)
-                });
+            contests = data.result;
+
+            Cache.store(contests);
+
+            component.setState({
+                contests: component.processContestList(contests),
+                isLoading: false
             });
-        }
+        }, function(data, textStatus, jqXHR){
+
+            component.setState({
+                isLoading: false
+            });
+        });
     },
     componentDidMount: function(){
         this.initializeSettings();
-        this.getContestList();
+        if (Cache.empty() || Cache.dataOlderThan(5)) {
+            this.getContestList();
+        }
         //  TODO: Reset scroll position if last scrolled time < 5 minutes ?
     },
     render: function(){
-        return <Main contests = {this.state.contests}/>
+        return (
+            <div>
+                <Header
+                    onClickRefresh = {this.getContestList.bind(this)}
+                    isLoading = {this.state.isLoading}
+                />
+                <MainContainer contests = {this.state.contests}/>
+            </div>
+        )
     }
 });
 

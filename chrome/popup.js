@@ -170,12 +170,7 @@ function checkRuntime(){
   var currVersion = getVersion();
   var prevVersion = localStorage['version']
   if (currVersion != prevVersion) {
-    // Check if we just installed this extension.
-    if (typeof prevVersion == 'undefined') {
-      chrome.tabs.create({ url: "options.html" });
-    } else {
-      chrome.tabs.create({ url: "options.html" });
-    }
+    chrome.tabs.create({ url: "http://nishanthvijayan.github.io/CoderCalendar/" });
     localStorage['version'] = currVersion;
   }
 }

@@ -8,7 +8,7 @@ var newsfeed = panels.Panel({
   width: 350,
   height: 500,
   contentURL: self.data.url("popup.html"),
-  contentScriptFile: [self.data.url("jquery.js"),self.data.url("popup.js"),self.data.url("moment.js")]
+  contentScriptFile: [self.data.url("jquery-3.1.0.min.js"),self.data.url("popup.js"),self.data.url("moment.js")]
 });
 
 

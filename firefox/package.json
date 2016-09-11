@@ -13,5 +13,8 @@
   "license": "MPL 2.0",
   "keywords": [
     "code", "programming", "codechef", "codeforces", "topcoder", "hackerrank", "hackerearth"
-  ]
+  ],
+  "permissions": {
+    "multiprocess": true
+  }
 }

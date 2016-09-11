@@ -28,7 +28,7 @@ function popup(){
 
 exports.main = function (options, callbacks) {
     if (options.loadReason === 'install' || options.loadReason === 'upgrade') {
-        tabs.open("./options.html");
+        tabs.open("http://nishanthvijayan.github.io/CoderCalendar/");
     }
 };
 

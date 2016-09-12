@@ -2,6 +2,10 @@ var React = require('react');
 var Contest = require('./Contest');
 
 var ContestList = React.createClass({
+    propTypes: {
+        contests:      React.PropTypes.arrayOf(React.PropTypes.object),
+        type:      React.PropTypes.string
+    },
     render: function(){
         var component = this;
         return(

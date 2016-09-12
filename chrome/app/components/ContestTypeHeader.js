@@ -8,4 +8,8 @@ var ContestTypeHeader = function ContestTypeHeader(props){
     )
 };
 
+ContestTypeHeader.propTypes = {
+  type: React.PropTypes.string
+}
+
 module.exports = ContestTypeHeader;

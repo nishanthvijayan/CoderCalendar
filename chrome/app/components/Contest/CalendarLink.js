@@ -33,4 +33,9 @@ var CalendarLink = React.createClass({
     }
 });
 
+CalendarLink.propTypes = {
+  type: React.PropTypes.string,
+  details: React.PropTypes.object
+}
+
 module.exports = CalendarLink;

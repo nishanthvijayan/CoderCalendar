@@ -10,4 +10,9 @@ var ContestDuration = React.createClass({
     }
 });
 
+ContestDuration.propTypes = {
+  type: React.PropTypes.string,
+  details: React.PropTypes.object
+}
+
 module.exports = ContestDuration;

@@ -3,6 +3,9 @@ var ContestTypeHeader = require('./ContestTypeHeader');
 var ContestList = require('./ContestList');
 
 var Main = React.createClass({
+    propTypes: {
+        contests:      React.PropTypes.object
+    },
     render: function(){
         return(
             <div className = 'main-container'>

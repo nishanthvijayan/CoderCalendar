@@ -1,6 +1,10 @@
 var React = require('react');
 
 var Header = React.createClass({
+    propTypes: {
+    onClickRefresh:      React.PropTypes.func,
+    isLoading:   React.PropTypes.bool
+    },
     onClickGitHub: function(){
         chrome.tabs.create({ url: "https://bit.ly/1LUziPN" });
     },

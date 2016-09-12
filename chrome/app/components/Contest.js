@@ -6,6 +6,10 @@ var ContestImage = require('./Contest/ContestImage');
 var ContestDuration = require('./Contest/ContestDuration');
 
 var Contest = React.createClass({
+    propTypes: {
+        details:      React.PropTypes.object,
+        type:      React.PropTypes.string
+    },
     onClickContest: function(){
          chrome.tabs.create({url: this.props.details.url});
     },

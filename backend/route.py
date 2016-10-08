@@ -213,7 +213,30 @@ def fetch_hackalist():
             posts["upcoming"].append({ "Name" :  item["title"]+" ["+item["city"]+"]" , "url" : item["url"] , "StartTime" :  strftime("%a, %d %b %Y %H:%M", localtime(mktime(start_time))),"EndTime" : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time))),"Duration":duration,"Platform":"OTHER"  })
         elif   cur_time > start_time and cur_time < end_time:
             posts["ongoing"].append({  "Name" :  item["title"]+" ["+item["city"]+"]" , "url" : item["url"]  , "EndTime"   : strftime("%a, %d %b %Y %H:%M", localtime(mktime(end_time)))  ,"Platform":"OTHER"  })
-     
+ 
+def fetch_coj():
+    contest_types = [["upcoming","coming"],["ongoing","running"]]
+    posts["upcoming"] = []
+    posts["ongoing"] = []
+    for each in contest_types:
+        pagenum=1
+        while(True):
+    	    page = urlopen("http://coj.uci.cu/tables/"+each[1]+".xhtml?page="+str(pagenum))
+    	    soup = BeautifulSoup(page,"html.parser")
+    	    contests_rows  = soup.findAll("tr")
+    	    cur_time=localtime()
+            if(contests_rows[2]["class"][0]=="empty"):
+    	        break
+    	    for contests_row in contests_rows[2:len(contests_rows)-1]:
+    	        contests_td = contests_row.findAll("td")
+    	        contest_id = contests_td[0].string.strip()  
+                name = contests_td[2].a.string.strip()
+    	        start_time = strptime(contests_td[3].a.string.strip(), "%Y-%m-%d %H:%M:%S")
+                end_time = strptime(contests_td[4].a.string.strip(),"%Y-%m-%d %H:%M:%S")
+    	        duration = get_duration(int(( mktime(end_time)-mktime(start_time) )/60 ))
+    	        posts[each[0]].append({"Name" : name , "url" : "http://coj.uci.cu/contest/contestview.xhtml?cid="+contest_id,"StartTime" : strftime("%a, %d %b %Y %H:%M", start_time),"EndTime" : strftime("%a, %d %b %Y %H:%M",end_time),"Duration":duration ,"Platform":"COJ" })
+    	    pagenum=pagenum+1 
+    
         
 def fetch():
 
@@ -231,6 +254,7 @@ def fetch():
     thread_list.append( threading.Thread(target=fetch_hackerrank_college) )
     # thread_list.append( threading.Thread(target=fetch_facebook) )
     thread_list.append( threading.Thread(target=fetch_hackalist) )
+    thread_list.append( threading.Thread(target=fetch_coj) )
     # thread_list.append( threading.Thread(target=fetch_google) )
 
     for thread in thread_list:

@@ -292,18 +292,18 @@ def fetch_atcoder():
     url = "https://atcoder.jp/"
     page = urlopen(url).read()
     soup = BeautifulSoup(page, "html.parser")
-    divs = soup.find_all("div", {"class": "table-responsive"})[:2]
+    divs = soup.find_all("div", {"class": "table-responsive"})
 
-    for i in range(0, 2):
+    for div in divs:
 
-        bodies = divs[i].find_all("tbody")
+        bodies = div.find_all("tbody")
         for body in bodies:
 
             link = body.find_all("a")[1]
             contest_url = str(link["href"])
             contest_name = str(link.get_text())
 
-            if (contest_name.find("practice contest") > -1):
+            if contest_name.find("practice contest") > -1:
                 continue
 
             page = urlopen(contest_url).read()
@@ -319,14 +319,18 @@ def fetch_atcoder():
             end_time = gmtime(timegm(strptime(end_time, "%Y/%m/%d %H:%M:%S")) + 19800)
             contest_duration = mktime(end_time) - mktime(start_time)
 
+            cur_time = gmtime()
+            start_left = mktime(start_time) - mktime(cur_time)
+            end_left = mktime(end_time) - mktime(cur_time)
+
             start_time = strftime("%a, %d %b %Y %H:%M", start_time)
             end_time = strftime("%a, %d %b %Y %H:%M", end_time)
 
-            if i == 0:
+            if start_left < 1 and end_left > 0:
                 posts["ongoing"].append(
                     {"Name": contest_name, "Duration": get_duration(int(contest_duration / 60)), "Platform": platform,
                      "StartTime": start_time, "EndTime": end_time, "url": contest_url})
-            else:
+            if start_left > 0 and end_left > 0:
                 posts["upcoming"].append(
                     {"Name": contest_name, "Duration": get_duration(int(contest_duration / 60)), "Platform": platform,
                      "StartTime": start_time, "EndTime": end_time, "url": contest_url})

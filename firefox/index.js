@@ -1,38 +1,25 @@
-var buttons = require('sdk/ui/button/action');
-var panels = require("sdk/panel");
-var self = require("sdk/self");
-var tabs = require("sdk/tabs");
+function fetchdata(){
+  req =  new XMLHttpRequest();
+  req.open("GET",'https://contesttrackerapi.herokuapp.com/',true);
+  req.send();
+  req.onload = function(){
 
+    imgToggle();
+    
+    res = JSON.parse(req.responseText);
+    putdata(res);
 
-var newsfeed = panels.Panel({
-  width: 400,
-  height: 600,
-  contentURL: self.data.url("popup.html"),
-  contentScriptFile: [self.data.url("jquery-3.1.0.min.js"),self.data.url("popup.js"),self.data.url("moment.js")]
-});
+    // cache creation
+    localStorage.cache  = req.responseText;
 
-
-var button = buttons.ActionButton({
-  id: "CoderCalendar",
-  label: "Displays upcoming and ongoing coding contests from various platforms",
-  icon: {
-    "16": "./img/icon32.png",
-    "32": "./img/icon32.png"
-  },
-  onClick: popup 
-})
-
-function popup(){
-  newsfeed.show({ position: button });
- };
-
-exports.main = function (options, callbacks) {
-    if (options.loadReason === 'install' || options.loadReason === 'upgrade') {
-        tabs.open("http://nishanthvijayan.github.io/CoderCalendar/");
+  };
+  req.onerror = function(){
+    imgToggle();
+    if(localStorage.cache){
+      localData = JSON.parse(localStorage.cache);
+      putdata(localData);
     }
-};
 
-newsfeed.port.on("linkClicked", function (text) {
-  //open new tab with link
-  tabs.open(text);
-});
+  };
+}
+setInterval(fetchdata(),1800000);

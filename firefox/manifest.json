@@ -1,0 +1,29 @@
+{
+  "applications": {
+    "gecko": {
+      "id": "jid1-ThQRNy5J1zU6Bg@jetpack"
+    }
+  },
+  "name": "Coder's Calendar",
+  "short_name": "Coder's Calendar",
+  "version": "0.4.0",
+  "description": "Presents you with a list of upcoming & ongoing Programming Contests happeing on a variety of popular platforms.",
+  "author": "Nishanth Vijayan",
+  "browser_action": {
+    "browser_style": true,
+    "default_title": "Coder's Calendar",
+    "default_popup": "data/popup.html",
+    "default_icon": {
+      "16": "data/img/icon32.png",
+      "32": "data/img/icon32.png"
+    }
+  },
+  "icons": {
+    "16": "data/img/icon32.png",
+    "32": "data/img/icon32.png"
+  },
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["bg.js"]
+  }
+}

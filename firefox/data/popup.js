@@ -250,30 +250,30 @@ $(document).ready(function(){
   }, 60000);
 
   
-  //sends "link to be opened" to main.js
+  //opens link in new tab
   $("body").on('click',"li", function(){
-    self.port.emit("linkClicked",this.data);
+    window.open(this.data, '_blank');
     return false;
   });
   
-  //sends "link to be opened" to main.js
+  //opens link in new tab
   $("body").on('click',".calendar", function(){
-    self.port.emit("linkClicked",this.data);
+    window.open(this.data, '_blank');
     return false;
   });
 
-  //sends "link to be opened" to main.js
+  //opens link in new tab
   $("body").on('click',"a", function(){
-    self.port.emit("linkClicked",$(this).attr('data'));
+    window.open($(this).attr('data'), '_blank');
     return false;
   });
 
   $("body").on('click',".fa-gear", function(){
-    self.port.emit("linkClicked", "options.html" );
+    window.open('options.html', '_blank');
   });
 
   $("body").on('click',".fa-code", function(){
-    self.port.emit("linkClicked", "https://bit.ly/1LUziPN" );
+    window.open('https://bit.ly/1LUziPN', '_blank');
   });
 
   $("body").on('click',".fa-refresh", function(){
@@ -281,7 +281,7 @@ $(document).ready(function(){
   });
 
   $("body").on('click',".fa-android", function(){
-    self.port.emit("linkClicked", "https://bit.ly/1KqFi3U" );
+    window.open('https://bit.ly/1KqFi3U', '_blank');
   });
 
 });

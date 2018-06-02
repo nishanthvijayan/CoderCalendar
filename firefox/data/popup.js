@@ -252,34 +252,29 @@ $(document).ready(function(){
   
   //opens link in new tab
   $("body").on('click',"li", function(){
-
-	browser.tabs.create({  url: this.data });
+    browser.tabs.create({  url: this.data });
     return false;
   });
   
   //opens link in new tab
   $("body").on('click',".calendar", function(){
-   browser.tabs.create({  url: this.data });
-
+    browser.tabs.create({  url: this.data });
     return false;
   });
 
   //opens link in new tab
   $("body").on('click',"a", function(){
-   browser.tabs.create({  url: $(this).attr('data')  });
-
+    browser.tabs.create({  url: $(this).attr('data')  });
     return false;
   });
 
   $("body").on('click',".fa-gear", function(){
-  
- browser.tabs.create({  url:"/data/options.html"  });
+  browser.tabs.create({  url:"/data/options.html"  });
 
   });
 
   $("body").on('click',".fa-code", function(){
-   
-	  	 browser.tabs.create({url:"https://bit.ly/1LUziPN" });
+  browser.tabs.create({url:"https://bit.ly/1LUziPN" });
 
   });
 
@@ -292,7 +287,7 @@ $(document).ready(function(){
 
   });
 	
- browser.tabs.create({url:"https://bit.ly/1KqFi3U" });
+ 
 
 });
 

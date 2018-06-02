@@ -22,8 +22,6 @@
     "16": "data/img/icon32.png",
     "32": "data/img/icon32.png"
   },
-  "manifest_version": 2,
-  "background": {
-    "scripts": ["bg.js"]
-  }
+  "manifest_version": 2
+
 }

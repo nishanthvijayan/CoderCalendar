@@ -252,28 +252,30 @@ $(document).ready(function(){
   
   //opens link in new tab
   $("body").on('click',"li", function(){
-    window.open(this.data, '_blank');
+    browser.tabs.create({  url: this.data });
     return false;
   });
   
   //opens link in new tab
   $("body").on('click',".calendar", function(){
-    window.open(this.data, '_blank');
+    browser.tabs.create({  url: this.data });
     return false;
   });
 
   //opens link in new tab
   $("body").on('click',"a", function(){
-    window.open($(this).attr('data'), '_blank');
+    browser.tabs.create({  url: $(this).attr('data')  });
     return false;
   });
 
   $("body").on('click',".fa-gear", function(){
-    window.open('options.html', '_blank');
+  browser.tabs.create({  url:"/data/options.html"  });
+
   });
 
   $("body").on('click',".fa-code", function(){
-    window.open('https://bit.ly/1LUziPN', '_blank');
+  browser.tabs.create({url:"https://bit.ly/1LUziPN" });
+
   });
 
   $("body").on('click',".fa-refresh", function(){
@@ -281,8 +283,11 @@ $(document).ready(function(){
   });
 
   $("body").on('click',".fa-android", function(){
-    window.open('https://bit.ly/1KqFi3U', '_blank');
+     browser.tabs.create({url:"https://bit.ly/1KqFi3U"});
+
   });
+	
+ 
 
 });
 

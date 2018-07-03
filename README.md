@@ -1,5 +1,9 @@
-[![Codewake](https://www.codewake.com/badges/codewake.svg)](https://www.codewake.com/p/coder-calendar)
-# Coder's Calendar
+# Notice
+This project is not actively maintained anymore. Development of the extensions (both firefox & chrome) has been moved to this [new repository](https://github.com/nishanthvijayan/CoderCalendar-Extensions/).  Any issues relating to extensions should be posted in the new repo.
+  
+Thank you!  
+  
+# Coder's Calendar [Legacy]
 ![Coder's Calendar](http://i.imgur.com/PK58rhe.png)  
   
 Android App and browser extensions for competitive programming enthusiasts.

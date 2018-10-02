@@ -7,7 +7,7 @@ Thank you!
 ![Coder's Calendar](http://i.imgur.com/PK58rhe.png)  
   
 Android App and browser extensions for competitive programming enthusiasts.
-Shows a list of live & upcoming coding contests taking place in various popular competitive programming websites with the facility to add them to your google calender.
+Shows a list of live & upcoming coding contests taking place in various popular competitive programming websites with the facility to add them to your google calendar.
 Currently shows updates from Codechef , HackerEarth , Hackerrank, Topcoder and Codeforces.
 
   

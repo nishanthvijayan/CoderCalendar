@@ -243,3 +243,18 @@ a {
 @media screen and (max-width: 42em) {
   .site-footer {
     font-size: 0.9rem; } }
+
+.platforms {
+  padding: 50px;
+}
+
+.platform {
+  display: inline-block;
+  text-align: center;
+  padding: 50px;
+}
+
+.platform-image {
+  height: 120px;
+  display: block;
+}
